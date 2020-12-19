@@ -38,11 +38,9 @@
   <ItemGroup>
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\ApiSingleton.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Utils\Physics\MathfExtensions.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\HeroLoader.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\MonoSingleton.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Utils\Physics\PhysicsUtils.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\HeroesCollection.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\Hero.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\HeroLoader.cs" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_AlphaBlend.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Additive.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Multiply.shader" />

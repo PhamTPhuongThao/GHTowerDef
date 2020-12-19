@@ -1,0 +1,9 @@
+{
+  "numberOfHero": 1,
+  "heroes": [
+    {
+      "hero": 1,
+      "attackType": 1
+    }
+  ]
+}
