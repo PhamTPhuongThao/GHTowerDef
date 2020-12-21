@@ -36,6 +36,7 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\TowerDefense\Scripts\Core\TeamLeft.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\MovingToward.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\TeamRight.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Utils\Physics\MathfExtensions.cs" />
@@ -48,7 +49,8 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\NPC.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\HeroLoader.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\MonoSingleton.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\TeamLeft.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\CenterLine.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\WarManager.cs" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_AlphaBlend.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Additive.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Multiply.shader" />

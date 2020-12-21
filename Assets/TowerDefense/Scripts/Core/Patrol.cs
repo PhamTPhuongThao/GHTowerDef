@@ -27,6 +27,9 @@ public class Patrol : MonoBehaviour
     public TeamRight teamRight;
     public TeamLeft teamLeft;
 
+    [SerializeField]
+    public NPC nPC;
+
     // Private variables for base behaviour
     NavMeshAgent navMeshAgent;
     int currentPatrolIndex;
@@ -40,6 +43,7 @@ public class Patrol : MonoBehaviour
     {
         teamRight = FindObjectOfType<TeamRight>();
         teamLeft = FindObjectOfType<TeamLeft>();
+        nPC = GetComponent<NPC>();
 
         navMeshAgent = this.GetComponent<NavMeshAgent>();
         if (navMeshAgent == null)
@@ -48,7 +52,15 @@ public class Patrol : MonoBehaviour
         }
         else
         {
-            patrolPoints = teamRight.teamRight;
+            if (nPC.teamright)
+            {
+                patrolPoints = teamLeft.teamLeft;
+            }
+            else
+            {
+                patrolPoints = teamRight.teamRight;
+            }
+
             if (patrolPoints != null && patrolPoints.Count >= 2)
             {
                 currentPatrolIndex = Random.Range(0, patrolPoints.Count - 1); ;

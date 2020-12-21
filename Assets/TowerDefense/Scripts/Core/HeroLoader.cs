@@ -11,8 +11,16 @@ public class HeroLoader : MonoBehaviour
     [System.Serializable]
     public class Hero
     {
-        public int hero;
-        public int attackType;
+        public string Name;
+        public int MaxHp;
+        public int MaxAttack;
+        public int AttackMiss;
+        public int PhysicalDefense;
+        public float CriticalChance;
+        public float CriticalDamage;
+        public float AttackSpeed;
+        public int AttackType;
+        public int MovementSpeed;
     }
 
     [System.Serializable]
@@ -30,14 +38,18 @@ public class HeroLoader : MonoBehaviour
         public int numberOfArmy;
 
     }
+
+    public WarManager warManager;
     public HeroesCollectionOfOurTeam heroesCollectionOfOurTeam = new HeroesCollectionOfOurTeam();
     public HeroesCollectionOfEnemyTeam heroesCollectionOfEnemyTeam = new HeroesCollectionOfEnemyTeam();
 
     [ContextMenu("Load Heroes Configure")]
     private void Start()
     {
+        warManager = FindObjectOfType<WarManager>();
         heroesCollectionOfOurTeam = JsonUtility.FromJson<HeroesCollectionOfOurTeam>(textJSONOurTeam.text);
         heroesCollectionOfEnemyTeam = JsonUtility.FromJson<HeroesCollectionOfEnemyTeam>(textJSONEnemyTeam.text);
+        warManager.StartGame();
     }
     private void Update()
     {
