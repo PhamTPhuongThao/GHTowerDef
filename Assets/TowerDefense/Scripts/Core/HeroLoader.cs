@@ -5,7 +5,8 @@ using UnityEngine;
 public class HeroLoader : MonoBehaviour
 {
     [SerializeField]
-    public TextAsset textJSON;
+    public TextAsset textJSONOurTeam;
+    public TextAsset textJSONEnemyTeam;
 
     [System.Serializable]
     public class Hero
@@ -15,18 +16,28 @@ public class HeroLoader : MonoBehaviour
     }
 
     [System.Serializable]
-    public class HeroesCollection
+    public class HeroesCollectionOfOurTeam
     {
         public int numberOfHero;
         public Hero[] heroes;
+        public int numberOfArmy;
 
     }
-    public HeroesCollection heroesCollection = new HeroesCollection();
+    public class HeroesCollectionOfEnemyTeam
+    {
+        public int numberOfHero;
+        public Hero[] heroes;
+        public int numberOfArmy;
+
+    }
+    public HeroesCollectionOfOurTeam heroesCollectionOfOurTeam = new HeroesCollectionOfOurTeam();
+    public HeroesCollectionOfEnemyTeam heroesCollectionOfEnemyTeam = new HeroesCollectionOfEnemyTeam();
 
     [ContextMenu("Load Heroes Configure")]
     private void Start()
     {
-        heroesCollection = JsonUtility.FromJson<HeroesCollection>(textJSON.text);
+        heroesCollectionOfOurTeam = JsonUtility.FromJson<HeroesCollectionOfOurTeam>(textJSONOurTeam.text);
+        heroesCollectionOfEnemyTeam = JsonUtility.FromJson<HeroesCollectionOfEnemyTeam>(textJSONEnemyTeam.text);
     }
     private void Update()
     {
