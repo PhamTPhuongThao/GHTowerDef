@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class TeamRight : MonoBehaviour
 {
-    public List<NPC> teamRight;
-    public int numberOfNPC;
-
     void Start()
     {
 

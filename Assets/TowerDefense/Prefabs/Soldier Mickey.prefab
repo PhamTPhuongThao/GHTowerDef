@@ -731,9 +731,10 @@ GameObject:
   - component: {fileID: 403078145950700594}
   - component: {fileID: 403078145950700595}
   - component: {fileID: 403078145950700596}
+  - component: {fileID: -8986775301767949299}
   m_Layer: 0
   m_Name: Soldier Mickey
-  m_TagString: Untagged
+  m_TagString: Left
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -824,7 +825,6 @@ MonoBehaviour:
   AttackType: 0
   MovementSpeed: 6
   value: 0
-  blood: 0
   isTeamright: 0
   center: {fileID: 0}
   characterRigidbody: {fileID: 0}
@@ -842,8 +842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolWaiting: 0
   totalWaitTime: 3
-  swichProbability: 0.2
-  patrolPoints: []
+  patrolPoint: {x: 0, y: 0, z: 0}
   teamRight: {fileID: 0}
   teamLeft: {fileID: 0}
   nPC: {fileID: 0}
@@ -870,6 +869,19 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &-8986775301767949299
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 403078146860897721}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1.7
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &403078146860897723
 GameObject:
   m_ObjectHideFlags: 0

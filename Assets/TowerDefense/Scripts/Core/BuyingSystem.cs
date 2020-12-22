@@ -47,18 +47,13 @@ public class BuyingSystem : MonoBehaviour
         // Checking whether have eneymy
         if (!Mickey.GetComponent<NPC>().isTeamright) // team left
         {
-            if (teamRight.teamRight.Count != 0)
-            {
-                Mickey.GetComponent<Patrol>().patrolPoints = teamRight.teamRight;
-            }
+            Mickey.gameObject.tag = "Left";
+            Mickey.GetComponent<Patrol>().patrolPoint = teamRight.transform.position;
         }
         else // team right
         {
-            if (teamLeft.teamLeft.Count != 0)
-            {
-                Mickey.GetComponent<Patrol>().patrolPoints = teamLeft.teamLeft;
-            }
-
+            Mickey.gameObject.tag = "Right";
+            Mickey.GetComponent<Patrol>().patrolPoint = teamLeft.transform.position;
         }
     }
 
@@ -86,18 +81,13 @@ public class BuyingSystem : MonoBehaviour
         // Checking whether have eneymy
         if (!Ralph.GetComponent<NPC>().isTeamright) // team left
         {
-            if (teamRight.teamRight.Count != 0)
-            {
-                Ralph.GetComponent<Patrol>().patrolPoints = teamRight.teamRight;
-            }
+            Ralph.gameObject.tag = "Left";
+            Ralph.GetComponent<Patrol>().patrolPoint = teamRight.transform.position;
         }
         else // team right
         {
-            if (teamLeft.teamLeft.Count != 0)
-            {
-                Ralph.GetComponent<Patrol>().patrolPoints = teamLeft.teamLeft;
-            }
-
+            Ralph.gameObject.tag = "Right";
+            Ralph.GetComponent<Patrol>().patrolPoint = teamLeft.transform.position;
         }
     }
 }

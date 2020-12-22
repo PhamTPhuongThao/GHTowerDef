@@ -15,23 +15,12 @@ public class NPC : MonoBehaviour
     public int MovementSpeed;
 
     public int value;
-    public int blood;
     public bool isTeamright;
     public CenterLine center;
     public Rigidbody characterRigidbody;
 
     void Start()
     {
-        // MaxHp = 100;
-        // MaxAttack = 10;
-        // AttackMiss = 0;
-        // PhysicalDefense = 30;
-        // CriticalChance = 0f;
-        // CriticalDamage = 0f;
-        // AttackSpeed = 1f;
-        // AttackType = 0;
-        // MovementSpeed = 6;
-
         center = FindObjectOfType<CenterLine>();
         characterRigidbody = GetComponent<Rigidbody>();
         if (transform.position.x > center.center.x)
@@ -44,8 +33,13 @@ public class NPC : MonoBehaviour
         }
     }
 
-    void Update()
+    public void GetHurt(int amountBlood)
     {
-
+        MaxHp -= amountBlood;
+        if (MaxHp < 0)
+        {
+            MaxHp = 0;
+            Destroy(this.gameObject);
+        }
     }
 }

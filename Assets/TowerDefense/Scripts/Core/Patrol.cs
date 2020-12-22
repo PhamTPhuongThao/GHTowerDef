@@ -15,13 +15,13 @@ public class Patrol : MonoBehaviour
     float totalWaitTime = 3f;
 
     //The probanility of swiching direction
-    [SerializeField]
-    float swichProbability = 0.2f;
+    // [SerializeField]
+    // float swichProbability = 0.2f;
 
     // The list of all patrol nodes to visit. -> all enemies random
     // if 1 enemy die -> delete it from this list
     [SerializeField]
-    public List<NPC> patrolPoints;
+    public Vector3 patrolPoint;
 
     [SerializeField]
     public TeamRight teamRight;
@@ -37,11 +37,8 @@ public class Patrol : MonoBehaviour
     int currentPatrolIndex;
     bool travelling;
     bool waiting;
-    bool patrolFoward;
+    // bool patrolFoward;
     float waitTimer;
-
-
-
 
     void Start()
     {
@@ -60,19 +57,18 @@ public class Patrol : MonoBehaviour
         {
             if (nPC.isTeamright)
             {
-                patrolPoints = teamLeft.teamLeft;
+                patrolPoint = teamLeft.transform.position;
             }
             else
             {
-                patrolPoints = teamRight.teamRight;
+                patrolPoint = teamRight.transform.position;
             }
 
-            if (patrolPoints != null && patrolPoints.Count >= 2)
+            if (patrolPoint != null)
             {
-                currentPatrolIndex = Random.Range(0, patrolPoints.Count - 1); ;
                 animator.SetInteger("attackOne", nPC.AttackType);
                 navMeshAgent.speed = nPC.MovementSpeed;
-                SetDestination();
+                SetDestination(patrolPoint);
             }
             else
             {
@@ -83,12 +79,9 @@ public class Patrol : MonoBehaviour
 
     void Update()
     {
-        //Moving and check if close to the destination
         if (travelling && navMeshAgent.remainingDistance <= 1.0f)
         {
             travelling = false;
-
-            //If we are going to wait, then wait.
             if (patrolWaiting)
             {
                 waiting = true;
@@ -96,13 +89,9 @@ public class Patrol : MonoBehaviour
             }
             else
             {
-                ChangePatrolPoint();
-
-                SetDestination();
+                SetDestination(patrolPoint);
             }
         }
-
-        // If we are waiting (to kill the enemy)
         if (waiting)
         {
             animator.SetBool("running", false);
@@ -112,41 +101,38 @@ public class Patrol : MonoBehaviour
             {
                 waiting = false;
                 animator.SetBool("enemyMeet", false);
-                ChangePatrolPoint();
-                SetDestination();
+                SetDestination(patrolPoint);
             }
         }
     }
-    private void SetDestination()
+    private void SetDestination(Vector3 setPatrolPoint)
     {
-
         animator.SetBool("running", true);
-        if (patrolPoints != null)
+        if (patrolPoint != null)
         {
-            Vector3 targetVector = patrolPoints[currentPatrolIndex].transform.position;
+            Vector3 targetVector = patrolPoint;
             navMeshAgent.SetDestination(targetVector);
             travelling = true;
         }
     }
 
-    // Select a new patrol point in the available list
-    // but also with a small probability allows for us to move forward or backward 
-    private void ChangePatrolPoint()
+    private void OnTriggerEnter(Collider other)
     {
-        if (UnityEngine.Random.Range(0f, 1f) <= swichProbability)
+        if (other.GetComponent<NPC>() == null)
         {
-            patrolFoward = !patrolFoward;
+            return;
         }
-
-        if (patrolFoward)
+        if (nPC != null)
         {
-            currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Count;
-        }
-        else
-        {
-            if (--currentPatrolIndex < 0)
+            if (!nPC.isTeamright && other.tag == "Right")
             {
-                currentPatrolIndex = patrolPoints.Count - 1;
+                patrolPoint = other.transform.position;
+                SetDestination(patrolPoint);
+            }
+            else if (nPC.isTeamright && other.tag == "Left")
+            {
+                patrolPoint = other.transform.position;
+                SetDestination(patrolPoint);
             }
         }
     }

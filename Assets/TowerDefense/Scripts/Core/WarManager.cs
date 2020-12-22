@@ -41,6 +41,15 @@ public class WarManager : MonoBehaviour
                 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 4;
                 spawnPos = launchPoint.position + pos;
                 Instantiate(hero, spawnPos, launchPoint.rotation);
+                if (hero.GetComponent<NPC>().isTeamright)
+                {
+                    hero.gameObject.tag = "Right";
+                }
+                else
+                {
+                    hero.gameObject.tag = "Left";
+                }
+
                 hero.GetComponent<NavMeshAgent>().speed = heroLoader.heroesCollectionOfOurTeam.heroes[i].MovementSpeed;
                 hero.GetComponent<NPC>().MaxHp = heroLoader.heroesCollectionOfOurTeam.heroes[i].MaxHp;
                 hero.GetComponent<NPC>().MaxAttack = heroLoader.heroesCollectionOfOurTeam.heroes[i].MaxAttack;
@@ -63,6 +72,14 @@ public class WarManager : MonoBehaviour
                 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 10;
                 spawnPos = launchPoint.position + pos;
                 Instantiate(hero, spawnPos, launchPoint.rotation);
+                if (hero.GetComponent<NPC>().isTeamright)
+                {
+                    hero.gameObject.tag = "Right";
+                }
+                else
+                {
+                    hero.gameObject.tag = "Left";
+                }
             }
             for (int i = 0; i < heroLoader.soldier.NumberOfArmy - numberOfSoldierMickey; i++)
             {
@@ -71,6 +88,14 @@ public class WarManager : MonoBehaviour
                 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 10;
                 spawnPos = launchPoint.position + pos;
                 Instantiate(hero, spawnPos, launchPoint.rotation);
+                if (hero.GetComponent<NPC>().isTeamright)
+                {
+                    hero.gameObject.tag = "Right";
+                }
+                else
+                {
+                    hero.gameObject.tag = "Left";
+                }
             }
 
         }
