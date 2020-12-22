@@ -1,6 +1,5 @@
 {
   "numberOfHero": 2,
-  "numberOfArmy": 2,
   "heroes": [
     {
       "Name": "Mickey",
@@ -11,7 +10,7 @@
       "CriticalChance": 0.057,
       "CriticalDamage": 1.5,
       "AttackSpeed": 0.76,
-      "AttackType": 0,
+      "AttackType": 1,
       "MovementSpeed": 9
     },
     {

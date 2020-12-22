@@ -1,6 +1,5 @@
 {
   "numberOfHero": 1,
-  "numberOfArmy": 2,
   "heroes": [
     {
       "Name": "Mickey",

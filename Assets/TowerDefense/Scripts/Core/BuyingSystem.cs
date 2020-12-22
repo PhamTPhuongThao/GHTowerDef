@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BuyingSystem : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class BuyingSystem : MonoBehaviour
     public Transform launchPoint;
     public Patrol patrol;
     public TeamRight teamRight;
+    public TeamLeft teamLeft;
 
     public Vector3 spawnPos;
 
@@ -18,45 +20,84 @@ public class BuyingSystem : MonoBehaviour
         patrol = FindObjectOfType<Patrol>();
         teamRight = FindObjectOfType<TeamRight>();
 
-
     }
 
     public void BuyMickey()
     {
-        var angle = Random.Range(1, 100) * Mathf.PI * 2 / 100;
+        var maxAngleUp = Mathf.PI / 2;
+        var maxAngleDown = -Mathf.PI / 2;
+        if (Mickey.GetComponent<NPC>().isTeamright)
+        {
+            maxAngleDown = Mathf.PI / 2;
+            maxAngleUp = -Mathf.PI / 2;
+        }
+
+        var angle = Random.Range(maxAngleUp, maxAngleDown);
         var pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 4;
         spawnPos = launchPoint.position + pos;
+        // Checking remain coin
         value = 50;
         if (CoinSystem.totalCoin < value)
         {
             return;
         }
         CoinSystem.SpendCoin(value);
+        // Instantiate
         Instantiate(Mickey, spawnPos, launchPoint.rotation);
-        if (teamRight.teamRight.Count == 0)
+        // Checking whether have eneymy
+        if (!Mickey.GetComponent<NPC>().isTeamright) // team left
         {
-            return;
+            if (teamRight.teamRight.Count != 0)
+            {
+                Mickey.GetComponent<Patrol>().patrolPoints = teamRight.teamRight;
+            }
         }
-        Mickey.GetComponent<Patrol>().patrolPoints = teamRight.teamRight;
+        else // team right
+        {
+            if (teamLeft.teamLeft.Count != 0)
+            {
+                Mickey.GetComponent<Patrol>().patrolPoints = teamLeft.teamLeft;
+            }
+
+        }
     }
 
     public void BuyRalph()
     {
-        var angle = Random.Range(1, 100) * Mathf.PI * 2 / 100;
+        var maxAngleUp = Mathf.PI / 2;
+        var maxAngleDown = -Mathf.PI / 2;
+        if (Ralph.GetComponent<NPC>().isTeamright)
+        {
+            maxAngleDown = Mathf.PI / 2;
+            maxAngleUp = -Mathf.PI / 2;
+        }
+        var angle = Random.Range(maxAngleUp, maxAngleDown);
         var pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 4;
         spawnPos = launchPoint.position + pos;
-        spawnPos = launchPoint.position;
+        // Checking remain coin
         value = 40;
         if (CoinSystem.totalCoin < value)
         {
             return;
         }
         CoinSystem.SpendCoin(value);
+        // Instantiate
         Instantiate(Ralph, spawnPos, launchPoint.rotation);
-        if (teamRight.teamRight.Count == 0)
+        // Checking whether have eneymy
+        if (!Ralph.GetComponent<NPC>().isTeamright) // team left
         {
-            return;
+            if (teamRight.teamRight.Count != 0)
+            {
+                Ralph.GetComponent<Patrol>().patrolPoints = teamRight.teamRight;
+            }
         }
-        Ralph.GetComponent<Patrol>().patrolPoints = teamRight.teamRight;
+        else // team right
+        {
+            if (teamLeft.teamLeft.Count != 0)
+            {
+                Ralph.GetComponent<Patrol>().patrolPoints = teamLeft.teamLeft;
+            }
+
+        }
     }
 }

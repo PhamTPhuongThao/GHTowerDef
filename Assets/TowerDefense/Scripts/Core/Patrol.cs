@@ -29,9 +29,11 @@ public class Patrol : MonoBehaviour
 
     [SerializeField]
     public NPC nPC;
+    public Animator animator;
 
     // Private variables for base behaviour
     NavMeshAgent navMeshAgent;
+
     int currentPatrolIndex;
     bool travelling;
     bool waiting;
@@ -39,20 +41,24 @@ public class Patrol : MonoBehaviour
     float waitTimer;
 
 
+
+
     void Start()
     {
+        animator = GetComponent<Animator>();
         teamRight = FindObjectOfType<TeamRight>();
         teamLeft = FindObjectOfType<TeamLeft>();
         nPC = GetComponent<NPC>();
-
         navMeshAgent = this.GetComponent<NavMeshAgent>();
+        patrolWaiting = true;
+
         if (navMeshAgent == null)
         {
             Debug.LogError("The nav mesh agent component is not attached to" + gameObject.name);
         }
         else
         {
-            if (nPC.teamright)
+            if (nPC.isTeamright)
             {
                 patrolPoints = teamLeft.teamLeft;
             }
@@ -64,6 +70,8 @@ public class Patrol : MonoBehaviour
             if (patrolPoints != null && patrolPoints.Count >= 2)
             {
                 currentPatrolIndex = Random.Range(0, patrolPoints.Count - 1); ;
+                animator.SetInteger("attackOne", nPC.AttackType);
+                navMeshAgent.speed = nPC.MovementSpeed;
                 SetDestination();
             }
             else
@@ -81,7 +89,7 @@ public class Patrol : MonoBehaviour
             travelling = false;
 
             //If we are going to wait, then wait.
-            if (waiting)
+            if (patrolWaiting)
             {
                 waiting = true;
                 waitTimer = 0f;
@@ -89,17 +97,21 @@ public class Patrol : MonoBehaviour
             else
             {
                 ChangePatrolPoint();
+
                 SetDestination();
             }
         }
 
-        //If we are waiting (to kill the enemy)
+        // If we are waiting (to kill the enemy)
         if (waiting)
         {
+            animator.SetBool("running", false);
+            animator.SetBool("enemyMeet", true);
             waitTimer += Time.deltaTime;
-            if (waitTimer <= totalWaitTime)
+            if (waitTimer >= totalWaitTime)
             {
                 waiting = false;
+                animator.SetBool("enemyMeet", false);
                 ChangePatrolPoint();
                 SetDestination();
             }
@@ -107,6 +119,8 @@ public class Patrol : MonoBehaviour
     }
     private void SetDestination()
     {
+
+        animator.SetBool("running", true);
         if (patrolPoints != null)
         {
             Vector3 targetVector = patrolPoints[currentPatrolIndex].transform.position;
