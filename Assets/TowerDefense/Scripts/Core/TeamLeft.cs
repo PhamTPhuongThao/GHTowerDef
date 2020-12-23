@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class TeamLeft : MonoBehaviour
 {
-    void Start()
-    {
+    public int maxHP;
 
-    }
-    void Update()
+    public void GetHurt(int amountBlood)
     {
-
+        maxHP -= amountBlood;
+        if (maxHP < 0)
+        {
+            maxHP = 0;
+            Destroy(this.gameObject);
+        }
     }
 }

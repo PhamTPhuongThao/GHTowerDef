@@ -17,12 +17,12 @@ public class NPC : MonoBehaviour
     public int value;
     public bool isTeamright;
     public CenterLine center;
-    public Rigidbody characterRigidbody;
+    public Patrol patrol;
 
     void Start()
     {
         center = FindObjectOfType<CenterLine>();
-        characterRigidbody = GetComponent<Rigidbody>();
+        patrol = GetComponent<Patrol>();
         if (transform.position.x > center.center.x)
         {
             isTeamright = true;
@@ -33,13 +33,43 @@ public class NPC : MonoBehaviour
         }
     }
 
+
+    public void Attack(Collider enemy)
+    {
+        enemy.GetComponent<NPC>().GetHurt(MaxAttack);
+    }
+
+    public void AttackTower(Collider enemy)
+    {
+        if (isTeamright)
+        {
+            enemy.GetComponent<TeamLeft>().GetHurt(MaxAttack);
+        }
+        else
+        {
+            enemy.GetComponent<TeamRight>().GetHurt(MaxAttack);
+        }
+    }
+
     public void GetHurt(int amountBlood)
     {
         MaxHp -= amountBlood;
         if (MaxHp < 0)
         {
             MaxHp = 0;
+            patrol.isDead = true;
             Destroy(this.gameObject);
         }
     }
+
+    public int GetHP()
+    {
+        return MaxHp;
+    }
+
+    public void LevelUp()
+    {
+
+    }
+
 }

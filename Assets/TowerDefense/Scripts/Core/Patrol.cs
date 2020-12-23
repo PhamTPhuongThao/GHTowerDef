@@ -5,23 +5,15 @@ using UnityEngine.AI;
 
 public class Patrol : MonoBehaviour
 {
-    // Dictates whether the agent waits on each node
-    // -> when fight -> true
     [SerializeField]
     bool patrolWaiting;
 
-    //Total time wait at each node ->  (bool) if enemy die -> move to another patrolpoint
     [SerializeField]
-    float totalWaitTime = 3f;
+    float totalWaitTime = 2f;
 
-    //The probanility of swiching direction
-    // [SerializeField]
-    // float swichProbability = 0.2f;
-
-    // The list of all patrol nodes to visit. -> all enemies random
-    // if 1 enemy die -> delete it from this list
     [SerializeField]
     public Vector3 patrolPoint;
+    public Vector3 aim;
 
     [SerializeField]
     public TeamRight teamRight;
@@ -31,14 +23,12 @@ public class Patrol : MonoBehaviour
     public NPC nPC;
     public Animator animator;
 
-    // Private variables for base behaviour
     NavMeshAgent navMeshAgent;
-
-    int currentPatrolIndex;
     bool travelling;
     bool waiting;
-    // bool patrolFoward;
     float waitTimer;
+
+    public bool isDead;
 
     void Start()
     {
@@ -47,7 +37,7 @@ public class Patrol : MonoBehaviour
         teamLeft = FindObjectOfType<TeamLeft>();
         nPC = GetComponent<NPC>();
         navMeshAgent = this.GetComponent<NavMeshAgent>();
-        patrolWaiting = true;
+
 
         if (navMeshAgent == null)
         {
@@ -57,13 +47,13 @@ public class Patrol : MonoBehaviour
         {
             if (nPC.isTeamright)
             {
-                patrolPoint = teamLeft.transform.position;
+                aim = teamLeft.transform.position;
             }
             else
             {
-                patrolPoint = teamRight.transform.position;
+                aim = teamRight.transform.position;
             }
-
+            patrolPoint = aim;
             if (patrolPoint != null)
             {
                 animator.SetInteger("attackOne", nPC.AttackType);
@@ -79,19 +69,20 @@ public class Patrol : MonoBehaviour
 
     void Update()
     {
+        animator.SetBool("running", true);
+        animator.SetBool("enemyMeet", false);
+        if (isDead)
+        {
+            return;
+        }
+        patrolPoint = aim;
         if (travelling && navMeshAgent.remainingDistance <= 1.0f)
         {
             travelling = false;
-            if (patrolWaiting)
-            {
-                waiting = true;
-                waitTimer = 0f;
-            }
-            else
-            {
-                SetDestination(patrolPoint);
-            }
+            waiting = true;
+            waitTimer = 0f;
         }
+
         if (waiting)
         {
             animator.SetBool("running", false);
@@ -100,15 +91,16 @@ public class Patrol : MonoBehaviour
             if (waitTimer >= totalWaitTime)
             {
                 waiting = false;
-                animator.SetBool("enemyMeet", false);
                 SetDestination(patrolPoint);
             }
         }
     }
+
     private void SetDestination(Vector3 setPatrolPoint)
     {
         animator.SetBool("running", true);
-        if (patrolPoint != null)
+        animator.SetBool("enemyMeet", false);
+        if (patrolPoint != null && !isDead)
         {
             Vector3 targetVector = patrolPoint;
             navMeshAgent.SetDestination(targetVector);
@@ -118,21 +110,27 @@ public class Patrol : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<NPC>() == null)
-        {
-            return;
-        }
         if (nPC != null)
         {
-            if (!nPC.isTeamright && other.tag == "Right")
+            if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight") && !other.GetComponent<Patrol>().isDead)
             {
                 patrolPoint = other.transform.position;
                 SetDestination(patrolPoint);
+                nPC.Attack(other);
             }
-            else if (nPC.isTeamright && other.tag == "Left")
+            else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft") && !other.GetComponent<Patrol>().isDead)
             {
                 patrolPoint = other.transform.position;
                 SetDestination(patrolPoint);
+                nPC.Attack(other);
+            }
+            else if (nPC.isTeamright && other.tag == "TowerLeft")
+            {
+                nPC.AttackTower(other);
+            }
+            else if (!nPC.isTeamright && other.tag == "TowerRight")
+            {
+                nPC.AttackTower(other);
             }
         }
     }

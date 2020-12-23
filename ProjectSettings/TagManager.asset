@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Left
   - Right
+  - TowerLeft
+  - TowerRight
+  - HeroLeft
+  - HeroRight
   layers:
   - Default
   - TransparentFX
@@ -15,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - NavMesh
   - 
   - 
   - 

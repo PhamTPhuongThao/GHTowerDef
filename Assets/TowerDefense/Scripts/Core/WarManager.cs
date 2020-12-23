@@ -10,18 +10,22 @@ public class WarManager : MonoBehaviour
     public GameObject Ralph;
     public GameObject SoldierMickey;
     public GameObject SoldierRalph;
-    public Transform launchPoint;
+    public Transform launchPointLeft;
+    public Transform launchPointRight;
     private GameObject hero;
+
+    public float maxAngleUp = Mathf.PI / 2;
+    public float maxAngleDown = -Mathf.PI / 2;
+    public float maxAngleDownRight = 3 * Mathf.PI / 2;
+    public float angle = 0f;
+    public float angleLeft = 0f;
+    public float angleRight = 0f;
+    public Vector3 pos = Vector3.zero;
+    public Vector3 spawnPos = Vector3.zero;
 
     public void StartGame()
     {
         heroLoader = FindObjectOfType<HeroLoader>();
-
-        var maxAngleUp = Mathf.PI / 2;
-        var maxAngleDown = -Mathf.PI / 2;
-        var angle = 0f;
-        var pos = Vector3.zero;
-        var spawnPos = Vector3.zero;
         if (heroLoader.heroesCollectionOfOurTeam.heroes.Length > 0)
         {
             for (int i = 0; i < heroLoader.heroesCollectionOfOurTeam.heroes.Length; i++)
@@ -39,15 +43,15 @@ public class WarManager : MonoBehaviour
                 }
 
                 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 4;
-                spawnPos = launchPoint.position + pos;
-                Instantiate(hero, spawnPos, launchPoint.rotation);
+                spawnPos = launchPointLeft.position + pos;
+                Instantiate(hero, spawnPos, launchPointLeft.rotation);
                 if (hero.GetComponent<NPC>().isTeamright)
                 {
-                    hero.gameObject.tag = "Right";
+                    hero.gameObject.tag = "HeroRight";
                 }
                 else
                 {
-                    hero.gameObject.tag = "Left";
+                    hero.gameObject.tag = "HeroLeft";
                 }
 
                 hero.GetComponent<NavMeshAgent>().speed = heroLoader.heroesCollectionOfOurTeam.heroes[i].MovementSpeed;
@@ -67,37 +71,31 @@ public class WarManager : MonoBehaviour
             var numberOfSoldierMickey = Random.Range(1, heroLoader.soldier.NumberOfArmy);
             for (int i = 0; i < numberOfSoldierMickey; i++)
             {
-                angle = Random.Range(maxAngleUp, maxAngleDown);
-                hero = SoldierMickey;
-                pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 10;
-                spawnPos = launchPoint.position + pos;
-                Instantiate(hero, spawnPos, launchPoint.rotation);
-                if (hero.GetComponent<NPC>().isTeamright)
-                {
-                    hero.gameObject.tag = "Right";
-                }
-                else
-                {
-                    hero.gameObject.tag = "Left";
-                }
+                CreateArmy(SoldierMickey);
             }
             for (int i = 0; i < heroLoader.soldier.NumberOfArmy - numberOfSoldierMickey; i++)
             {
-                angle = Random.Range(maxAngleUp, maxAngleDown);
-                hero = SoldierRalph;
-                pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 10;
-                spawnPos = launchPoint.position + pos;
-                Instantiate(hero, spawnPos, launchPoint.rotation);
-                if (hero.GetComponent<NPC>().isTeamright)
-                {
-                    hero.gameObject.tag = "Right";
-                }
-                else
-                {
-                    hero.gameObject.tag = "Left";
-                }
+                CreateArmy(SoldierRalph);
             }
 
         }
     }
+
+    private void CreateArmy(GameObject heroType)
+    {
+        heroType.GetComponent<NPC>().isTeamright = false;
+        heroType.gameObject.tag = "Left";
+        angleLeft = Random.Range(maxAngleUp, maxAngleDown);
+        pos = new Vector3(Mathf.Cos(angleLeft), 0, Mathf.Sin(angleLeft)) * 6;
+        spawnPos = launchPointLeft.position + pos;
+        Instantiate(heroType, spawnPos, launchPointLeft.rotation);
+
+        heroType.GetComponent<NPC>().isTeamright = true;
+        heroType.gameObject.tag = "Right";
+        angleRight = Random.Range(maxAngleUp, maxAngleDownRight);
+        pos = new Vector3(Mathf.Cos(angleRight), 0, Mathf.Sin(angleRight)) * 6;
+        spawnPos = launchPointRight.position + pos;
+        Instantiate(heroType, spawnPos, launchPointRight.rotation);
+    }
+
 }
