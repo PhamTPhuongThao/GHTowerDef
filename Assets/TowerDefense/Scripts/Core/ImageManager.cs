@@ -18,28 +18,28 @@ public class ImageManager : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject != ownHero)
+        if (other.gameObject != ownHero && other.GetComponent<NPC>())
         {
+            if (isTeamright && other.tag == "HeroRight" && (ownHero.GetComponent<NPC>().level == other.GetComponent<NPC>().level) && (ownHero.GetComponent<NPC>().Name == other.GetComponent<NPC>().Name))
+            {
+                ownHero.GetComponent<NPC>().isLevelingUp = true;
+                Destroy(this.gameObject);
+                Destroy(ownHero);
+                Destroy(ownHero.GetComponent<NPC>().levelText.gameObject);
+                other.GetComponent<NPC>().level++;
+                other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
+                other.GetComponent<LevelUp>().ResetConfig();
+            }
+            else if (!isTeamright && other.tag == "HeroLeft" && (ownHero.GetComponent<NPC>().level == other.GetComponent<NPC>().level) && (ownHero.GetComponent<NPC>().Name == other.GetComponent<NPC>().Name))
+            {
+                ownHero.GetComponent<NPC>().isLevelingUp = true;
+                Destroy(this.gameObject);
+                Destroy(ownHero);
+                Destroy(ownHero.GetComponent<NPC>().levelText.gameObject);
+                other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
+                other.GetComponent<LevelUp>().ResetConfig();
+            }
 
-            if (isTeamright && other.tag == "HeroRight" && (ownHero.GetComponent<NPC>().level == other.GetComponent<NPC>().level))// + 2 hero different
-            {
-                canLevelUp = true;
-                Destroy(this.gameObject);
-                Destroy(ownHero);
-                Debug.Log("can level up");
-                other.GetComponent<Patrol>().animator.SetBool("canLevelUp", canLevelUp);
-                other.GetComponent<LevelUp>().ResetConfig();
-            }
-            else if (!isTeamright && other.tag == "HeroLeft" && (ownHero.GetComponent<NPC>().level == other.GetComponent<NPC>().level))
-            {
-                canLevelUp = true;
-                Destroy(this.gameObject);
-                Destroy(ownHero);
-                Debug.Log("can level up");
-                other.GetComponent<Patrol>().animator.SetBool("canLevelUp", canLevelUp);
-                other.GetComponent<LevelUp>().ResetConfig();
-            }
-            canLevelUp = false;
         }
 
     }

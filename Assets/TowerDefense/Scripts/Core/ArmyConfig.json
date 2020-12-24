@@ -1,5 +1,5 @@
 {
-  "NumberOfArmy": 10,
+  "NumberOfArmy": 2,
   "MaxHp": 750,
   "MaxAttack": 20,
   "AttackMiss": 0,
@@ -8,5 +8,5 @@
   "CriticalDamage": 1.5,
   "AttackSpeed": 0.76,
   "AttackType": 1,
-  "MovementSpeed": 9
+  "MovementSpeed": 5
 }

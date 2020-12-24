@@ -6,15 +6,13 @@ public class LevelUp : MonoBehaviour
 {
     private Vector3 mOffset;
     private float mZCoord;
-
     private NPC nPC;
-
-    bool canLevelUp;
     private GameObject getHeroImage;
 
     private void Start()
     {
         nPC = GetComponent<NPC>();
+
     }
 
     private void OnMouseDown()
@@ -50,6 +48,12 @@ public class LevelUp : MonoBehaviour
     }
 
 
+    public IEnumerator Waiting()
+    {
+        yield return new WaitForSeconds(2f);
+        this.gameObject.GetComponent<Patrol>().animator.SetBool("canLevelUp", false);
+    }
+
     public void ResetConfig()
     {
         this.gameObject.GetComponent<NPC>().level++;
@@ -61,6 +65,7 @@ public class LevelUp : MonoBehaviour
         // this.gameObject.GetComponent<NPC>().CriticalDamage = 
         // this.gameObject.GetComponent<NPC>().AttackSpeed = 
         // this.gameObject.GetComponent<NPC>().AttackType = 
+        StartCoroutine(Waiting());
 
     }
 

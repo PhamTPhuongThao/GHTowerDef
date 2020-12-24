@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
+    public string Name;
     public int MaxHp;
     public int MaxAttack;
     public int AttackMiss;
@@ -17,15 +18,28 @@ public class NPC : MonoBehaviour
 
     public int value;
     public bool isTeamright;
-    public int level;
+
+
     public CenterLine center;
     public Patrol patrol;
     public GameObject heroImage;
+
+    public LevelText levelText;
+    public int level;
+    public bool isLevelingUp;
 
     void Start()
     {
         center = FindObjectOfType<CenterLine>();
         patrol = GetComponent<Patrol>();
+        level = 1;
+        levelText = FindObjectOfType<LevelText>();
+        isLevelingUp = false;
+        if (levelText.text)
+        {
+            levelText.text.text = "L." + level;
+        }
+
         if (transform.position.x > center.center.x)
         {
             isTeamright = true;
@@ -36,6 +50,10 @@ public class NPC : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        LevelUp();
+    }
 
     public void Attack(Collider enemy)
     {
@@ -72,7 +90,10 @@ public class NPC : MonoBehaviour
 
     public void LevelUp()
     {
-
+        if (levelText.text)
+        {
+            levelText.text.text = "L." + level;
+        }
     }
 
 }

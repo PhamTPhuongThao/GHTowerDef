@@ -1270,6 +1270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fa7a0bfb1073c468a36125a14b449e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Name: 
   MaxHp: 100
   MaxAttack: 10
   AttackMiss: 0
@@ -1281,10 +1282,12 @@ MonoBehaviour:
   MovementSpeed: 6
   value: 0
   isTeamright: 1
-  level: 0
   center: {fileID: 0}
   patrol: {fileID: 0}
   heroImage: {fileID: 0}
+  levelText: {fileID: 0}
+  level: 0
+  isLevelingUp: 0
 --- !u!114 &3323415788718781387
 MonoBehaviour:
   m_ObjectHideFlags: 0
