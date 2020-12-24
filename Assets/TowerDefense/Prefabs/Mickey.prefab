@@ -841,7 +841,7 @@ GameObject:
   - component: {fileID: 1279194400298504463}
   - component: {fileID: 7678809866339459344}
   - component: {fileID: 4770397800576162880}
-  - component: {fileID: 7830629280394921556}
+  - component: {fileID: -3304051755158709486}
   m_Layer: 0
   m_Name: Mickey
   m_TagString: HeroLeft
@@ -979,8 +979,11 @@ MonoBehaviour:
   MovementSpeed: 9
   value: 0
   isTeamright: 0
+  level: 1
   center: {fileID: 0}
   patrol: {fileID: 0}
+  heroImage: {fileID: 5409150874960963299, guid: d7884a6b25ef84e4ca96285ba51b63fc,
+    type: 3}
 --- !u!135 &4770397800576162880
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -994,7 +997,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 2.3
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &7830629280394921556
+--- !u!114 &-3304051755158709486
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

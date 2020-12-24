@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
@@ -16,8 +17,10 @@ public class NPC : MonoBehaviour
 
     public int value;
     public bool isTeamright;
+    public int level;
     public CenterLine center;
     public Patrol patrol;
+    public GameObject heroImage;
 
     void Start()
     {

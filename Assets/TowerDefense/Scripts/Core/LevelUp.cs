@@ -9,18 +9,21 @@ public class LevelUp : MonoBehaviour
 
     private NPC nPC;
 
-    bool mouseButtonReleased;
     bool canLevelUp;
+    private GameObject getHeroImage;
 
     private void Start()
     {
         nPC = GetComponent<NPC>();
     }
+
     private void OnMouseDown()
     {
         mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
         mOffset = gameObject.transform.position - GetMouseWorldPos();
-        mouseButtonReleased = false;
+        getHeroImage = Instantiate(nPC.heroImage, transform.position, transform.rotation);
+        getHeroImage.GetComponent<ImageManager>().isTeamright = nPC.isTeamright;
+        getHeroImage.GetComponent<ImageManager>().ownHero = transform.gameObject;
     }
 
     private Vector3 GetMouseWorldPos()
@@ -32,35 +35,32 @@ public class LevelUp : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        // create a copy of transform -> if level up delete main transform
-        //Instantiate(transform.gameObject, transform.position, transform.rotation);
-        transform.position = GetMouseWorldPos() + mOffset;
+        if (getHeroImage)
+        {
+            getHeroImage.transform.position = GetMouseWorldPos() + mOffset;
+        }
     }
 
     private void OnMouseUp()
     {
-        mouseButtonReleased = true;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (mouseButtonReleased)
+        if (getHeroImage && !getHeroImage.GetComponent<ImageManager>().canLevelUp)
         {
-            if (nPC.isTeamright && other.tag == "HeroRight")
-            {
-                canLevelUp = true;
-                Debug.Log("can level up");
-            }
-            else if (!nPC.isTeamright && other.tag == "HeroLeft")
-            {
-                canLevelUp = true;
-                Debug.Log("can level up");
-            }
+            Destroy(getHeroImage);
         }
     }
 
-    private void ResetConfi(Collider other)
+
+    public void ResetConfig()
     {
+        this.gameObject.GetComponent<NPC>().level++;
+        // this.gameObject.GetComponent<NPC>().MaxHp = 
+        // this.gameObject.GetComponent<NPC>().MaxAttack = 
+        // this.gameObject.GetComponent<NPC>().AttackMiss = 
+        // this.gameObject.GetComponent<NPC>().PhysicalDefense = 
+        // this.gameObject.GetComponent<NPC>().CriticalChance = 
+        // this.gameObject.GetComponent<NPC>().CriticalDamage = 
+        // this.gameObject.GetComponent<NPC>().AttackSpeed = 
+        // this.gameObject.GetComponent<NPC>().AttackType = 
 
     }
 

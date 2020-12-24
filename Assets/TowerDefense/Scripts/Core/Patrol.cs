@@ -110,7 +110,7 @@ public class Patrol : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (nPC != null)
+        if (nPC && other)
         {
             if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight") && !other.GetComponent<Patrol>().isDead)
             {

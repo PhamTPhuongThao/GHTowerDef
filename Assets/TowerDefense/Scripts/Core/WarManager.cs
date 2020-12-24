@@ -25,60 +25,61 @@ public class WarManager : MonoBehaviour
 
     public void StartGame()
     {
-        heroLoader = FindObjectOfType<HeroLoader>();
-        if (heroLoader.heroesCollectionOfOurTeam.heroes.Length > 0)
-        {
-            for (int i = 0; i < heroLoader.heroesCollectionOfOurTeam.heroes.Length; i++)
-            {
-                if (heroLoader.heroesCollectionOfOurTeam.heroes[i].Name == "Mickey")
-                {
-                    angle = Random.Range(maxAngleUp, maxAngleDown);
-                    hero = Mickey;
+        // heroLoader = FindObjectOfType<HeroLoader>();
+        // if (heroLoader.heroesCollectionOfOurTeam.heroes.Length > 0)
+        // {
+        //     for (int i = 0; i < heroLoader.heroesCollectionOfOurTeam.heroes.Length; i++)
+        //     {
+        //         if (heroLoader.heroesCollectionOfOurTeam.heroes[i].Name == "Mickey")
+        //         {
+        //             angle = Random.Range(maxAngleUp, maxAngleDown);
+        //             hero = Mickey;
 
-                }
-                else if (heroLoader.heroesCollectionOfOurTeam.heroes[i].Name == "Ralph")
-                {
-                    angle = Random.Range(maxAngleUp, maxAngleDown);
-                    hero = Ralph;
-                }
+        //         }
+        //         else if (heroLoader.heroesCollectionOfOurTeam.heroes[i].Name == "Ralph")
+        //         {
+        //             angle = Random.Range(maxAngleUp, maxAngleDown);
+        //             hero = Ralph;
+        //         }
 
-                pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 4;
-                spawnPos = launchPointLeft.position + pos;
-                Instantiate(hero, spawnPos, launchPointLeft.rotation);
-                if (hero.GetComponent<NPC>().isTeamright)
-                {
-                    hero.gameObject.tag = "HeroRight";
-                }
-                else
-                {
-                    hero.gameObject.tag = "HeroLeft";
-                }
+        //         pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 4;
+        //         spawnPos = launchPointLeft.position + pos;
+        //         Instantiate(hero, spawnPos, launchPointLeft.rotation);
+        //         if (hero.GetComponent<NPC>().isTeamright)
+        //         {
+        //             hero.gameObject.tag = "HeroRight";
+        //         }
+        //         else
+        //         {
+        //             hero.gameObject.tag = "HeroLeft";
+        //         }
 
-                hero.GetComponent<NavMeshAgent>().speed = heroLoader.heroesCollectionOfOurTeam.heroes[i].MovementSpeed;
-                hero.GetComponent<NPC>().MaxHp = heroLoader.heroesCollectionOfOurTeam.heroes[i].MaxHp;
-                hero.GetComponent<NPC>().MaxAttack = heroLoader.heroesCollectionOfOurTeam.heroes[i].MaxAttack;
-                hero.GetComponent<NPC>().AttackMiss = heroLoader.heroesCollectionOfOurTeam.heroes[i].AttackMiss;
-                hero.GetComponent<NPC>().PhysicalDefense = heroLoader.heroesCollectionOfOurTeam.heroes[i].PhysicalDefense;
-                hero.GetComponent<NPC>().CriticalChance = heroLoader.heroesCollectionOfOurTeam.heroes[i].CriticalChance;
-                hero.GetComponent<NPC>().CriticalDamage = heroLoader.heroesCollectionOfOurTeam.heroes[i].CriticalDamage;
-                hero.GetComponent<NPC>().AttackSpeed = heroLoader.heroesCollectionOfOurTeam.heroes[i].AttackSpeed;
-                hero.GetComponent<NPC>().AttackType = heroLoader.heroesCollectionOfOurTeam.heroes[i].AttackType;
-            }
-        }
+        //         hero.GetComponent<NavMeshAgent>().speed = heroLoader.heroesCollectionOfOurTeam.heroes[i].MovementSpeed;
+        //         hero.GetComponent<NPC>().MaxHp = heroLoader.heroesCollectionOfOurTeam.heroes[i].MaxHp;
+        //         hero.GetComponent<NPC>().MaxAttack = heroLoader.heroesCollectionOfOurTeam.heroes[i].MaxAttack;
+        //         hero.GetComponent<NPC>().AttackMiss = heroLoader.heroesCollectionOfOurTeam.heroes[i].AttackMiss;
+        //         hero.GetComponent<NPC>().PhysicalDefense = heroLoader.heroesCollectionOfOurTeam.heroes[i].PhysicalDefense;
+        //         hero.GetComponent<NPC>().CriticalChance = heroLoader.heroesCollectionOfOurTeam.heroes[i].CriticalChance;
+        //         hero.GetComponent<NPC>().CriticalDamage = heroLoader.heroesCollectionOfOurTeam.heroes[i].CriticalDamage;
+        //         hero.GetComponent<NPC>().AttackSpeed = heroLoader.heroesCollectionOfOurTeam.heroes[i].AttackSpeed;
+        //         hero.GetComponent<NPC>().AttackType = heroLoader.heroesCollectionOfOurTeam.heroes[i].AttackType;
+        //         hero.GetComponent<NPC>().level = 1;
+        //     }
+        // }
 
-        if (heroLoader.soldier.NumberOfArmy > 0)
-        {
-            var numberOfSoldierMickey = Random.Range(1, heroLoader.soldier.NumberOfArmy);
-            for (int i = 0; i < numberOfSoldierMickey; i++)
-            {
-                CreateArmy(SoldierMickey);
-            }
-            for (int i = 0; i < heroLoader.soldier.NumberOfArmy - numberOfSoldierMickey; i++)
-            {
-                CreateArmy(SoldierRalph);
-            }
+        // if (heroLoader.soldier.NumberOfArmy > 0)
+        // {
+        //     var numberOfSoldierMickey = Random.Range(1, heroLoader.soldier.NumberOfArmy);
+        //     for (int i = 0; i < numberOfSoldierMickey; i++)
+        //     {
+        //         CreateArmy(SoldierMickey);
+        //     }
+        //     for (int i = 0; i < heroLoader.soldier.NumberOfArmy - numberOfSoldierMickey; i++)
+        //     {
+        //         CreateArmy(SoldierRalph);
+        //     }
 
-        }
+        // }
     }
 
     private void CreateArmy(GameObject heroType)

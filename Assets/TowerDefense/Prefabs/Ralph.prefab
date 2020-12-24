@@ -1243,7 +1243,7 @@ GameObject:
   - component: {fileID: 7101429446673197484}
   - component: {fileID: 6644252775079070094}
   - component: {fileID: 6807462712264429092}
-  - component: {fileID: 8305154542070705875}
+  - component: {fileID: 7448757376465076166}
   m_Layer: 0
   m_Name: Ralph
   m_TagString: HeroLeft
@@ -1381,8 +1381,11 @@ MonoBehaviour:
   MovementSpeed: 9
   value: 0
   isTeamright: 0
+  level: 1
   center: {fileID: 0}
   patrol: {fileID: 0}
+  heroImage: {fileID: 2401572306313422137, guid: f93ba774c3290264583c5bd3b85a07a3,
+    type: 3}
 --- !u!135 &6807462712264429092
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1396,7 +1399,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.6
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &8305154542070705875
+--- !u!114 &7448757376465076166
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

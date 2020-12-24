@@ -411,8 +411,10 @@ MonoBehaviour:
   MovementSpeed: 6
   value: 0
   isTeamright: 1
+  level: 0
   center: {fileID: 0}
   patrol: {fileID: 0}
+  heroImage: {fileID: 0}
 --- !u!114 &9104243582064967323
 MonoBehaviour:
   m_ObjectHideFlags: 0
