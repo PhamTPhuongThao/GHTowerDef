@@ -889,7 +889,6 @@ MonoBehaviour:
   MovementSpeed: 9
   value: 0
   isTeamright: 0
-  center: {fileID: 0}
   patrol: {fileID: 0}
   heroImage: {fileID: 5409150874960963299, guid: d7884a6b25ef84e4ca96285ba51b63fc,
     type: 3}

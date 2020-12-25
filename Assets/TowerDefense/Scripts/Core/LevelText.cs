@@ -11,7 +11,7 @@ public class LevelText : MonoBehaviour
     public void Start()
     {
         text = GetComponent<Text>();
-        text.text = "L." + 1;
+        text.text = "";
     }
 
 }

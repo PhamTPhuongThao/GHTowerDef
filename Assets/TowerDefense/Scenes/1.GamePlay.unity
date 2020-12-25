@@ -6479,6 +6479,7 @@ MonoBehaviour:
   textJSONEnemyTeam: {fileID: 4900000, guid: 5b054cd96e0ac15459dace77f4510775, type: 3}
   textJSONArmy: {fileID: 4900000, guid: 3611665a0ae51c84dae12c89f50976c6, type: 3}
   warManager: {fileID: 0}
+  chooseTeamLeft: 0
   heroesCollectionOfOurTeam:
     numberOfHero: 0
     heroes: []
@@ -7701,19 +7702,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1.181764
   m_Center: {x: 0.105136946, y: 0.25091583, z: 0.11738427}
---- !u!114 &1061612271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061612269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dbb0e0054fb6dc4186080114702a648, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1078026151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8622,8 +8610,6 @@ MonoBehaviour:
   angleRight: 0
   pos: {x: 0, y: 0, z: 0}
   spawnPos: {x: 0, y: 0, z: 0}
-  LevelText: {fileID: 1958124555}
-  LevelTextCopy: {fileID: 0}
   Canvas: {fileID: 1817182268}
 --- !u!4 &1127187374
 Transform:
@@ -12683,7 +12669,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4372973593729692, guid: 491dc122236ad9749a046177ea69736d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 71.53
+      value: 75.8
       objectReference: {fileID: 0}
     - target: {fileID: 4372973593729692, guid: 491dc122236ad9749a046177ea69736d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12691,7 +12677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4372973593729692, guid: 491dc122236ad9749a046177ea69736d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 51.81
+      value: 45.6
       objectReference: {fileID: 0}
     - target: {fileID: 4372973593729692, guid: 491dc122236ad9749a046177ea69736d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14149,14 +14135,15 @@ MonoBehaviour:
   value: 0
   Mickey: {fileID: 5977743361588825522, guid: 9df5ec7ff86a73f4db755449013d63e5, type: 3}
   Ralph: {fileID: 7386026762437853313, guid: d6f4e9687fb09dd45b72a13d9c2ff070, type: 3}
-  launchPoint: {fileID: 2068704532}
+  launchPoint: {fileID: 0}
   patrol: {fileID: 0}
-  teamRight: {fileID: 0}
-  teamLeft: {fileID: 0}
+  teamRight: {fileID: 1510835900}
+  teamLeft: {fileID: 2068704533}
   spawnPos: {x: 0, y: 0, z: 0}
   LevelText: {fileID: 1958124555}
   LevelTextCopy: {fileID: 0}
   Canvas: {fileID: 1817182268}
+  HeroLoader: {fileID: 947350157}
   maxAngleDownRight: 4.712389
   maxAngleUp: 1.5707964
   maxAngleDown: -1.5707964

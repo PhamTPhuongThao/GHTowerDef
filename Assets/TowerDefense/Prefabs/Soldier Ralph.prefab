@@ -1282,7 +1282,6 @@ MonoBehaviour:
   MovementSpeed: 6
   value: 0
   isTeamright: 1
-  center: {fileID: 0}
   patrol: {fileID: 0}
   heroImage: {fileID: 0}
   levelText: {fileID: 0}

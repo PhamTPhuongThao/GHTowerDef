@@ -19,8 +19,6 @@ public class NPC : MonoBehaviour
     public int value;
     public bool isTeamright;
 
-
-    public CenterLine center;
     public Patrol patrol;
     public GameObject heroImage;
 
@@ -30,23 +28,14 @@ public class NPC : MonoBehaviour
 
     void Start()
     {
-        center = FindObjectOfType<CenterLine>();
         patrol = GetComponent<Patrol>();
         level = 1;
         levelText = FindObjectOfType<LevelText>();
         isLevelingUp = false;
+
         if (levelText.text)
         {
             levelText.text.text = "L." + level;
-        }
-
-        if (transform.position.x > center.center.x)
-        {
-            isTeamright = true;
-        }
-        else
-        {
-            isTeamright = false;
         }
     }
 

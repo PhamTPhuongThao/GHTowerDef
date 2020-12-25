@@ -19,9 +19,9 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Game
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -46,7 +46,7 @@ MonoBehaviour:
     y: 0
     width: 1920
     height: 997
-  m_MinSize: {x: 875, y: 300}
+  m_MinSize: {x: 875, y: 542}
   m_MaxSize: {x: 10000, y: 10000}
   m_UseTopView: 1
   m_TopViewHeight: 30
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_MinSize: {x: 708, y: 492}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
-  controlID: 36
+  controlID: 180
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 321}
   m_MaxSize: {x: 4001, y: 8021}
   vertical: 1
-  controlID: 37
+  controlID: 62
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -568,9 +568,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.98846215, y: -5.063188, z: 1.4433728}
+    m_Target: {x: 6.060146, y: 107.38053, z: -2.3021386}
     speed: 2
-    m_Value: {x: 0.98846215, y: -5.063188, z: 1.4433728}
+    m_Value: {x: 6.060146, y: 107.38053, z: -2.3021386}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -621,9 +621,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0.70710605, y: -0.0010606599, z: 0.0010606599, w: 0.70710605}
   m_Size:
-    m_Target: 21.485933
+    m_Target: 22.024452
     speed: 2
-    m_Value: 21.485933
+    m_Value: 22.024452
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -676,7 +676,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 15358
+  m_LastSelectedObjectID: 15718
 --- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -706,9 +706,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 3673ffff
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 566fffffe473ffff26a4ffffeaa4ffffacafffff74cdffff9ad9ffff64f4ffff28f5ffff5cfbffffb63a00002c3b0000963c0000663d0000
+      m_ExpandedIDs: d44ffcff8e50fcffaa52fcffe2c2feff8ee7feffb2ebfeffc2d3ffff5cfbffffb63a00002c3c0000963c0000da3c00000a3d0000663d0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -771,20 +771,20 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/TowerDefense/Prefabs
+    - Assets/TowerDefense/Scripts/Core
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/TowerDefense/Prefabs
+  - Assets/TowerDefense/Scripts/Core
   m_LastFoldersGridSize: 16
   m_LastProjectPath: G:\Unity Project\GHTowerDef
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 164}
-    m_SelectedIDs: 0c460000
-    m_LastClickedID: 17932
+    scrollPos: {x: 0, y: 180}
+    m_SelectedIDs: d4450000
+    m_LastClickedID: 17876
     m_ExpandedIDs: 00000000c2450000c4450000c6450000c8450000ca450000cc450000ce450000d0450000d2450000d4450000d6450000d8450000da450000dc450000de450000e0450000e2450000e445000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0

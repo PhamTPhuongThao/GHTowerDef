@@ -5,10 +5,14 @@ using UnityEngine;
 public class ImageManager : MonoBehaviour
 {
     public bool isTeamright;
-    public GameObject ownHero;
-
     public bool canLevelUp;
+    public GameObject ownHero;
+    public bool occupied;
 
+    private void Start()
+    {
+        occupied = false;
+    }
     private void Update()
     {
         if (!ownHero)
@@ -16,31 +20,42 @@ public class ImageManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject != ownHero && other.GetComponent<NPC>())
+        if (!occupied)
         {
-            if (isTeamright && other.tag == "HeroRight" && (ownHero.GetComponent<NPC>().level == other.GetComponent<NPC>().level) && (ownHero.GetComponent<NPC>().Name == other.GetComponent<NPC>().Name))
+            occupied = true;
+        }
+        var ownerNPC = ownHero.GetComponent<NPC>();
+        var otherNPC = other.GetComponent<NPC>();
+
+        if (other.gameObject != ownHero && other.GetComponent<NPC>() && (ownerNPC.level == otherNPC.level) && (ownerNPC.Name == otherNPC.Name))
+        {
+            if (isTeamright && other.tag == "HeroRight")
             {
-                ownHero.GetComponent<NPC>().isLevelingUp = true;
-                Destroy(this.gameObject);
-                Destroy(ownHero);
-                Destroy(ownHero.GetComponent<NPC>().levelText.gameObject);
-                other.GetComponent<NPC>().level++;
-                other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
-                other.GetComponent<LevelUp>().ResetConfig();
+                LevelingUp(other);
             }
-            else if (!isTeamright && other.tag == "HeroLeft" && (ownHero.GetComponent<NPC>().level == other.GetComponent<NPC>().level) && (ownHero.GetComponent<NPC>().Name == other.GetComponent<NPC>().Name))
+            else if (!isTeamright && other.tag == "HeroLeft")
             {
-                ownHero.GetComponent<NPC>().isLevelingUp = true;
-                Destroy(this.gameObject);
-                Destroy(ownHero);
-                Destroy(ownHero.GetComponent<NPC>().levelText.gameObject);
-                other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
-                other.GetComponent<LevelUp>().ResetConfig();
+                LevelingUp(other);
             }
 
         }
+        occupied = false;
+    }
 
+    public void LevelingUp(Collider other)
+    {
+        var otherNPC = ownHero.GetComponent<NPC>();
+        otherNPC.isLevelingUp = true;
+        Destroy(this.gameObject);
+        Destroy(ownHero);
+        if (otherNPC.levelText)
+        {
+            Destroy(otherNPC.levelText.gameObject);
+        }
+        other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
+        other.GetComponent<LevelUp>().ResetConfig();
     }
 }

@@ -56,15 +56,16 @@ public class LevelUp : MonoBehaviour
 
     public void ResetConfig()
     {
-        this.gameObject.GetComponent<NPC>().level++;
-        // this.gameObject.GetComponent<NPC>().MaxHp = 
-        // this.gameObject.GetComponent<NPC>().MaxAttack = 
-        // this.gameObject.GetComponent<NPC>().AttackMiss = 
-        // this.gameObject.GetComponent<NPC>().PhysicalDefense = 
-        // this.gameObject.GetComponent<NPC>().CriticalChance = 
-        // this.gameObject.GetComponent<NPC>().CriticalDamage = 
-        // this.gameObject.GetComponent<NPC>().AttackSpeed = 
-        // this.gameObject.GetComponent<NPC>().AttackType = 
+        var currChange = this.gameObject.GetComponent<NPC>();
+        currChange.level++;
+        currChange.MaxHp = currChange.MaxHp * 2;
+        currChange.MaxAttack = currChange.MaxAttack * 2;
+        currChange.AttackMiss = currChange.AttackMiss * 2;
+        currChange.PhysicalDefense = currChange.PhysicalDefense * 2;
+        currChange.CriticalChance = currChange.CriticalChance * 2;
+        currChange.CriticalDamage = currChange.CriticalDamage * 2;
+        currChange.AttackSpeed = currChange.AttackSpeed * 2;
+        currChange.AttackType = currChange.AttackType * 2;
         StartCoroutine(Waiting());
 
     }

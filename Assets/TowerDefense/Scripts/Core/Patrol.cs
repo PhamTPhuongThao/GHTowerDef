@@ -45,11 +45,11 @@ public class Patrol : MonoBehaviour
         }
         else
         {
-            if (nPC.isTeamright)
+            if (nPC.isTeamright && teamLeft)
             {
                 aim = teamLeft.transform.position;
             }
-            else
+            else if (!nPC.isTeamright && teamRight)
             {
                 aim = teamRight.transform.position;
             }
@@ -94,6 +94,19 @@ public class Patrol : MonoBehaviour
                 SetDestination(patrolPoint);
             }
         }
+        if (!teamRight && nPC.isTeamright)
+        {
+            Destroy(this.gameObject);
+        }
+        if (!teamLeft && !nPC.isTeamright)
+        {
+            Destroy(this.gameObject);
+        }
+
+        if (nPC.isLevelingUp)
+        {
+            SetDestination(transform.position);
+        }
     }
 
     private void SetDestination(Vector3 setPatrolPoint)
@@ -110,7 +123,7 @@ public class Patrol : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (nPC && other)
+        if (nPC && other && other.GetComponent<Patrol>())
         {
             if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight") && !other.GetComponent<Patrol>().isDead)
             {
