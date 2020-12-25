@@ -417,6 +417,7 @@ MonoBehaviour:
   levelText: {fileID: 0}
   level: 0
   isLevelingUp: 0
+  heroLoader: {fileID: 0}
 --- !u!114 &9104243582064967323
 MonoBehaviour:
   m_ObjectHideFlags: 0

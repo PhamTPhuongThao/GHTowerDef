@@ -858,7 +858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patrolWaiting: 0
   totalWaitTime: 3
-  patrolPoint: {x: 15.099999, y: 0.5, z: 1.65}
+  patrolPoint: {x: 15.5199995, y: 0.5, z: 1.65}
   aim: {x: 0, y: 0, z: 0}
   teamRight: {fileID: 0}
   teamLeft: {fileID: 0}
@@ -895,6 +895,7 @@ MonoBehaviour:
   levelText: {fileID: 0}
   level: 1
   isLevelingUp: 0
+  heroLoader: {fileID: 0}
 --- !u!135 &73872801023145023
 SphereCollider:
   m_ObjectHideFlags: 0

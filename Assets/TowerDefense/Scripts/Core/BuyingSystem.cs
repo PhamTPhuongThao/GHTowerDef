@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class BuyingSystem : MonoBehaviour
 {
-    public int value;
+    //public int value;
     public GameObject Mickey;
     public GameObject Ralph;
 
@@ -44,7 +44,14 @@ public class BuyingSystem : MonoBehaviour
 
     public void BuyHero(GameObject hero, int value, bool start, HeroLoader.Hero heroClass)
     {
-        var currNPC = hero.GetComponent<NPC>();
+        ChooseTeam();
+        InstantiateHero(hero, value);
+        SetConfig(hero, start, heroClass);
+        AddingTag(hero);
+    }
+
+    public void ChooseTeam()
+    {
         if (HeroLoader.GetComponent<HeroLoader>().chooseTeamLeft)
         {
             launchPoint = teamLeft.transform;
@@ -54,59 +61,33 @@ public class BuyingSystem : MonoBehaviour
             maxAngleDown = maxAngleDownRight;
             launchPoint = teamRight.transform;
         }
+    }
 
+    public void CreateLabelText(GameObject hero)
+    {
+        var currNPC = hero.GetComponent<NPC>();
+        LevelTextCopy = Instantiate(LevelText, spawnPos, launchPoint.rotation);
+        LevelTextCopy.transform.SetParent(Canvas.transform, false);
+        currNPC.levelText = LevelTextCopy.GetComponent<LevelText>();
+
+    }
+
+    public void InstantiateHero(GameObject hero, int value)
+    {
         var angle = Random.Range(maxAngleUp, maxAngleDown);
         var pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 4;
         spawnPos = launchPoint.position + pos;
-
         if (CoinSystem.totalCoin < value)
         {
             return;
         }
         CoinSystem.SpendCoin(value);
-
-        // Instantiate
         Instantiate(hero, spawnPos, launchPoint.rotation);
-        if (heroClass != null)
-        {
+    }
 
-            hero.GetComponent<NavMeshAgent>().speed = heroClass.MovementSpeed;
-            currNPC.Name = heroClass.Name;
-            currNPC.MaxHp = heroClass.MaxHp;
-            currNPC.MaxAttack = heroClass.MaxAttack;
-            currNPC.AttackMiss = heroClass.AttackMiss;
-            currNPC.PhysicalDefense = heroClass.PhysicalDefense;
-            currNPC.CriticalChance = heroClass.CriticalChance;
-            currNPC.CriticalDamage = heroClass.CriticalDamage;
-            currNPC.AttackSpeed = heroClass.AttackSpeed;
-            currNPC.AttackType = heroClass.AttackType;
-        }
-        else
-        {
-            // SET DEFAULT
-        }
-
-        // Level Label
-        if (LevelText.GetComponent<LevelText>().text == null)
-        {
-            StartCoroutine(Waiting()); // parallel running
-        }
-        LevelTextCopy = Instantiate(LevelText, spawnPos, launchPoint.rotation);
-        LevelTextCopy.transform.SetParent(Canvas.transform, false);
-        currNPC.levelText = LevelTextCopy.GetComponent<LevelText>();
-
-
-
-        if (hero == Mickey)
-        {
-            currNPC.Name = "Mickey";
-        }
-        else if (hero == Ralph)
-        {
-            currNPC.Name = "Ralph";
-        }
-
-        // Adding tag
+    public void AddingTag(GameObject hero)
+    {
+        var currNPC = hero.GetComponent<NPC>();
         currNPC.isTeamright = !HeroLoader.GetComponent<HeroLoader>().chooseTeamLeft;
         if (!currNPC.isTeamright && teamRight)
         {
@@ -120,8 +101,37 @@ public class BuyingSystem : MonoBehaviour
         }
     }
 
-    public IEnumerator Waiting()
+    public void SetConfig(GameObject hero, bool start, HeroLoader.Hero heroClass)
     {
-        yield return new WaitForSeconds(5f);
+        var currNPC = hero.GetComponent<NPC>();
+        if (start)
+        {
+            hero.GetComponent<NavMeshAgent>().speed = heroClass.MovementSpeed;
+            currNPC.Name = heroClass.Name;
+            currNPC.MaxHp = heroClass.MaxHp;
+            currNPC.MaxAttack = heroClass.MaxAttack;
+            currNPC.AttackMiss = heroClass.AttackMiss;
+            currNPC.PhysicalDefense = heroClass.PhysicalDefense;
+            currNPC.CriticalChance = heroClass.CriticalChance;
+            currNPC.CriticalDamage = heroClass.CriticalDamage;
+            currNPC.AttackSpeed = heroClass.AttackSpeed;
+            currNPC.AttackType = heroClass.AttackType;
+        }
+        else
+        {
+            // SET DEFAULT OF ITEM 
+
+        }
+        CreateLabelText(hero);
+
+        if (hero == Mickey)
+        {
+            currNPC.Name = "Mickey";
+        }
+        else if (hero == Ralph)
+        {
+            currNPC.Name = "Ralph";
+        }
     }
+
 }

@@ -25,17 +25,22 @@ public class NPC : MonoBehaviour
     public LevelText levelText;
     public int level;
     public bool isLevelingUp;
+    public HeroLoader heroLoader;
 
     void Start()
     {
         patrol = GetComponent<Patrol>();
-        level = 1;
         levelText = FindObjectOfType<LevelText>();
+        heroLoader = FindObjectOfType<HeroLoader>();
+        level = 1;
         isLevelingUp = false;
-
-        if (levelText.text)
+        if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "HeroRight")
         {
-            levelText.text.text = "L." + level;
+            value = 50;
+        }
+        else if (this.gameObject.tag == "Left" || this.gameObject.tag == "Right")
+        {
+            value = 20;
         }
     }
 
@@ -68,7 +73,36 @@ public class NPC : MonoBehaviour
         {
             MaxHp = 0;
             patrol.isDead = true;
+            KillEnemyCoinGetting();
             Destroy(this.gameObject);
+
+        }
+    }
+
+    public void KillEnemyCoinGetting()
+    {
+        if (heroLoader.chooseTeamLeft) // we choose team left
+        {
+            if ((this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "Left"))
+            {
+                EnemyCoinSystem.GetCoin(value);
+            }
+            else if ((this.gameObject.tag == "HeroRight" || this.gameObject.tag == "Right"))
+            {
+                CoinSystem.GetCoin(value);
+            }
+        }
+        else // we choose team right
+        {
+            if ((this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "Left"))
+            {
+                CoinSystem.GetCoin(value);
+            }
+            else if ((this.gameObject.tag == "HeroRight" || this.gameObject.tag == "Right"))
+            {
+                Debug.Log("hello");
+                EnemyCoinSystem.GetCoin(value);
+            }
         }
     }
 

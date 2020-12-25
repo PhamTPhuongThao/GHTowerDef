@@ -23,26 +23,23 @@ public class ImageManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!occupied)
-        {
-            occupied = true;
-        }
+
         var ownerNPC = ownHero.GetComponent<NPC>();
         var otherNPC = other.GetComponent<NPC>();
-
         if (other.gameObject != ownHero && other.GetComponent<NPC>() && (ownerNPC.level == otherNPC.level) && (ownerNPC.Name == otherNPC.Name))
         {
             if (isTeamright && other.tag == "HeroRight")
             {
+                this.gameObject.GetComponent<Collider>().enabled = false;
                 LevelingUp(other);
             }
             else if (!isTeamright && other.tag == "HeroLeft")
             {
+                this.gameObject.GetComponent<Collider>().enabled = false;
                 LevelingUp(other);
             }
 
         }
-        occupied = false;
     }
 
     public void LevelingUp(Collider other)

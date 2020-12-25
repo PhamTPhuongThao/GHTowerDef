@@ -38,7 +38,6 @@ public class Patrol : MonoBehaviour
         nPC = GetComponent<NPC>();
         navMeshAgent = this.GetComponent<NavMeshAgent>();
 
-
         if (navMeshAgent == null)
         {
             Debug.LogError("The nav mesh agent component is not attached to" + gameObject.name);
@@ -94,18 +93,16 @@ public class Patrol : MonoBehaviour
                 SetDestination(patrolPoint);
             }
         }
+
         if (!teamRight && nPC.isTeamright)
         {
+            Destroy(nPC.levelText.gameObject);
             Destroy(this.gameObject);
         }
         if (!teamLeft && !nPC.isTeamright)
         {
+            Destroy(nPC.levelText.gameObject);
             Destroy(this.gameObject);
-        }
-
-        if (nPC.isLevelingUp)
-        {
-            SetDestination(transform.position);
         }
     }
 
@@ -123,21 +120,25 @@ public class Patrol : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (nPC && other && other.GetComponent<Patrol>())
+        if (nPC && other)
         {
-            if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight") && !other.GetComponent<Patrol>().isDead)
+            if (other.GetComponent<Patrol>() && !other.GetComponent<Patrol>().isDead)
             {
-                patrolPoint = other.transform.position;
-                SetDestination(patrolPoint);
-                nPC.Attack(other);
+                if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight"))
+                {
+                    patrolPoint = other.transform.position;
+                    SetDestination(patrolPoint);
+                    nPC.Attack(other);
+                }
+                else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft"))
+                {
+                    patrolPoint = other.transform.position;
+                    SetDestination(patrolPoint);
+                    nPC.Attack(other);
+                }
             }
-            else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft") && !other.GetComponent<Patrol>().isDead)
-            {
-                patrolPoint = other.transform.position;
-                SetDestination(patrolPoint);
-                nPC.Attack(other);
-            }
-            else if (nPC.isTeamright && other.tag == "TowerLeft")
+
+            if (nPC.isTeamright && other.tag == "TowerLeft")
             {
                 nPC.AttackTower(other);
             }
@@ -147,4 +148,5 @@ public class Patrol : MonoBehaviour
             }
         }
     }
+
 }

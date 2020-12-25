@@ -36,7 +36,6 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\TowerDefense\Scripts\Core\CenterLine.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\TeamLeft.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\MovingToward.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\LevelLabel.cs" />
@@ -51,10 +50,10 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\CoinSystem.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\EnemyCoinSystem.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Utils\Physics\PhysicsUtils.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\LevelText.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\NPC.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\HeroLoader.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\MonoSingleton.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\LevelText.cs" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_AlphaBlend.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Additive.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Multiply.shader" />

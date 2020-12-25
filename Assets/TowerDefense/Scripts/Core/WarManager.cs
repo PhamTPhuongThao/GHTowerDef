@@ -14,16 +14,16 @@ public class WarManager : MonoBehaviour
     public Transform launchPointRight;
     private GameObject hero;
 
-    public float maxAngleUp = Mathf.PI / 2;
-    public float maxAngleDown = -Mathf.PI / 2;
-    public float maxAngleDownRight = 3 * Mathf.PI / 2;
-    public float angle = 0f;
-    public float angleLeft = 0f;
-    public float angleRight = 0f;
-    public Vector3 pos = Vector3.zero;
-    public Vector3 spawnPos = Vector3.zero;
+    private float maxAngleUp = Mathf.PI / 2;
+    private float maxAngleDown = -Mathf.PI / 2;
+    private float maxAngleDownRight = 3 * Mathf.PI / 2;
+    private float angleLeft = 0f;
+    private float angleRight = 0f;
+    private Vector3 pos = Vector3.zero;
+    private Vector3 spawnPos = Vector3.zero;
 
     public GameObject Canvas;
+    public List<GameObject> Heroes;
 
     public void StartGame()
     {
