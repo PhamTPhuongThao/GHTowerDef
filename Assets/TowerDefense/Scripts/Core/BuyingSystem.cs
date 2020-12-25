@@ -21,6 +21,8 @@ public class BuyingSystem : MonoBehaviour
 
     public GameObject HeroLoader;
 
+    public LevelText levelTextContainer;
+
     public float maxAngleDownRight = 3 * Mathf.PI / 2;
     public float maxAngleUp = Mathf.PI / 2;
     public float maxAngleDown = -Mathf.PI / 2;
@@ -44,6 +46,8 @@ public class BuyingSystem : MonoBehaviour
 
     public void BuyHero(GameObject hero, int value, bool start, HeroLoader.Hero heroClass)
     {
+        var currNPC = hero.GetComponent<NPC>();
+        levelTextContainer = currNPC.levelText;
         ChooseTeam();
         InstantiateHero(hero, value);
         SetConfig(hero, start, heroClass);
@@ -68,8 +72,19 @@ public class BuyingSystem : MonoBehaviour
         var currNPC = hero.GetComponent<NPC>();
         LevelTextCopy = Instantiate(LevelText, spawnPos, launchPoint.rotation);
         LevelTextCopy.transform.SetParent(Canvas.transform, false);
-        currNPC.levelText = LevelTextCopy.GetComponent<LevelText>();
+        levelTextContainer = LevelTextCopy.GetComponent<LevelText>();
+        if (LevelTextCopy.GetComponent<LevelText>().text == null)
+        {
+            StartCoroutine(Waiting(LevelTextCopy));
+        }
+        currNPC.levelText = levelTextContainer;
 
+    }
+
+    public IEnumerator Waiting(GameObject LevelTextCopy)
+    {
+        yield return new WaitForSeconds(5f);
+        levelTextContainer = LevelTextCopy.GetComponent<LevelText>();
     }
 
     public void InstantiateHero(GameObject hero, int value)

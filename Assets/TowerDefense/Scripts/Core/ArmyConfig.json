@@ -1,6 +1,6 @@
 {
-  "NumberOfArmy": 2,
-  "MaxHp": 750,
+  "NumberOfArmy": 1,
+  "MaxHp": 100,
   "MaxAttack": 20,
   "AttackMiss": 0,
   "PhysicalDefense": 60,

@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: 
-  MaxHp: 100
+  MaxHp: 200
   MaxAttack: 10
   AttackMiss: 0
   PhysicalDefense: 20
