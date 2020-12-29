@@ -52,7 +52,6 @@ public class HeroLoader : MonoBehaviour
 
     }
 
-    public WarManager warManager;
     public bool chooseTeamLeft;
     public HeroesCollectionOfOurTeam heroesCollectionOfOurTeam = new HeroesCollectionOfOurTeam();
     public HeroesCollectionOfEnemyTeam heroesCollectionOfEnemyTeam = new HeroesCollectionOfEnemyTeam();
@@ -62,10 +61,8 @@ public class HeroLoader : MonoBehaviour
     private void Start()
     {
         chooseTeamLeft = true;
-        warManager = FindObjectOfType<WarManager>();
         heroesCollectionOfOurTeam = JsonUtility.FromJson<HeroesCollectionOfOurTeam>(textJSONOurTeam.text);
         heroesCollectionOfEnemyTeam = JsonUtility.FromJson<HeroesCollectionOfEnemyTeam>(textJSONEnemyTeam.text);
         soldier = JsonUtility.FromJson<Soldier>(textJSONArmy.text);
-        warManager.StartGame();
     }
 }

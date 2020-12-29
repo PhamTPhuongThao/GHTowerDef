@@ -35,12 +35,12 @@ public class TeamLeft : MonoBehaviour
     {
         if (heroLoader.chooseTeamLeft)
         {
-            EnemyCoinSystem.GetCoin(value);
+            EnemyCoinSystem.Instance.GetCoin(value);
             loseScreen.SetActive(true);
         }
         else
         {
-            CoinSystem.GetCoin(value);
+            CoinSystem.Instance.GetCoin(value);
             winScreen.SetActive(true);
 
         }

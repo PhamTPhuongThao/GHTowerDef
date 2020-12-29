@@ -21,11 +21,17 @@ public class NPC : MonoBehaviour
 
     public Patrol patrol;
     public GameObject heroImage;
+    public GameObject effect;
 
     public LevelText levelText;
     public int level;
     public bool isLevelingUp;
     public HeroLoader heroLoader;
+    public bool canAttack;
+    public float waiterForAttack;
+
+    public int countAttack;
+
 
     void Start()
     {
@@ -46,23 +52,65 @@ public class NPC : MonoBehaviour
 
     private void Update()
     {
-        LevelUp();
+        LevelUpdate();
+        AttackSpeedCal();
+    }
+
+    public void AttackSpeedCal()
+    {
+        waiterForAttack += Time.deltaTime;
+        if (waiterForAttack >= AttackSpeed)
+        {
+            canAttack = true;
+            waiterForAttack = 0f;
+        }
     }
 
     public void Attack(Collider enemy)
     {
-        enemy.GetComponent<NPC>().GetHurt(MaxAttack);
+        var attackContainer = MaxAttack;
+        if (canAttack)
+        {
+            if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
+            {
+                Debug.Log(countAttack);
+                MaxAttack = (int)(MaxAttack * CriticalDamage);
+                Instantiate(effect, this.transform.position, this.transform.rotation);
+                countAttack = 0;
+            }
+            enemy.GetComponent<NPC>().GetHurt(MaxAttack);
+            canAttack = false;
+            MaxAttack = attackContainer;
+            countAttack++;
+        }
     }
 
     public void AttackTower(Collider enemy)
     {
-        if (isTeamright)
+        var attackContainer = MaxAttack;
+        if (isTeamright && canAttack)
         {
+            if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
+            {
+                MaxAttack = (int)(MaxAttack * CriticalDamage);
+                Instantiate(effect, this.transform.position, this.transform.rotation);
+                countAttack = 0;
+            }
             enemy.GetComponent<TeamLeft>().GetHurt(MaxAttack);
+            canAttack = false;
+            countAttack++;
         }
-        else
+        else if (!isTeamright && canAttack)
         {
+            if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
+            {
+                MaxAttack = (int)(MaxAttack * CriticalDamage);
+                Instantiate(effect, this.transform.position, this.transform.rotation);
+                countAttack = 0;
+            }
             enemy.GetComponent<TeamRight>().GetHurt(MaxAttack);
+            canAttack = false;
+            countAttack++;
         }
     }
 
@@ -81,37 +129,31 @@ public class NPC : MonoBehaviour
 
     public void KillEnemyCoinGetting()
     {
-        if (heroLoader.chooseTeamLeft) // we choose team left
+        if (heroLoader.chooseTeamLeft)
         {
             if ((this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "Left"))
             {
-                EnemyCoinSystem.GetCoin(value);
+                EnemyCoinSystem.Instance.GetCoin(value);
             }
             else if ((this.gameObject.tag == "HeroRight" || this.gameObject.tag == "Right"))
             {
-                CoinSystem.GetCoin(value);
+                CoinSystem.Instance.GetCoin(value);
             }
         }
-        else // we choose team right
+        else
         {
             if ((this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "Left"))
             {
-                CoinSystem.GetCoin(value);
+                CoinSystem.Instance.GetCoin(value);
             }
             else if ((this.gameObject.tag == "HeroRight" || this.gameObject.tag == "Right"))
             {
-                Debug.Log("hello");
-                EnemyCoinSystem.GetCoin(value);
+                EnemyCoinSystem.Instance.GetCoin(value);
             }
         }
     }
 
-    public int GetHP()
-    {
-        return MaxHp;
-    }
-
-    public void LevelUp()
+    public void LevelUpdate()
     {
         if (levelText.text)
         {

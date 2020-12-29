@@ -29,6 +29,7 @@ public class Patrol : MonoBehaviour
     float waitTimer;
 
     public bool isDead;
+    public bool inWar;
 
     void Start()
     {
@@ -68,13 +69,12 @@ public class Patrol : MonoBehaviour
 
     void Update()
     {
-        animator.SetBool("running", true);
-        animator.SetBool("enemyMeet", false);
         if (isDead)
         {
             return;
         }
         patrolPoint = aim;
+
         if (travelling && navMeshAgent.remainingDistance <= 1.0f)
         {
             travelling = false;
@@ -124,29 +124,88 @@ public class Patrol : MonoBehaviour
         {
             if (other.GetComponent<Patrol>() && !other.GetComponent<Patrol>().isDead)
             {
-                if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight"))
+                if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight") && !inWar)
                 {
+                    inWar = true;
                     patrolPoint = other.transform.position;
                     SetDestination(patrolPoint);
+                    animator.SetBool("running", false);
+                    animator.SetBool("enemyMeet", true);
                     nPC.Attack(other);
                 }
-                else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft"))
+                else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft") && !inWar)
                 {
+                    inWar = true;
                     patrolPoint = other.transform.position;
                     SetDestination(patrolPoint);
+                    animator.SetBool("running", false);
+                    animator.SetBool("enemyMeet", true);
                     nPC.Attack(other);
                 }
             }
 
+
             if (nPC.isTeamright && other.tag == "TowerLeft")
             {
+                animator.SetBool("running", false);
+                animator.SetBool("enemyMeet", true);
                 nPC.AttackTower(other);
             }
             else if (!nPC.isTeamright && other.tag == "TowerRight")
             {
+                animator.SetBool("running", false);
+                animator.SetBool("enemyMeet", true);
                 nPC.AttackTower(other);
             }
         }
+        patrolPoint = aim;
+        inWar = false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (nPC && other)
+        {
+            if (other.GetComponent<Patrol>() && !other.GetComponent<Patrol>().isDead)
+            {
+                if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight") && !inWar)
+                {
+                    inWar = true;
+                    patrolPoint = other.transform.position;
+                    SetDestination(patrolPoint);
+                    animator.SetBool("running", false);
+                    animator.SetBool("enemyMeet", true);
+                    nPC.Attack(other);
+                }
+                else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft") && !inWar)
+                {
+                    inWar = true;
+                    patrolPoint = other.transform.position;
+                    SetDestination(patrolPoint);
+                    animator.SetBool("running", false);
+                    animator.SetBool("enemyMeet", true);
+                    nPC.Attack(other);
+                }
+            }
+
+
+            if (nPC.isTeamright && other.tag == "TowerLeft")
+            {
+                animator.SetBool("running", false);
+                animator.SetBool("enemyMeet", true);
+                nPC.AttackTower(other);
+            }
+            else if (!nPC.isTeamright && other.tag == "TowerRight")
+            {
+
+                animator.SetBool("running", false);
+                animator.SetBool("enemyMeet", true);
+                nPC.AttackTower(other);
+            }
+        }
+        patrolPoint = aim;
+        inWar = false;
     }
 
 }
+

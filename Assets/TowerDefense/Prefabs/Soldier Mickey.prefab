@@ -367,9 +367,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9104243583310642961}
   serializedVersion: 2
-  m_Mass: 0.2
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Mass: 10
+  m_Drag: 10
+  m_AngularDrag: 10
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -407,17 +407,21 @@ MonoBehaviour:
   PhysicalDefense: 20
   CriticalChance: 0
   CriticalDamage: 0
-  AttackSpeed: 1
+  AttackSpeed: 0.7
   AttackType: 0
-  MovementSpeed: 6
+  MovementSpeed: 4
   value: 0
   isTeamright: 1
   patrol: {fileID: 0}
   heroImage: {fileID: 0}
+  effect: {fileID: 0}
   levelText: {fileID: 0}
   level: 0
   isLevelingUp: 0
   heroLoader: {fileID: 0}
+  canAttack: 0
+  waiterForAttack: 0
+  countAttack: 0
 --- !u!114 &9104243582064967323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,6 +443,7 @@ MonoBehaviour:
   nPC: {fileID: 0}
   animator: {fileID: 0}
   isDead: 0
+  inWar: 0
 --- !u!195 &9104243582064967324
 NavMeshAgent:
   m_ObjectHideFlags: 0

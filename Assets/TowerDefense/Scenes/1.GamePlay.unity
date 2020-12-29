@@ -2103,6 +2103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dd2f6e6ea1548546bccf6d803b5256f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalCoin: 0
 --- !u!1001 &275522334
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3380,7 +3381,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488132590}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.0000056219}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 440471272}
@@ -3388,8 +3389,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 115.91058, y: -21.644836}
+  m_AnchoredPosition: {x: -4.079956, y: 0}
+  m_SizeDelta: {x: 509.93216, y: -0.000045776367}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &488132592
 MonoBehaviour:
@@ -3413,11 +3414,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_MinSize: 1
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -4931,7 +4932,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -175, y: 134.39}
+  m_AnchoredPosition: {x: -17.1, y: 134.39}
   m_SizeDelta: {x: 69.22528, y: 20.81897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &660331875
@@ -4969,16 +4970,16 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 12
+    m_FontSize: 105
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 1
-    m_MaxSize: 40
+    m_MaxSize: 105
     m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 
 --- !u!222 &660331877
@@ -6190,7 +6191,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 1c91a3911312f184e83274c7e855a0f8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6837,7 +6838,6 @@ MonoBehaviour:
   textJSONOurTeam: {fileID: 4900000, guid: c058ba73751e29146b35859fd129aa17, type: 3}
   textJSONEnemyTeam: {fileID: 4900000, guid: 5b054cd96e0ac15459dace77f4510775, type: 3}
   textJSONArmy: {fileID: 4900000, guid: 3611665a0ae51c84dae12c89f50976c6, type: 3}
-  warManager: {fileID: 0}
   chooseTeamLeft: 0
   heroesCollectionOfOurTeam:
     numberOfHero: 0
@@ -7597,13 +7597,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1023065610}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.69, y: 6.3, z: -15.41}
+  m_LocalRotation: {x: 0.3420201, y: 0, z: 0, w: 0.9396927}
+  m_LocalPosition: {x: 2, y: 20, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 40, y: 0, z: 0}
 --- !u!1001 &1026822292
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8962,7 +8962,6 @@ MonoBehaviour:
   launchPointLeft: {fileID: 2068704532}
   launchPointRight: {fileID: 1510835899}
   Canvas: {fileID: 1817182268}
-  Heroes: []
 --- !u!4 &1127187374
 Transform:
   m_ObjectHideFlags: 0
@@ -10634,6 +10633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e7db88105df8f4fa65e89b70f6b12d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  totalCoin: 0
 --- !u!1001 &1359325927
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12033,7 +12033,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f5a3271307d41a4186e31a1f597456b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 500
+  maxHP: 5000
   value: 0
   heroLoader: {fileID: 0}
   winScreen: {fileID: 440471271}
@@ -12050,7 +12050,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 9.29}
+  m_Size: {x: 2.23, y: 2.78, z: 9.29}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1514977823
 PrefabInstance:
@@ -14425,6 +14425,7 @@ GameObject:
   - component: {fileID: 1817182270}
   - component: {fileID: 1817182269}
   - component: {fileID: 1817182273}
+  - component: {fileID: 1817182274}
   m_Layer: 5
   m_Name: CanvasView
   m_TagString: Untagged
@@ -14461,11 +14462,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
+  m_ReferenceResolution: {x: 1080, y: 1920}
+  m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
@@ -14482,7 +14483,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 1023065613}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -14535,14 +14536,24 @@ MonoBehaviour:
   teamRight: {fileID: 1510835900}
   teamLeft: {fileID: 2068704533}
   spawnPos: {x: 0, y: 0, z: 0}
-  LevelText: {fileID: 660331873}
-  LevelTextCopy: {fileID: 0}
-  Canvas: {fileID: 1817182268}
-  HeroLoader: {fileID: 947350157}
-  levelTextContainer: {fileID: 0}
+  LevelText: {fileID: 660331875}
+  canvas: {fileID: 1817182271}
+  HeroLoader: {fileID: 947350158}
   maxAngleDownRight: 4.712389
   maxAngleUp: 1.5707964
   maxAngleDown: -1.5707964
+--- !u!114 &1817182274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817182268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3be306b1219f79240a83e06e6838bebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1821913849
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15093,7 +15104,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1923772161}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -3.3651e-11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1762001023}
@@ -15101,8 +15112,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 115.91058, y: -21.644836}
+  m_AnchoredPosition: {x: -3.9799805, y: 0}
+  m_SizeDelta: {x: 428.10693, y: 0.000030517578}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1923772163
 MonoBehaviour:
@@ -15126,11 +15137,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 30
+    m_FontSize: 50
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
-    m_MaxSize: 40
+    m_MinSize: 1
+    m_MaxSize: 50
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -16021,7 +16032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca085200ff70ed42bf5c54081ab800c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 500
+  maxHP: 1500
   value: 0
   heroLoader: {fileID: 0}
   winScreen: {fileID: 440471271}
@@ -16038,7 +16049,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 1.5, z: 9.05}
+  m_Size: {x: 1.97, y: 2.96, z: 9.05}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2076590123
 PrefabInstance:

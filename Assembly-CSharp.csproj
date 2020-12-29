@@ -54,6 +54,7 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\NPC.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\HeroLoader.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\MonoSingleton.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\CanvasChangePosition.cs" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_AlphaBlend.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Additive.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Multiply.shader" />

@@ -23,8 +23,11 @@ public class WarManager : MonoBehaviour
     private Vector3 spawnPos = Vector3.zero;
 
     public GameObject Canvas;
-    public List<GameObject> Heroes;
 
+    private void Start()
+    {
+        StartGame();
+    }
     public void StartGame()
     {
         heroLoader = FindObjectOfType<HeroLoader>();
@@ -40,8 +43,7 @@ public class WarManager : MonoBehaviour
                 {
                     hero = Ralph;
                 }
-
-                Canvas.GetComponent<BuyingSystem>().BuyHero(hero, 0, true, heroLoader.heroesCollectionOfOurTeam.heroes[i]);
+                Canvas.GetComponent<BuyingSystem>().BuyHero(hero, 0, true, true, heroLoader.heroesCollectionOfOurTeam.heroes[i]);
             }
         }
 
@@ -58,6 +60,24 @@ public class WarManager : MonoBehaviour
             }
 
         }
+
+        // if (heroLoader.heroesCollectionOfEnemyTeam.heroes.Length > 0)
+        // {
+
+        //     for (int i = 0; i < heroLoader.heroesCollectionOfEnemyTeam.heroes.Length; i++)
+        //     {
+        //         if (heroLoader.heroesCollectionOfEnemyTeam.heroes[i].Name == "Mickey")
+        //         {
+        //             hero = Mickey;
+        //         }
+        //         else if (heroLoader.heroesCollectionOfEnemyTeam.heroes[i].Name == "Ralph")
+        //         {
+        //             hero = Ralph;
+        //         }
+        //         Canvas.GetComponent<BuyingSystem>().BuyHero(hero, 0, true, false, heroLoader.heroesCollectionOfEnemyTeam.heroes[i]);
+        //     }
+
+        // }
     }
 
     private void CreateArmy(GameObject heroType)

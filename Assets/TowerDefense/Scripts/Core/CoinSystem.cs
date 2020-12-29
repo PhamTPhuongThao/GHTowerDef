@@ -6,32 +6,53 @@ using UnityEngine.UI;
 public class CoinSystem : MonoBehaviour
 {
     Text text;
-    public static int totalCoin;
+    public int totalCoin;
 
-    // private static CoinSystem instance;
+    private static CoinSystem m_Instance;
 
-    // private CoinSystem() { }
+    private static readonly object m_Lock = new object();
 
-    // // public static CoinSystem getInstance()
-    // // {
-    // //     if (instance == null)
-    // //     {
-    // //         instance = new CoinSystem();
-    // //     }
-    // //     return instance;
-    // // }
+    public static CoinSystem Instance
+    {
+        get
+        {
+            lock (m_Lock)
+            {
+                if (m_Instance == null)
+                {
+                    m_Instance = (CoinSystem)FindObjectOfType(typeof(CoinSystem));
 
-    // public static CoinSystem Instance
-    // {
-    //     get
-    //     {
-    //         if (instance == null)
-    //         {
-    //             instance = new CoinSystem();
-    //         }
-    //         return instance;
-    //     }
-    // }
+                    if (FindObjectsOfType(typeof(CoinSystem)).Length > 1)
+                    {
+                        // Debug.LogError("[Singleton] Something went really wrong " +
+                        //                " - there should never be more than 1 singleton!" +
+                        //                " Reopening the scene might fix it.");
+                        return m_Instance;
+                    }
+
+                    if (m_Instance == null)
+                    {
+                        GameObject singleton = new GameObject();
+                        m_Instance = singleton.AddComponent<CoinSystem>();
+                        singleton.name = string.Format("[------Singleton: {0}-----] ", typeof(CoinSystem).Name);
+
+                        DontDestroyOnLoad(singleton);
+
+                        // Debug.Log("[Singleton] An instance of " + typeof(CoinSystem) +
+                        //           " is needed in the scene, so '" + singleton +
+                        //           "' was created with DontDestroyOnLoad.");
+                    }
+                    // else
+                    // {
+                    //     Debug.Log("[Singleton] Using instance already created: " +
+                    //               m_Instance.gameObject.name);
+                    // }
+                }
+
+                return m_Instance;
+            }
+        }
+    }
 
     void Start()
     {
@@ -49,12 +70,12 @@ public class CoinSystem : MonoBehaviour
         text.text = totalCoin + "C";
     }
 
-    public static void GetCoin(int coinToGet)
+    public void GetCoin(int coinToGet)
     {
         totalCoin += coinToGet;
     }
 
-    public static void SpendCoin(int coinToSpend)
+    public void SpendCoin(int coinToSpend)
     {
         totalCoin -= coinToSpend;
     }
