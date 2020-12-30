@@ -96,12 +96,22 @@ public class Patrol : MonoBehaviour
 
         if (!teamRight && nPC.isTeamright)
         {
-            Destroy(nPC.levelText.gameObject);
+            nPC.countAttack = 0;
+            // Destroy(nPC.NPCLevelText.gameObject);
+            if (nPC.NPCBloodBar)
+            {
+                Destroy(nPC.NPCBloodBar.gameObject);
+            }
             Destroy(this.gameObject);
         }
         if (!teamLeft && !nPC.isTeamright)
         {
-            Destroy(nPC.levelText.gameObject);
+            nPC.countAttack = 0;
+            // Destroy(nPC.NPCLevelText.gameObject);
+            if (nPC.NPCBloodBar)
+            {
+                Destroy(nPC.NPCBloodBar.gameObject);
+            }
             Destroy(this.gameObject);
         }
     }
@@ -110,7 +120,7 @@ public class Patrol : MonoBehaviour
     {
         animator.SetBool("running", true);
         animator.SetBool("enemyMeet", false);
-        if (patrolPoint != null && !isDead)
+        if (patrolPoint != null && !isDead && navMeshAgent)
         {
             Vector3 targetVector = patrolPoint;
             navMeshAgent.SetDestination(targetVector);

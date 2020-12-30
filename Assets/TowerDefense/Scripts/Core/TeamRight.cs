@@ -9,12 +9,22 @@ public class TeamRight : MonoBehaviour
     public GameObject winScreen;
     public GameObject loseScreen;
     public TeamLeft teamLeft;
+    public NPCBloodBar teamRightHealthBar;
+    public NPCBloodBar NPCHealthBar;
+    public NPCBloodBar NPCEnemyHealthBar;
 
     private void Start()
     {
         heroLoader = FindObjectOfType<HeroLoader>();
         teamLeft = FindObjectOfType<TeamLeft>();
         value = 200;
+        maxHP = 1500;
+        teamRightHealthBar.bloodBar.maxValue = maxHP;
+    }
+
+    private void Update()
+    {
+        teamRightHealthBar.bloodBar.value = maxHP;
     }
 
     public void GetHurt(int amountBlood)
@@ -25,6 +35,10 @@ public class TeamRight : MonoBehaviour
             maxHP = 0;
             KillEnemyCoinGetting();
             Destroy(this.gameObject);
+            Destroy(teamRightHealthBar.gameObject);
+            Destroy(teamLeft.teamLeftHealthBar.gameObject);
+            Destroy(NPCHealthBar.gameObject);
+            Destroy(NPCEnemyHealthBar.gameObject);
             Destroy(teamLeft.gameObject);
         }
     }

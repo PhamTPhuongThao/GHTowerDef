@@ -108,7 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7506aac0f7ba10c4a817024bfbd32987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelText: {fileID: 0}
+  bloodslider: {fileID: 0}
+  rectTransform: {fileID: 0}
 --- !u!1 &7386026762437853313
 GameObject:
   m_ObjectHideFlags: 0
@@ -128,7 +129,7 @@ GameObject:
   - component: {fileID: 7156893944261947575}
   m_Layer: 0
   m_Name: Ralph
-  m_TagString: HeroLeft
+  m_TagString: HeroRight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -206,6 +207,7 @@ MonoBehaviour:
   nPC: {fileID: 0}
   animator: {fileID: 0}
   isDead: 0
+  inWar: 0
 --- !u!114 &7386026762206029532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,20 +264,22 @@ MonoBehaviour:
   CriticalDamage: 1.5
   AttackSpeed: 0.76
   AttackType: 1
-  MovementSpeed: 6
+  MovementSpeed: 5
   value: 0
-  isTeamright: 0
+  isTeamright: 1
   patrol: {fileID: 0}
   heroImage: {fileID: 2401572306313422137, guid: f93ba774c3290264583c5bd3b85a07a3,
     type: 3}
   effect: {fileID: 1217479511050380, guid: 7f4b90757abe92040964fd0c4e80701d, type: 3}
-  levelText: {fileID: 0}
+  NPCLevelText: {fileID: 0}
+  NPCBloodBar: {fileID: 0}
   level: 1
   isLevelingUp: 0
   heroLoader: {fileID: 0}
   canAttack: 0
   waiterForAttack: 0
   countAttack: 0
+  originalScale: {x: 0, y: 0, z: 0}
 --- !u!135 &6518361248434274645
 SphereCollider:
   m_ObjectHideFlags: 0

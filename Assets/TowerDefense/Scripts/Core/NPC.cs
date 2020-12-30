@@ -23,7 +23,8 @@ public class NPC : MonoBehaviour
     public GameObject heroImage;
     public GameObject effect;
 
-    public LevelText levelText;
+    public NPCLevelText NPCLevelText;
+    public NPCBloodBar NPCBloodBar;
     public int level;
     public bool isLevelingUp;
     public HeroLoader heroLoader;
@@ -32,28 +33,42 @@ public class NPC : MonoBehaviour
 
     public int countAttack;
 
+    public Vector3 originalScale;
+
 
     void Start()
     {
         patrol = GetComponent<Patrol>();
-        levelText = FindObjectOfType<LevelText>();
+        NPCLevelText = FindObjectOfType<NPCLevelText>();
+        NPCBloodBar = FindObjectOfType<NPCBloodBar>();
         heroLoader = FindObjectOfType<HeroLoader>();
         level = 1;
         isLevelingUp = false;
         if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "HeroRight")
         {
             value = 50;
+            NPCBloodBar.bloodBar.maxValue = 750;
+            NPCBloodBar.bloodBar.value = 750;
         }
         else if (this.gameObject.tag == "Left" || this.gameObject.tag == "Right")
         {
             value = 20;
+            NPCBloodBar = null;
+            NPCLevelText = null;
+            heroImage = null;
+            effect = null;
         }
+        originalScale = this.transform.localScale;
     }
 
     private void Update()
     {
-        LevelUpdate();
-        AttackSpeedCal();
+        if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "HeroRight")
+        {
+            LevelUpdate();
+            BloodUpdate();
+            AttackSpeedCal();
+        }
     }
 
     public void AttackSpeedCal()
@@ -68,49 +83,61 @@ public class NPC : MonoBehaviour
 
     public void Attack(Collider enemy)
     {
+        var skillEffect = effect;
         var attackContainer = MaxAttack;
         if (canAttack)
         {
             if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
             {
-                Debug.Log(countAttack);
                 MaxAttack = (int)(MaxAttack * CriticalDamage);
-                Instantiate(effect, this.transform.position, this.transform.rotation);
+                skillEffect = Instantiate(effect, this.transform.position, this.transform.rotation);
                 countAttack = 0;
+                this.transform.localScale = originalScale;
             }
             enemy.GetComponent<NPC>().GetHurt(MaxAttack);
             canAttack = false;
             MaxAttack = attackContainer;
             countAttack++;
+            // Destroy(skillEffect.gameObject);
+            this.transform.localScale = originalScale + Vector3.one * (countAttack / ((float)2 * (1 / CriticalChance)));
         }
     }
 
     public void AttackTower(Collider enemy)
     {
+        var skillEffect = effect;
         var attackContainer = MaxAttack;
         if (isTeamright && canAttack)
         {
             if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
             {
                 MaxAttack = (int)(MaxAttack * CriticalDamage);
-                Instantiate(effect, this.transform.position, this.transform.rotation);
+                skillEffect = Instantiate(effect, this.transform.position, this.transform.rotation);
                 countAttack = 0;
+                this.transform.localScale = originalScale;
             }
             enemy.GetComponent<TeamLeft>().GetHurt(MaxAttack);
             canAttack = false;
+            MaxAttack = attackContainer;
             countAttack++;
+            // Destroy(skillEffect.gameObject);
+            this.transform.localScale = originalScale + Vector3.one * (countAttack / ((float)2 * (1 / CriticalChance)));
         }
         else if (!isTeamright && canAttack)
         {
             if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
             {
                 MaxAttack = (int)(MaxAttack * CriticalDamage);
-                Instantiate(effect, this.transform.position, this.transform.rotation);
+                skillEffect = Instantiate(effect, this.transform.position, this.transform.rotation);
                 countAttack = 0;
+                this.transform.localScale = originalScale;
             }
             enemy.GetComponent<TeamRight>().GetHurt(MaxAttack);
             canAttack = false;
+            MaxAttack = attackContainer;
             countAttack++;
+            // Destroy(skillEffect.gameObject);
+            this.transform.localScale = originalScale + Vector3.one * (countAttack / ((float)2 * (1 / CriticalChance)));
         }
     }
 
@@ -122,6 +149,10 @@ public class NPC : MonoBehaviour
             MaxHp = 0;
             patrol.isDead = true;
             KillEnemyCoinGetting();
+            if (NPCBloodBar)
+            {
+                Destroy(NPCBloodBar.gameObject);
+            }
             Destroy(this.gameObject);
 
         }
@@ -155,9 +186,17 @@ public class NPC : MonoBehaviour
 
     public void LevelUpdate()
     {
-        if (levelText.text)
+        if (NPCLevelText.text)
         {
-            levelText.text.text = "L." + level;
+            NPCLevelText.text.text = "L." + level;
+        }
+    }
+
+    public void BloodUpdate()
+    {
+        if (NPCBloodBar.bloodBar)
+        {
+            NPCBloodBar.bloodBar.value = MaxHp;
         }
     }
 

@@ -415,13 +415,15 @@ MonoBehaviour:
   patrol: {fileID: 0}
   heroImage: {fileID: 0}
   effect: {fileID: 0}
-  levelText: {fileID: 0}
+  NPCLevelText: {fileID: 0}
+  NPCBloodBar: {fileID: 0}
   level: 0
   isLevelingUp: 0
   heroLoader: {fileID: 0}
   canAttack: 0
   waiterForAttack: 0
   countAttack: 0
+  originalScale: {x: 0, y: 0, z: 0}
 --- !u!114 &9104243582064967323
 MonoBehaviour:
   m_ObjectHideFlags: 0

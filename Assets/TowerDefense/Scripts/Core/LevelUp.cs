@@ -8,20 +8,24 @@ public class LevelUp : MonoBehaviour
     private float mZCoord;
     private NPC nPC;
     private GameObject getHeroImage;
+    private HeroLoader heroLoader;
 
     private void Start()
     {
         nPC = GetComponent<NPC>();
-
+        heroLoader = FindObjectOfType<HeroLoader>();
     }
 
     private void OnMouseDown()
     {
-        mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
-        mOffset = gameObject.transform.position - GetMouseWorldPos();
-        getHeroImage = Instantiate(nPC.heroImage, transform.position, transform.rotation);
-        getHeroImage.GetComponent<ImageManager>().isTeamright = nPC.isTeamright;
-        getHeroImage.GetComponent<ImageManager>().ownHero = transform.gameObject;
+        if ((nPC.isTeamright && !heroLoader.chooseTeamLeft) || (!nPC.isTeamright && heroLoader.chooseTeamLeft))
+        {
+            mZCoord = Camera.main.WorldToScreenPoint(gameObject.transform.position).z;
+            mOffset = gameObject.transform.position - GetMouseWorldPos();
+            getHeroImage = Instantiate(nPC.heroImage, transform.position, transform.rotation);
+            getHeroImage.GetComponent<ImageManager>().isTeamright = nPC.isTeamright;
+            getHeroImage.GetComponent<ImageManager>().ownHero = transform.gameObject;
+        }
     }
 
     private Vector3 GetMouseWorldPos()

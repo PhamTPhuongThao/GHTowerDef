@@ -40,6 +40,7 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\MovingToward.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\LevelLabel.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\TeamRight.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\CanvasChangePosition.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Utils\Physics\MathfExtensions.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\LevelUp.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\BuyingSystem.cs" />
@@ -50,11 +51,11 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\CoinSystem.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\EnemyCoinSystem.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Utils\Physics\PhysicsUtils.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\LevelText.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\NPC.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\HeroLoader.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\MonoSingleton.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\CanvasChangePosition.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\NPCLevelText.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\NPCBloodBar.cs" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_AlphaBlend.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Additive.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Multiply.shader" />

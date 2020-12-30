@@ -24,13 +24,30 @@ public class WarManager : MonoBehaviour
 
     public GameObject Canvas;
 
+    BuyingSystem buyingSystem;
+    public bool isReady;
+
     private void Start()
     {
+        buyingSystem = Canvas.GetComponent<BuyingSystem>();
+        heroLoader = FindObjectOfType<HeroLoader>();
+        buyingSystem.isOurTeamRecover = true;
         StartGame();
     }
     public void StartGame()
     {
-        heroLoader = FindObjectOfType<HeroLoader>();
+        CreateAllArmy();
+        StartCoroutine(CreateOurTeam());
+        StartCoroutine(CreateEnemyTeam());
+        // need to stand still before all created
+    }
+    private void Update()
+    {
+
+    }
+
+    private IEnumerator CreateOurTeam()
+    {
         if (heroLoader.heroesCollectionOfOurTeam.heroes.Length > 0)
         {
             for (int i = 0; i < heroLoader.heroesCollectionOfOurTeam.heroes.Length; i++)
@@ -43,10 +60,36 @@ public class WarManager : MonoBehaviour
                 {
                     hero = Ralph;
                 }
-                Canvas.GetComponent<BuyingSystem>().BuyHero(hero, 0, true, true, heroLoader.heroesCollectionOfOurTeam.heroes[i]);
+                yield return new WaitForSeconds(1f);
+                buyingSystem.BuyHero(hero, 0, true, true, heroLoader.heroesCollectionOfOurTeam.heroes[i]);
             }
         }
+    }
 
+    private IEnumerator CreateEnemyTeam()
+    {
+        yield return new WaitForSeconds(2f);
+        if (heroLoader.heroesCollectionOfEnemyTeam.heroes.Length > 0)
+        {
+
+            for (int i = 0; i < heroLoader.heroesCollectionOfEnemyTeam.heroes.Length; i++)
+            {
+                if (heroLoader.heroesCollectionOfEnemyTeam.heroes[i].Name == "Mickey")
+                {
+                    hero = Mickey;
+                }
+                else if (heroLoader.heroesCollectionOfEnemyTeam.heroes[i].Name == "Ralph")
+                {
+                    hero = Ralph;
+                }
+                yield return new WaitForSeconds(1f);
+                buyingSystem.BuyHero(hero, 0, true, false, heroLoader.heroesCollectionOfEnemyTeam.heroes[i]);
+            }
+        }
+    }
+
+    private void CreateAllArmy()
+    {
         if (heroLoader.soldier.NumberOfArmy > 0)
         {
             var numberOfSoldierMickey = Random.Range(1, heroLoader.soldier.NumberOfArmy);
@@ -58,26 +101,7 @@ public class WarManager : MonoBehaviour
             {
                 CreateArmy(SoldierRalph);
             }
-
         }
-
-        // if (heroLoader.heroesCollectionOfEnemyTeam.heroes.Length > 0)
-        // {
-
-        //     for (int i = 0; i < heroLoader.heroesCollectionOfEnemyTeam.heroes.Length; i++)
-        //     {
-        //         if (heroLoader.heroesCollectionOfEnemyTeam.heroes[i].Name == "Mickey")
-        //         {
-        //             hero = Mickey;
-        //         }
-        //         else if (heroLoader.heroesCollectionOfEnemyTeam.heroes[i].Name == "Ralph")
-        //         {
-        //             hero = Ralph;
-        //         }
-        //         Canvas.GetComponent<BuyingSystem>().BuyHero(hero, 0, true, false, heroLoader.heroesCollectionOfEnemyTeam.heroes[i]);
-        //     }
-
-        // }
     }
 
     private void CreateArmy(GameObject heroType)
@@ -97,4 +121,8 @@ public class WarManager : MonoBehaviour
         Instantiate(heroType, spawnPos, launchPointRight.rotation);
     }
 
+    private IEnumerator EnemyBuyHero()
+    {
+        yield return new WaitForSeconds(1f);
+    }
 }

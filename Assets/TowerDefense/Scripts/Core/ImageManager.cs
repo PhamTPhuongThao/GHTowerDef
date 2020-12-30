@@ -44,14 +44,16 @@ public class ImageManager : MonoBehaviour
 
     public void LevelingUp(Collider other)
     {
-        var otherNPC = ownHero.GetComponent<NPC>();
-        otherNPC.isLevelingUp = true;
+        var ownHeroNPC = ownHero.GetComponent<NPC>();
+        ownHeroNPC.isLevelingUp = true;
         Destroy(this.gameObject);
         Destroy(ownHero);
-        if (otherNPC.levelText)
+        if (ownHeroNPC.NPCBloodBar)
         {
-            Destroy(otherNPC.levelText.gameObject);
+            Destroy(ownHeroNPC.NPCBloodBar.gameObject);
         }
+        other.GetComponent<NPC>().countAttack = 0;
+        other.transform.localScale = other.GetComponent<NPC>().originalScale;
         other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
         other.GetComponent<LevelUp>().ResetConfig();
     }
