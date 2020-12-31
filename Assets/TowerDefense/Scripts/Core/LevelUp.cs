@@ -26,6 +26,7 @@ public class LevelUp : MonoBehaviour
             getHeroImage.GetComponent<ImageManager>().isTeamright = nPC.isTeamright;
             getHeroImage.GetComponent<ImageManager>().ownHero = transform.gameObject;
         }
+        return;
     }
 
     private Vector3 GetMouseWorldPos()

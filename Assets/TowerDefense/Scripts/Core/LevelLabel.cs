@@ -23,7 +23,7 @@ public class LevelLabel : MonoBehaviour
         if (bloodslider)
         {
             Vector2 PosSlider = Camera.main.WorldToScreenPoint(this.transform.position);
-            bloodslider.GetComponent<RectTransform>().anchoredPosition = (PosSlider - new Vector2(420, 230)) * 4f;
+            bloodslider.GetComponent<RectTransform>().anchoredPosition = (PosSlider - new Vector2(930, 500));
 
         }
     }

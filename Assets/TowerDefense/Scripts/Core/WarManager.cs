@@ -38,7 +38,8 @@ public class WarManager : MonoBehaviour
     {
         CreateAllArmy();
         StartCoroutine(CreateOurTeam());
-        StartCoroutine(CreateEnemyTeam());
+        //StartCoroutine(CreateEnemyTeam());
+        StartCoroutine(EnemyBuyHero());
         // need to stand still before all created
     }
     private void Update()
@@ -123,6 +124,27 @@ public class WarManager : MonoBehaviour
 
     private IEnumerator EnemyBuyHero()
     {
-        yield return new WaitForSeconds(1f);
+
+        yield return new WaitForSeconds(2f);
+        if (heroLoader.heroesCollectionOfEnemyTeam.numberOfHero > 0)
+        {
+            for (int i = 0; i < heroLoader.heroesCollectionOfEnemyTeam.numberOfHero; i++)
+            {
+                var r = Random.Range(1, 1000);
+                if (r % 2 == 0)
+                {
+                    hero = Mickey;
+                    yield return new WaitForSeconds(3f);
+                    buyingSystem.BuyHero(hero, 0, true, false, null);
+                }
+                else
+                {
+                    hero = Ralph;
+                    yield return new WaitForSeconds(3f);
+                    buyingSystem.BuyHero(hero, 0, true, false, null);
+                }
+
+            }
+        }
     }
 }

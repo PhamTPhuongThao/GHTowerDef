@@ -36,11 +36,20 @@ public class TeamLeft : MonoBehaviour
         {
             maxHP = 0;
             KillEnemyCoinGetting();
+            // health bar of 2 team
+            if (teamLeftHealthBar && teamRight.teamRightHealthBar)
+            {
+                Destroy(teamLeftHealthBar.gameObject);
+                Destroy(teamRight.teamRightHealthBar.gameObject);
+            }
+            // health bar of NPC of 2 team
+            if (NPCEnemyHealthBar && NPCEnemyHealthBar)
+            {
+                Destroy(NPCHealthBar.gameObject);
+                Destroy(NPCEnemyHealthBar.gameObject);
+            }
+            // 2 team
             Destroy(this.gameObject);
-            Destroy(teamLeftHealthBar.gameObject);
-            Destroy(teamRight.teamRightHealthBar.gameObject);
-            Destroy(NPCHealthBar.gameObject);
-            Destroy(NPCEnemyHealthBar.gameObject);
             Destroy(teamRight.gameObject);
 
         }

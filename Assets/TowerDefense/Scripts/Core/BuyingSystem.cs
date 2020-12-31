@@ -173,16 +173,19 @@ public class BuyingSystem : MonoBehaviour
         }
         if (start)
         {
-            currNPC.MovementSpeed = heroClass.MovementSpeed;
-            currNPC.Name = heroClass.Name;
-            currNPC.MaxHp = heroClass.MaxHp;
-            currNPC.MaxAttack = heroClass.MaxAttack;
-            currNPC.AttackMiss = heroClass.AttackMiss;
-            currNPC.PhysicalDefense = heroClass.PhysicalDefense;
-            currNPC.CriticalChance = heroClass.CriticalChance;
-            currNPC.CriticalDamage = heroClass.CriticalDamage;
-            currNPC.AttackSpeed = heroClass.AttackSpeed;
-            currNPC.AttackType = heroClass.AttackType;
+            if (heroClass != null)
+            {
+                currNPC.MovementSpeed = heroClass.MovementSpeed;
+                currNPC.Name = heroClass.Name;
+                currNPC.MaxHp = heroClass.MaxHp;
+                currNPC.MaxAttack = heroClass.MaxAttack;
+                currNPC.AttackMiss = heroClass.AttackMiss;
+                currNPC.PhysicalDefense = heroClass.PhysicalDefense;
+                currNPC.CriticalChance = heroClass.CriticalChance;
+                currNPC.CriticalDamage = heroClass.CriticalDamage;
+                currNPC.AttackSpeed = heroClass.AttackSpeed;
+                currNPC.AttackType = heroClass.AttackType;
+            }
         }
         else
         {
