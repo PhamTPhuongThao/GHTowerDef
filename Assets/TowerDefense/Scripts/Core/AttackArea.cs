@@ -8,11 +8,13 @@ public class AttackArea : MonoBehaviour
     private Patrol patrol;
     public Collider currentEnemy;
 
+    public List<Collider> container;
+
     private void Start()
     {
         nPC = GetComponentInParent<NPC>();
         patrol = GetComponentInParent<Patrol>();
-
+        container = new List<Collider>();
     }
 
     public IEnumerator Waiting()
@@ -21,37 +23,24 @@ public class AttackArea : MonoBehaviour
         patrol.navMeshAgent.isStopped = false;
         patrol.animator.SetBool("running", true);
         patrol.animator.SetBool("enemyMeet", false);
-    }
 
-    // private void OnTriggerEnter(Collider other)
-    // {
-    //     if (nPC && other)
-    //     {
-    //         if (other.GetComponent<Patrol>() && !other.GetComponent<Patrol>().isDead)
-    //         {
-    //             if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight"))
-    //             {
-    //                 patrol.animator.SetBool("running", false);
-    //                 patrol.animator.SetBool("enemyMeet", true);
-    //             }
-    //             else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft"))
-    //             {
-    //                 patrol.animator.SetBool("running", false);
-    //                 patrol.animator.SetBool("enemyMeet", true);
-    //             }
-    //         }
-    //         if (nPC.isTeamright && other.tag == "TowerLeft")
-    //         {
-    //             patrol.animator.SetBool("running", false);
-    //             patrol.animator.SetBool("enemyMeet", true);
-    //         }
-    //         else if (!nPC.isTeamright && other.tag == "TowerRight")
-    //         {
-    //             patrol.animator.SetBool("running", false);
-    //             patrol.animator.SetBool("enemyMeet", true);
-    //         }
-    //     }
-    // }
+        if (patrol.remainEnemyHero)
+        {
+            patrol.SetDestination(patrol.remainEnemyHero.transform.position);
+        }
+        else
+        {
+            if (patrol.remainEnemy)
+            {
+                patrol.SetDestination(patrol.remainEnemy.transform.position);
+            }
+            else
+            {
+                patrol.SetDestination(patrol.aim);
+            }
+        }
+
+    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -61,69 +50,125 @@ public class AttackArea : MonoBehaviour
             {
                 if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight"))
                 {
+                    container.Add(other);
                     if (!patrol.isDead)
                     {
                         patrol.navMeshAgent.isStopped = true;
                         patrol.animator.SetBool("running", false);
                         patrol.animator.SetBool("enemyMeet", true);
-                        nPC.Attack(other);
-                        if (nPC.MaxHp <= 0 || other.GetComponent<NPC>().MaxHp <= 0)
+                        if (container[0])
                         {
-                            StartCoroutine(Waiting());
-                        }
-                    }
+                            nPC.Attack(container[0]);
 
+                            if (nPC.MaxHp <= 0 || container[0].GetComponent<NPC>().MaxHp <= 0)
+                            {
+                                container.RemoveAt(0);
+                                StartCoroutine(Waiting());
+                            }
+                        }
+                        else
+                        {
+                            nPC.Attack(other);
+
+                            if (nPC.MaxHp <= 0 || other.GetComponent<NPC>().MaxHp <= 0)
+                            {
+                                StartCoroutine(Waiting());
+                            }
+                        }
+
+                    }
                 }
                 else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft"))
                 {
+                    container.Add(other);
                     if (!patrol.isDead)
                     {
-
                         patrol.navMeshAgent.isStopped = true;
                         patrol.animator.SetBool("running", false);
                         patrol.animator.SetBool("enemyMeet", true);
-                        nPC.Attack(other);
-                        if (nPC.MaxHp <= 0 || other.GetComponent<NPC>().MaxHp <= 0)
+
+                        if (container[0])
                         {
-                            StartCoroutine(Waiting());
+                            nPC.Attack(container[0]);
+
+                            if (nPC.MaxHp <= 0 || container[0].GetComponent<NPC>().MaxHp <= 0)
+                            {
+                                container.RemoveAt(0);
+                                StartCoroutine(Waiting());
+                            }
+                        }
+                        else
+                        {
+                            nPC.Attack(other);
+
+                            if (nPC.MaxHp <= 0 || other.GetComponent<NPC>().MaxHp <= 0)
+                            {
+                                StartCoroutine(Waiting());
+                            }
                         }
                     }
-
                 }
             }
 
             if (nPC.isTeamright && other.tag == "TowerLeft")
             {
+                container.Add(other);
                 if (!patrol.isDead)
                 {
-
-                    patrol.navMeshAgent.isStopped = true;
-
-                    patrol.animator.SetBool("running", false);
-                    patrol.animator.SetBool("enemyMeet", true);
-                    nPC.AttackTower(other);
-                    if (nPC.MaxHp <= 0 || other.GetComponent<TeamLeft>().maxHP <= 0)
+                    if (patrol.remainEnemyHero)
                     {
-                        StartCoroutine(Waiting());
+                        patrol.SetDestination(patrol.remainEnemyHero.transform.position);
                     }
-                }
+                    else
+                    {
+                        if (patrol.remainEnemy)
+                        {
+                            patrol.SetDestination(patrol.remainEnemy.transform.position);
+                        }
+                        else
+                        {
+                            patrol.navMeshAgent.isStopped = true;
+                            patrol.animator.SetBool("running", false);
+                            patrol.animator.SetBool("enemyMeet", true);
+                            nPC.AttackTower(other);
+                            if (nPC.MaxHp <= 0 || other.GetComponent<TeamLeft>().maxHP <= 0)
+                            {
+                                StartCoroutine(Waiting());
+                            }
+                        }
+                    }
 
+                }
             }
             else if (!nPC.isTeamright && other.tag == "TowerRight")
             {
+                container.Add(other);
                 if (!patrol.isDead)
                 {
-
-                    patrol.navMeshAgent.isStopped = true;
-                    patrol.animator.SetBool("running", false);
-                    patrol.animator.SetBool("enemyMeet", true);
-                    nPC.AttackTower(other);
-                    if (other && (nPC.MaxHp <= 0 || other.GetComponent<TeamRight>().maxHP <= 0))
+                    if (patrol.remainEnemyHero)
                     {
-                        StartCoroutine(Waiting());
+                        patrol.SetDestination(patrol.remainEnemyHero.transform.position);
                     }
-                }
+                    else
+                    {
+                        if (patrol.remainEnemy)
+                        {
+                            patrol.SetDestination(patrol.remainEnemy.transform.position);
+                        }
+                        else
+                        {
+                            patrol.navMeshAgent.isStopped = true;
+                            patrol.animator.SetBool("running", false);
+                            patrol.animator.SetBool("enemyMeet", true);
+                            nPC.AttackTower(other);
+                            if (other && (nPC.MaxHp <= 0 || other.GetComponent<TeamRight>().maxHP <= 0))
+                            {
+                                StartCoroutine(Waiting());
+                            }
+                        }
+                    }
 
+                }
             }
         }
     }

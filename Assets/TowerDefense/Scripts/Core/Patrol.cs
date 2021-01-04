@@ -22,8 +22,10 @@ public class Patrol : MonoBehaviour
 
     public NavMeshAgent navMeshAgent;
 
-    public NPC currentEnemy;
     public bool isDead;
+
+    public GameObject remainEnemyHero;
+    public GameObject remainEnemy;
 
     void Start()
     {
@@ -58,8 +60,6 @@ public class Patrol : MonoBehaviour
                 SetDestination(patrolPoint);
             }
         }
-
-        currentEnemy = null;
     }
 
     void Update()
@@ -69,9 +69,6 @@ public class Patrol : MonoBehaviour
             return;
         }
 
-        patrolPoint = aim;
-
-        // Right tower is destroyed
         if (!teamRight)
         {
             nPC.countAttack = 0;
@@ -82,7 +79,6 @@ public class Patrol : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        // Left tower is destroyed
         if (!teamLeft)
         {
             nPC.countAttack = 0;
@@ -92,15 +88,26 @@ public class Patrol : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+
+        if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "Left")
+        {
+            remainEnemyHero = GameObject.FindGameObjectWithTag("HeroRight");
+            remainEnemy = GameObject.FindGameObjectWithTag("Right");
+        }
+        else if (this.gameObject.tag == "HeroRight" || this.gameObject.tag == "Right")
+        {
+            remainEnemyHero = GameObject.FindGameObjectWithTag("HeroLeft");
+            remainEnemy = GameObject.FindGameObjectWithTag("Left");
+        }
     }
 
     public void SetDestination(Vector3 setPatrolPoint)
     {
         animator.SetBool("running", true);
         animator.SetBool("enemyMeet", false);
-        if (patrolPoint != null && !isDead)
+        if (setPatrolPoint != null && !isDead)
         {
-            Vector3 targetVector = patrolPoint;
+            Vector3 targetVector = setPatrolPoint;
             navMeshAgent.SetDestination(targetVector);
         }
     }

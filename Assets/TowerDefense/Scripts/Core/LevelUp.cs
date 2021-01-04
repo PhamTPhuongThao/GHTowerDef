@@ -16,7 +16,7 @@ public class LevelUp : MonoBehaviour
         heroLoader = FindObjectOfType<HeroLoader>();
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         if ((nPC.isTeamright && !heroLoader.chooseTeamLeft) || (!nPC.isTeamright && heroLoader.chooseTeamLeft))
         {
@@ -74,8 +74,5 @@ public class LevelUp : MonoBehaviour
         StartCoroutine(Waiting());
 
     }
-
-
-
 
 }

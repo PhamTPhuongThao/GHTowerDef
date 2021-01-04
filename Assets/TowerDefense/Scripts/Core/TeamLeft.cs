@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class TeamLeft : MonoBehaviour
 {
     public int maxHP;
-    public int value;
+    private int value;
     public HeroLoader heroLoader;
     public GameObject winScreen;
     public GameObject loseScreen;

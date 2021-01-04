@@ -30,12 +30,8 @@ public class NPC : MonoBehaviour
     public HeroLoader heroLoader;
     public bool canAttack;
     public float waiterForAttack;
-
     public int countAttack;
-
     public Vector3 originalScale;
-
-
     void Start()
     {
         patrol = GetComponent<Patrol>();
@@ -91,6 +87,10 @@ public class NPC : MonoBehaviour
         if (canAttack)
         {
             DoingAttack(enemy, skillEffect, attackContainer, 0);
+            if (enemy)
+            {
+                patrol.transform.LookAt(enemy.transform);
+            }
         }
     }
 
@@ -105,6 +105,10 @@ public class NPC : MonoBehaviour
         else if (!isTeamright && canAttack)
         {
             DoingAttack(enemy, skillEffect, attackContainer, -1);
+        }
+        if (enemy)
+        {
+            patrol.transform.LookAt(enemy.transform);
         }
     }
 

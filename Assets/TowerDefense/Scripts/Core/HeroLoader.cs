@@ -60,7 +60,7 @@ public class HeroLoader : MonoBehaviour
     [ContextMenu("Load Heroes Configure")]
     private void Start()
     {
-        chooseTeamLeft = true;
+        chooseTeamLeft = false;
         heroesCollectionOfOurTeam = JsonUtility.FromJson<HeroesCollectionOfOurTeam>(textJSONOurTeam.text);
         heroesCollectionOfEnemyTeam = JsonUtility.FromJson<HeroesCollectionOfEnemyTeam>(textJSONEnemyTeam.text);
         soldier = JsonUtility.FromJson<Soldier>(textJSONArmy.text);

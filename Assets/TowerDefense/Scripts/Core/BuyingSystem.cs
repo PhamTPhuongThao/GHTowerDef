@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class BuyingSystem : MonoBehaviour
 {
@@ -12,59 +12,88 @@ public class BuyingSystem : MonoBehaviour
     public Patrol patrol;
     public TeamRight teamRight;
     public TeamLeft teamLeft;
-    public Vector3 spawnPos;
+    private Vector3 spawnPos;
 
-    public NPCLevelText NPCLevelText;
     public NPCBloodBar NPCTeamBloodBar;
     public NPCBloodBar NPCEnemyBloodBar;
     public Canvas canvas;
     public HeroLoader HeroLoader;
 
-    public float maxAngleDownRight = 3 * Mathf.PI / 2;
-    public float maxAngleUp = Mathf.PI / 2;
-    public float maxAngleDown = -Mathf.PI / 2;
+    private float maxAngleDownRight = 3 * Mathf.PI / 2;
+    private float maxAngleUp = Mathf.PI / 2;
+    private float maxAngleDown = -Mathf.PI / 2;
 
-    public bool isOurTeamRecover;
-    public bool isEnemyTeamRecover;
+    private bool isMickeyRecover;
+    private bool isRalphRecover;
+    public Slider recoverSliderOfMickey;
+    public Slider recoverSliderOfRalph;
+    private float waitingTime = 4f;
+    private float counterMickey, counterRalph;
 
+    public List<GameObject> ourTeamContainer;
+    public List<GameObject> enemyTeamContainer;
 
     private void Start()
     {
         patrol = FindObjectOfType<Patrol>();
         teamRight = FindObjectOfType<TeamRight>();
         teamLeft = FindObjectOfType<TeamLeft>();
-        isOurTeamRecover = true;
-        isEnemyTeamRecover = true;
+
+        isMickeyRecover = true;
+        isRalphRecover = true;
+        recoverSliderOfMickey.gameObject.SetActive(false);
+        recoverSliderOfRalph.gameObject.SetActive(false);
+        recoverSliderOfMickey.maxValue = waitingTime;
+        recoverSliderOfRalph.maxValue = waitingTime;
+    }
+
+    private void Update()
+    {
+        recoverSliderOfMickey.value = counterMickey;
+        recoverSliderOfRalph.value = counterRalph;
+        if (!isMickeyRecover)
+        {
+            recoverSliderOfMickey.gameObject.SetActive(true);
+            counterMickey -= Time.deltaTime;
+            if (counterMickey <= 0)
+            {
+                counterMickey = waitingTime;
+                recoverSliderOfMickey.gameObject.SetActive(false);
+                isMickeyRecover = true;
+            }
+        }
+        if (!isRalphRecover)
+        {
+            recoverSliderOfRalph.gameObject.SetActive(true);
+            counterRalph -= Time.deltaTime;
+            if (counterRalph <= 0)
+            {
+                counterRalph = waitingTime;
+                recoverSliderOfRalph.gameObject.SetActive(false);
+                isRalphRecover = true;
+            }
+        }
+
     }
 
     public void BuyMickey()
     {
-        if (isOurTeamRecover)
+        if (isMickeyRecover)
         {
-            isOurTeamRecover = false;
+            isMickeyRecover = false;
+            counterMickey = waitingTime;
             BuyHero(Mickey, 50, false, true, null);
         }
     }
 
     public void BuyRalph()
     {
-        if (isOurTeamRecover)
+        if (isRalphRecover)
         {
-            isOurTeamRecover = false;
+            counterRalph = waitingTime;
+            isRalphRecover = false;
             BuyHero(Ralph, 40, false, true, null);
         }
-    }
-
-    public IEnumerator WaitingOurTeamToRecover()
-    {
-        yield return new WaitForSeconds(5f);
-        isOurTeamRecover = true;
-    }
-
-    public IEnumerator WaitingEnemyTeamToRecover()
-    {
-        yield return new WaitForSeconds(5f);
-        isEnemyTeamRecover = true;
     }
 
     public void BuyHero(GameObject hero, int value, bool start, bool enemyOrOurTeam, HeroLoader.Hero heroClass)
@@ -74,20 +103,13 @@ public class BuyingSystem : MonoBehaviour
             return;
         }
         ChooseTeam(enemyOrOurTeam, hero);
-        InstantiateHero(hero, value);
+        InstantiateHero(hero, value, start, enemyOrOurTeam);
         SetConfig(hero, start, heroClass);
         CreateLabel(enemyOrOurTeam, hero);
-        if (enemyOrOurTeam)
-        {
-            StartCoroutine(WaitingOurTeamToRecover());
-        }
-        else
-        {
-            StartCoroutine(WaitingEnemyTeamToRecover());
-        }
+
     }
 
-    public void ChooseTeam(bool enemyOrOurTeam, GameObject hero)
+    private void ChooseTeam(bool enemyOrOurTeam, GameObject hero)
     {
         if (enemyOrOurTeam)
         {
@@ -130,12 +152,8 @@ public class BuyingSystem : MonoBehaviour
         }
     }
 
-    public void CreateLabel(bool enemyOrOurTeam, GameObject hero)
+    private void CreateLabel(bool enemyOrOurTeam, GameObject hero)
     {
-        // var LevelTextCopy = NPCLevelText;
-        // LevelTextCopy = Instantiate(NPCLevelText, spawnPos, launchPoint.rotation);
-        // LevelTextCopy.transform.SetParent(canvas.transform, false);
-        // hero.GetComponent<NPC>().NPCLevelText = LevelTextCopy.GetComponent<NPCLevelText>();
         var BloodBarCopy = NPCTeamBloodBar;
         if (enemyOrOurTeam)
         {
@@ -151,16 +169,32 @@ public class BuyingSystem : MonoBehaviour
         hero.GetComponent<NPC>().NPCBloodBar = BloodBarCopy.GetComponent<NPCBloodBar>();
     }
 
-    public void InstantiateHero(GameObject hero, int value)
+    private void InstantiateHero(GameObject hero, int value, bool start, bool enemyOrOurTeam)
     {
         var angle = Random.Range(maxAngleUp, maxAngleDown);
         var pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * 4;
         spawnPos = launchPoint.position + pos;
         CoinSystem.Instance.SpendCoin(value);
-        Instantiate(hero, spawnPos, launchPoint.rotation);
+        if (start)
+        {
+            var cur = Instantiate(hero, spawnPos, launchPoint.rotation);
+            cur.GetComponent<Patrol>().enabled = false;
+            if (enemyOrOurTeam)
+            {
+                ourTeamContainer.Add(cur);
+            }
+            else
+            {
+                enemyTeamContainer.Add(cur);
+            }
+        }
+        else
+        {
+            Instantiate(hero, spawnPos, launchPoint.rotation);
+        }
     }
 
-    public void SetConfig(GameObject hero, bool start, HeroLoader.Hero heroClass)
+    private void SetConfig(GameObject hero, bool start, HeroLoader.Hero heroClass)
     {
         var currNPC = hero.GetComponent<NPC>();
         if (hero == Mickey)

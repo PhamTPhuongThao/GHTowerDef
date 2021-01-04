@@ -25,21 +25,20 @@ public class WarManager : MonoBehaviour
     public GameObject Canvas;
 
     BuyingSystem buyingSystem;
-    public bool isReady;
+    private bool isReady;
 
     private void Start()
     {
         buyingSystem = Canvas.GetComponent<BuyingSystem>();
         heroLoader = FindObjectOfType<HeroLoader>();
-        buyingSystem.isOurTeamRecover = true;
         StartGame();
     }
     public void StartGame()
     {
-        CreateAllArmy();
+        //CreateAllArmy();
         StartCoroutine(CreateOurTeam());
-        //StartCoroutine(CreateEnemyTeam());
-        StartCoroutine(EnemyBuyHero());
+        StartCoroutine(CreateEnemyTeam());
+        // StartCoroutine(EnemyBuyHero());
         // need to stand still before all created
     }
     private void Update()
@@ -61,7 +60,7 @@ public class WarManager : MonoBehaviour
                 {
                     hero = Ralph;
                 }
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.5f);
                 buyingSystem.BuyHero(hero, 0, true, true, heroLoader.heroesCollectionOfOurTeam.heroes[i]);
             }
         }
@@ -83,7 +82,7 @@ public class WarManager : MonoBehaviour
                 {
                     hero = Ralph;
                 }
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(.5f);
                 buyingSystem.BuyHero(hero, 0, true, false, heroLoader.heroesCollectionOfEnemyTeam.heroes[i]);
             }
         }
@@ -96,16 +95,16 @@ public class WarManager : MonoBehaviour
             var numberOfSoldierMickey = Random.Range(1, heroLoader.soldier.NumberOfArmy);
             for (int i = 0; i < numberOfSoldierMickey; i++)
             {
-                CreateArmy(SoldierMickey);
+                StartCoroutine(CreateArmy(SoldierMickey));
             }
             for (int i = 0; i < heroLoader.soldier.NumberOfArmy - numberOfSoldierMickey; i++)
             {
-                CreateArmy(SoldierRalph);
+                StartCoroutine(CreateArmy(SoldierRalph));
             }
         }
     }
 
-    private void CreateArmy(GameObject heroType)
+    private IEnumerator CreateArmy(GameObject heroType)
     {
         heroType.GetComponent<NPC>().isTeamright = false;
         heroType.gameObject.tag = "Left";
@@ -120,6 +119,8 @@ public class WarManager : MonoBehaviour
         pos = new Vector3(Mathf.Cos(angleRight), 0, Mathf.Sin(angleRight)) * 6;
         spawnPos = launchPointRight.position + pos;
         Instantiate(heroType, spawnPos, launchPointRight.rotation);
+
+        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator EnemyBuyHero()
