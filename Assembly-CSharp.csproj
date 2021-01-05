@@ -57,6 +57,9 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\DestroyParticleAfterFinish.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\AttackArea.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\MonoSingleton.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\HealthSystem.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\CountdownStart.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\Projectile.cs" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_AlphaBlend.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Additive.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Multiply.shader" />

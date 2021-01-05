@@ -35,11 +35,9 @@ public class WarManager : MonoBehaviour
     }
     public void StartGame()
     {
-        //CreateAllArmy();
-        StartCoroutine(CreateOurTeam());
-        StartCoroutine(CreateEnemyTeam());
-        // StartCoroutine(EnemyBuyHero());
-        // need to stand still before all created
+        // StartCoroutine(CreateOurTeam());
+        // StartCoroutine(CreateEnemyTeam());
+        // StartCoroutine(StandStill());
     }
     private void Update()
     {
@@ -68,7 +66,7 @@ public class WarManager : MonoBehaviour
 
     private IEnumerator CreateEnemyTeam()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         if (heroLoader.heroesCollectionOfEnemyTeam.heroes.Length > 0)
         {
 
@@ -88,23 +86,25 @@ public class WarManager : MonoBehaviour
         }
     }
 
-    private void CreateAllArmy()
+    private IEnumerator CreateAllArmy()
     {
         if (heroLoader.soldier.NumberOfArmy > 0)
         {
             var numberOfSoldierMickey = Random.Range(1, heroLoader.soldier.NumberOfArmy);
             for (int i = 0; i < numberOfSoldierMickey; i++)
             {
-                StartCoroutine(CreateArmy(SoldierMickey));
+                yield return new WaitForSeconds(1f);
+                CreateArmy(SoldierMickey);
             }
             for (int i = 0; i < heroLoader.soldier.NumberOfArmy - numberOfSoldierMickey; i++)
             {
-                StartCoroutine(CreateArmy(SoldierRalph));
+                yield return new WaitForSeconds(1f);
+                CreateArmy(SoldierRalph);
             }
         }
     }
 
-    private IEnumerator CreateArmy(GameObject heroType)
+    private void CreateArmy(GameObject heroType)
     {
         heroType.GetComponent<NPC>().isTeamright = false;
         heroType.gameObject.tag = "Left";
@@ -119,8 +119,6 @@ public class WarManager : MonoBehaviour
         pos = new Vector3(Mathf.Cos(angleRight), 0, Mathf.Sin(angleRight)) * 6;
         spawnPos = launchPointRight.position + pos;
         Instantiate(heroType, spawnPos, launchPointRight.rotation);
-
-        yield return new WaitForSeconds(1f);
     }
 
     private IEnumerator EnemyBuyHero()
@@ -146,6 +144,23 @@ public class WarManager : MonoBehaviour
                 }
 
             }
+        }
+    }
+
+    public IEnumerator StandStill()
+    {
+        yield return new WaitForSeconds(3f);
+        if (buyingSystem.enemyTeamContainer.Count == heroLoader.heroesCollectionOfEnemyTeam.heroes.Length)
+        {
+            for (int i = 0; i < buyingSystem.ourTeamContainer.Count; i++)
+            {
+                buyingSystem.ourTeamContainer[i].GetComponent<Patrol>().enabled = true;
+            }
+            for (int i = 0; i < buyingSystem.enemyTeamContainer.Count; i++)
+            {
+                buyingSystem.enemyTeamContainer[i].GetComponent<Patrol>().enabled = true;
+            }
+
         }
     }
 }

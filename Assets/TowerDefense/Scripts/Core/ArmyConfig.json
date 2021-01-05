@@ -7,6 +7,6 @@
   "CriticalChance": 0.057,
   "CriticalDamage": 1.5,
   "AttackSpeed": 0.76,
-  "AttackType": 1,
+  "AttackType": 0,
   "MovementSpeed": 4
 }

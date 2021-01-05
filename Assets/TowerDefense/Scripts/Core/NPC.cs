@@ -22,6 +22,7 @@ public class NPC : MonoBehaviour
     public Patrol patrol;
     public GameObject heroImage;
     public GameObject effect;
+    public GameObject bullet;
 
     public NPCLevelText NPCLevelText;
     public NPCBloodBar NPCBloodBar;
@@ -32,6 +33,8 @@ public class NPC : MonoBehaviour
     public float waiterForAttack;
     public int countAttack;
     public Vector3 originalScale;
+    public int bulletSpeed;
+
     void Start()
     {
         patrol = GetComponent<Patrol>();
@@ -40,6 +43,7 @@ public class NPC : MonoBehaviour
         heroLoader = FindObjectOfType<HeroLoader>();
         level = 1;
         isLevelingUp = false;
+        bulletSpeed = 3;
         if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "HeroRight")
         {
             value = 50;
@@ -86,7 +90,15 @@ public class NPC : MonoBehaviour
         var attackContainer = MaxAttack;
         if (canAttack)
         {
-            DoingAttack(enemy, skillEffect, attackContainer, 0);
+            if (AttackType == 0)
+            {
+                DoingAttack(enemy, skillEffect, attackContainer, 0);
+            }
+            else if (AttackType == 1 && (this.tag == "HeroRight" || this.tag == "HeroLeft"))
+            {
+
+                DoingFarAttack(enemy, skillEffect, attackContainer, 0);
+            }
             if (enemy)
             {
                 patrol.transform.LookAt(enemy.transform);
@@ -98,13 +110,28 @@ public class NPC : MonoBehaviour
     {
         var skillEffect = effect;
         var attackContainer = MaxAttack;
+
         if (isTeamright && canAttack)
         {
-            DoingAttack(enemy, skillEffect, attackContainer, 1);
+            if (AttackType == 0)
+            {
+                DoingAttack(enemy, skillEffect, attackContainer, 1);
+            }
+            else if (AttackType == 1 && (this.tag == "HeroRight" || this.tag == "HeroLeft"))
+            {
+                DoingFarAttack(enemy, skillEffect, attackContainer, 1);
+            }
         }
         else if (!isTeamright && canAttack)
         {
-            DoingAttack(enemy, skillEffect, attackContainer, -1);
+            if (AttackType == 0)
+            {
+                DoingAttack(enemy, skillEffect, attackContainer, -1);
+            }
+            else if (AttackType == 1 && (this.tag == "HeroRight" || this.tag == "HeroLeft"))
+            {
+                DoingFarAttack(enemy, skillEffect, attackContainer, -1);
+            }
         }
         if (enemy)
         {
@@ -139,6 +166,26 @@ public class NPC : MonoBehaviour
         countAttack++;
         this.transform.localScale = originalScale + Vector3.one * (countAttack / ((float)2 * (1 / CriticalChance)));
     }
+
+    public void DoingFarAttack(Collider enemy, GameObject skillEffect, int attackContainer, int classToChoose)
+    {
+        if (classToChoose == 0)
+        {
+            var bulletImage = Instantiate(bullet, this.transform.position, this.transform.rotation);
+            bulletImage.GetComponent<Projectile>().ownPlayer = this;
+        }
+        if (classToChoose == 1)
+        {
+            var bulletImage = Instantiate(bullet, this.transform.position, this.transform.rotation);
+            bulletImage.GetComponent<Projectile>().ownPlayer = this;
+        }
+        if (classToChoose == -1)
+        {
+            var bulletImage = Instantiate(bullet, this.transform.position, this.transform.rotation);
+            bulletImage.GetComponent<Projectile>().ownPlayer = this;
+        }
+    }
+
 
     public void GetHurt(int amountBlood)
     {

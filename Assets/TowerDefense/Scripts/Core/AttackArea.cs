@@ -9,12 +9,22 @@ public class AttackArea : MonoBehaviour
     public Collider currentEnemy;
 
     public List<Collider> container;
+    public SphereCollider attackCollider;
 
     private void Start()
     {
         nPC = GetComponentInParent<NPC>();
         patrol = GetComponentInParent<Patrol>();
         container = new List<Collider>();
+        attackCollider = GetComponent<SphereCollider>();
+        if (nPC.AttackType == 1)
+        {
+            attackCollider.radius = 4;
+        }
+        else
+        {
+            attackCollider.radius = 2;
+        }
     }
 
     public IEnumerator Waiting()
@@ -44,7 +54,7 @@ public class AttackArea : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (nPC && other)
+        if (nPC && other && (patrol.enabled == true))
         {
             if (other.GetComponent<Patrol>() && !other.GetComponent<Patrol>().isDead)
             {
@@ -175,9 +185,12 @@ public class AttackArea : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        patrol.animator.SetBool("running", true);
-        patrol.animator.SetBool("enemyMeet", false);
-        StartCoroutine(Waiting());
+        if (patrol.enabled == true)
+        {
+            patrol.animator.SetBool("running", true);
+            patrol.animator.SetBool("enemyMeet", false);
+            StartCoroutine(Waiting());
+        }
     }
 
 }

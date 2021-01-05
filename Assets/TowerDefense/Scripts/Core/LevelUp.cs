@@ -41,6 +41,10 @@ public class LevelUp : MonoBehaviour
         if (getHeroImage)
         {
             getHeroImage.transform.position = GetMouseWorldPos() + mOffset;
+            if (getHeroImage.transform.position.z < 0)
+            {
+                return;
+            }
         }
     }
 
@@ -51,7 +55,6 @@ public class LevelUp : MonoBehaviour
             Destroy(getHeroImage);
         }
     }
-
 
     public IEnumerator Waiting()
     {

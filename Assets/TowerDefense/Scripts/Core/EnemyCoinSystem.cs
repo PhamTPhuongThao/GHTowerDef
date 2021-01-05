@@ -24,9 +24,6 @@ public class EnemyCoinSystem : MonoBehaviour
 
                     if (FindObjectsOfType(typeof(EnemyCoinSystem)).Length > 1)
                     {
-                        // Debug.LogError("[Singleton] Something went really wrong " +
-                        //                " - there should never be more than 1 singleton!" +
-                        //                " Reopening the scene might fix it.");
                         return m_Instance;
                     }
 
@@ -35,20 +32,9 @@ public class EnemyCoinSystem : MonoBehaviour
                         GameObject singleton = new GameObject();
                         m_Instance = singleton.AddComponent<EnemyCoinSystem>();
                         singleton.name = string.Format("[------Singleton: {0}-----] ", typeof(EnemyCoinSystem).Name);
-
                         DontDestroyOnLoad(singleton);
-
-                        // Debug.Log("[Singleton] An instance of " + typeof(EnemyCoinSystem) +
-                        //           " is needed in the scene, so '" + singleton +
-                        //           "' was created with DontDestroyOnLoad.");
                     }
-                    // else
-                    // {
-                    //     Debug.Log("[Singleton] Using instance already created: " +
-                    //               m_Instance.gameObject.name);
-                    // }
                 }
-
                 return m_Instance;
             }
         }

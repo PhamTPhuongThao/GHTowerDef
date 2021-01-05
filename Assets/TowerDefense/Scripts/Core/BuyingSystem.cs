@@ -165,7 +165,7 @@ public class BuyingSystem : MonoBehaviour
         }
 
         BloodBarCopy = Instantiate(BloodBarCopy, spawnPos, launchPoint.rotation);
-        BloodBarCopy.transform.SetParent(canvas.transform, false);
+        BloodBarCopy.transform.SetParent(canvas.GetComponentInChildren<HealthSystem>().transform, false);
         hero.GetComponent<NPC>().NPCBloodBar = BloodBarCopy.GetComponent<NPCBloodBar>();
     }
 

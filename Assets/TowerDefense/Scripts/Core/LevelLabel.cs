@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class LevelLabel : MonoBehaviour
 {
-    // public Text levelText;
     public Slider bloodslider;
     public RectTransform rectTransform;
 

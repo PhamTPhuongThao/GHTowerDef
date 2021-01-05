@@ -1119,7 +1119,7 @@ GameObject:
   - component: {fileID: 6434697225098364335}
   m_Layer: 0
   m_Name: Mickey
-  m_TagString: HeroLeft
+  m_TagString: HeroRight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1245,11 +1245,12 @@ MonoBehaviour:
   AttackType: 1
   MovementSpeed: 5
   value: 0
-  isTeamright: 0
+  isTeamright: 1
   patrol: {fileID: 0}
   heroImage: {fileID: 5409150874960963299, guid: d7884a6b25ef84e4ca96285ba51b63fc,
     type: 3}
   effect: {fileID: 1416234665501338, guid: 4ae5e8bea6c66f446a0d95b4efadd894, type: 3}
+  bullet: {fileID: 0}
   NPCLevelText: {fileID: 0}
   NPCBloodBar: {fileID: 0}
   level: 1
@@ -1259,6 +1260,7 @@ MonoBehaviour:
   waiterForAttack: 0
   countAttack: 0
   originalScale: {x: 0, y: 0, z: 0}
+  bulletSpeed: 0
 --- !u!135 &4860798791066316245
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1802,3 +1804,4 @@ MonoBehaviour:
   nPC: {fileID: 0}
   currentEnemy: {fileID: 0}
   container: []
+  attackCollider: {fileID: 0}
