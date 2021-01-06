@@ -144,7 +144,7 @@ public class NPC : MonoBehaviour
             MaxAttack = (int)(MaxAttack * CriticalDamage);
             Instantiate(skillEffect, this.transform.position, this.transform.rotation);
             countAttack = 0;
-            this.transform.localScale = originalScale;
+            //this.transform.localScale = originalScale;
         }
         if (classToChoose == 0)
         {
@@ -162,7 +162,7 @@ public class NPC : MonoBehaviour
         canAttack = false;
         MaxAttack = attackContainer;
         countAttack++;
-        this.transform.localScale = originalScale + Vector3.one * (countAttack / ((float)2 * (1 / CriticalChance)));
+        //this.transform.localScale = originalScale + Vector3.one * (countAttack / ((float)2 * (1 / CriticalChance)));
     }
 
     public void DoingFarAttack(Collider enemy, int attackContainer, int classToChoose)
