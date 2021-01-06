@@ -60,6 +60,7 @@ MonoBehaviour:
   nPC: {fileID: 0}
   currentEnemy: {fileID: 0}
   container: []
+  attackCollider: {fileID: 0}
 --- !u!1 &5455280763406186497
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,6 +1457,7 @@ MonoBehaviour:
   patrol: {fileID: 0}
   heroImage: {fileID: 0}
   effect: {fileID: 0}
+  bullet: {fileID: 0}
   NPCLevelText: {fileID: 0}
   NPCBloodBar: {fileID: 0}
   level: 0
@@ -1465,6 +1467,7 @@ MonoBehaviour:
   waiterForAttack: 0
   countAttack: 0
   originalScale: {x: 0, y: 0, z: 0}
+  bulletSpeed: 0
 --- !u!114 &5455280762495990271
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1521,7 +1524,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.2
+  m_Radius: 2
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5455280763406186615
 GameObject:

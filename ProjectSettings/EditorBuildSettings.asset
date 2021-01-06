@@ -8,3 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/TowerDefense/Scenes/1.GamePlay.unity
     guid: f01c4094c3365ec4c8341d406785453c
+  m_configObjects: {}

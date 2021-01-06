@@ -53,6 +53,14 @@ public class ImageManager : MonoBehaviour
         other.GetComponent<NPC>().countAttack = 0;
         other.transform.localScale = other.GetComponent<NPC>().originalScale;
         other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
-        other.GetComponent<LevelUp>().ResetConfig();
+        if (ownHeroNPC.AttackType == 1 || other.GetComponent<NPC>().AttackType == 1)
+        {
+            other.GetComponent<LevelUp>().ResetConfig(1);
+        }
+        else
+        {
+            other.GetComponent<LevelUp>().ResetConfig(0);
+        }
+
     }
 }

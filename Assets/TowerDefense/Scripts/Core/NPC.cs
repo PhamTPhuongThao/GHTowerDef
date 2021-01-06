@@ -21,7 +21,7 @@ public class NPC : MonoBehaviour
 
     public Patrol patrol;
     public GameObject heroImage;
-    public GameObject effect;
+    public GameObject skillEffect;
     public GameObject bullet;
 
     public NPCLevelText NPCLevelText;
@@ -33,7 +33,7 @@ public class NPC : MonoBehaviour
     public float waiterForAttack;
     public int countAttack;
     public Vector3 originalScale;
-    public int bulletSpeed;
+    public float bulletSpeed;
 
     void Start()
     {
@@ -43,12 +43,12 @@ public class NPC : MonoBehaviour
         heroLoader = FindObjectOfType<HeroLoader>();
         level = 1;
         isLevelingUp = false;
-        bulletSpeed = 3;
+        bulletSpeed = 1f;
         if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "HeroRight")
         {
             value = 50;
-            NPCBloodBar.bloodBar.maxValue = 750;
-            NPCBloodBar.bloodBar.value = 750;
+            NPCBloodBar.bloodBar.maxValue = MaxHp;
+            NPCBloodBar.bloodBar.value = MaxHp;
         }
         else if (this.gameObject.tag == "Left" || this.gameObject.tag == "Right")
         {
@@ -59,7 +59,7 @@ public class NPC : MonoBehaviour
             NPCBloodBar = null;
             NPCLevelText = null;
             heroImage = null;
-            effect = null;
+            skillEffect = null;
         }
         originalScale = this.transform.localScale;
     }
@@ -86,18 +86,17 @@ public class NPC : MonoBehaviour
 
     public void Attack(Collider enemy)
     {
-        var skillEffect = effect;
         var attackContainer = MaxAttack;
         if (canAttack)
         {
             if (AttackType == 0)
             {
-                DoingAttack(enemy, skillEffect, attackContainer, 0);
+                DoingAttack(enemy, attackContainer, 0);
             }
             else if (AttackType == 1 && (this.tag == "HeroRight" || this.tag == "HeroLeft"))
             {
 
-                DoingFarAttack(enemy, skillEffect, attackContainer, 0);
+                DoingFarAttack(enemy, attackContainer, 0);
             }
             if (enemy)
             {
@@ -108,29 +107,28 @@ public class NPC : MonoBehaviour
 
     public void AttackTower(Collider enemy)
     {
-        var skillEffect = effect;
         var attackContainer = MaxAttack;
 
         if (isTeamright && canAttack)
         {
             if (AttackType == 0)
             {
-                DoingAttack(enemy, skillEffect, attackContainer, 1);
+                DoingAttack(enemy, attackContainer, 1);
             }
-            else if (AttackType == 1 && (this.tag == "HeroRight" || this.tag == "HeroLeft"))
+            else if (AttackType == 1 && (this.tag == "HeroRight"))
             {
-                DoingFarAttack(enemy, skillEffect, attackContainer, 1);
+                DoingFarAttack(enemy, attackContainer, 1);
             }
         }
         else if (!isTeamright && canAttack)
         {
             if (AttackType == 0)
             {
-                DoingAttack(enemy, skillEffect, attackContainer, -1);
+                DoingAttack(enemy, attackContainer, -1);
             }
-            else if (AttackType == 1 && (this.tag == "HeroRight" || this.tag == "HeroLeft"))
+            else if (AttackType == 1 && (this.tag == "HeroLeft"))
             {
-                DoingFarAttack(enemy, skillEffect, attackContainer, -1);
+                DoingFarAttack(enemy, attackContainer, -1);
             }
         }
         if (enemy)
@@ -139,12 +137,12 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public void DoingAttack(Collider enemy, GameObject skillEffect, int attackContainer, int classToChoose)
+    public void DoingAttack(Collider enemy, int attackContainer, int classToChoose)
     {
         if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
         {
             MaxAttack = (int)(MaxAttack * CriticalDamage);
-            skillEffect = Instantiate(effect, this.transform.position, this.transform.rotation);
+            Instantiate(skillEffect, this.transform.position, this.transform.rotation);
             countAttack = 0;
             this.transform.localScale = originalScale;
         }
@@ -167,23 +165,27 @@ public class NPC : MonoBehaviour
         this.transform.localScale = originalScale + Vector3.one * (countAttack / ((float)2 * (1 / CriticalChance)));
     }
 
-    public void DoingFarAttack(Collider enemy, GameObject skillEffect, int attackContainer, int classToChoose)
+    public void DoingFarAttack(Collider enemy, int attackContainer, int classToChoose)
     {
         if (classToChoose == 0)
         {
-            var bulletImage = Instantiate(bullet, this.transform.position, this.transform.rotation);
+            var bulletImage = Instantiate(bullet, transform.position, transform.rotation);
             bulletImage.GetComponent<Projectile>().ownPlayer = this;
+            bulletImage.GetComponent<Projectile>().enemy = enemy;
         }
         if (classToChoose == 1)
         {
-            var bulletImage = Instantiate(bullet, this.transform.position, this.transform.rotation);
+            var bulletImage = Instantiate(bullet, transform.position, transform.rotation);
             bulletImage.GetComponent<Projectile>().ownPlayer = this;
+            bulletImage.GetComponent<Projectile>().enemy = enemy;
         }
         if (classToChoose == -1)
         {
-            var bulletImage = Instantiate(bullet, this.transform.position, this.transform.rotation);
+            var bulletImage = Instantiate(bullet, transform.position, transform.rotation);
             bulletImage.GetComponent<Projectile>().ownPlayer = this;
+            bulletImage.GetComponent<Projectile>().enemy = enemy;
         }
+        canAttack = false;
     }
 
 

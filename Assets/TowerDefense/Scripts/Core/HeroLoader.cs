@@ -1,5 +1,3 @@
-using UnityEngine.UI;
-using System.IO;
 using UnityEngine;
 
 public class HeroLoader : MonoBehaviour

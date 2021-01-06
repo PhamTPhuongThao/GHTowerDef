@@ -6,8 +6,6 @@ public class AttackArea : MonoBehaviour
 {
     public NPC nPC;
     private Patrol patrol;
-    public Collider currentEnemy;
-
     public List<Collider> container;
     public SphereCollider attackCollider;
 
@@ -17,14 +15,7 @@ public class AttackArea : MonoBehaviour
         patrol = GetComponentInParent<Patrol>();
         container = new List<Collider>();
         attackCollider = GetComponent<SphereCollider>();
-        if (nPC.AttackType == 1)
-        {
-            attackCollider.radius = 4;
-        }
-        else
-        {
-            attackCollider.radius = 2;
-        }
+        attackCollider.radius = 2;
     }
 
     public IEnumerator Waiting()
@@ -49,71 +40,74 @@ public class AttackArea : MonoBehaviour
                 patrol.SetDestination(patrol.aim);
             }
         }
-
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (nPC && other && (patrol.enabled == true))
+        if (nPC && other && (patrol.enabled == true) && (nPC.AttackType == 0))
         {
-            if (other.GetComponent<Patrol>() && !other.GetComponent<Patrol>().isDead)
+            if (other.tag == "NormalAttack")
             {
-                if (!nPC.isTeamright && (other.tag == "Right" || other.tag == "HeroRight"))
+                var otherParent = other.transform.parent;
+                if (otherParent.GetComponent<Patrol>() && !otherParent.GetComponent<Patrol>().isDead)
                 {
-                    container.Add(other);
-                    if (!patrol.isDead)
+                    if (!nPC.isTeamright && (otherParent.tag == "Right" || otherParent.tag == "HeroRight"))
                     {
-                        patrol.navMeshAgent.isStopped = true;
-                        patrol.animator.SetBool("running", false);
-                        patrol.animator.SetBool("enemyMeet", true);
-                        if (container[0])
+                        container.Add(other.transform.parent.GetComponent<SphereCollider>());
+                        if (!patrol.isDead)
                         {
-                            nPC.Attack(container[0]);
-
-                            if (nPC.MaxHp <= 0 || container[0].GetComponent<NPC>().MaxHp <= 0)
+                            patrol.navMeshAgent.isStopped = true;
+                            patrol.animator.SetBool("running", false);
+                            patrol.animator.SetBool("enemyMeet", true);
+                            if (container[0] && container[0].GetComponent<NPC>())
                             {
-                                container.RemoveAt(0);
-                                StartCoroutine(Waiting());
-                            }
-                        }
-                        else
-                        {
-                            nPC.Attack(other);
+                                nPC.Attack(container[0]);
 
-                            if (nPC.MaxHp <= 0 || other.GetComponent<NPC>().MaxHp <= 0)
+                                if (nPC.MaxHp <= 0 || container[0].GetComponent<NPC>().MaxHp <= 0)
+                                {
+                                    container.RemoveAt(0);
+                                    StartCoroutine(Waiting());
+                                }
+                            }
+                            else
                             {
-                                StartCoroutine(Waiting());
-                            }
-                        }
+                                nPC.Attack(other.transform.parent.GetComponent<SphereCollider>());
 
+                                if (nPC.MaxHp <= 0 || other.transform.parent.GetComponent<NPC>().MaxHp <= 0)
+                                {
+                                    StartCoroutine(Waiting());
+                                }
+                            }
+
+                        }
                     }
-                }
-                else if (nPC.isTeamright && (other.tag == "Left" || other.tag == "HeroLeft"))
-                {
-                    container.Add(other);
-                    if (!patrol.isDead)
+                    else if (nPC.isTeamright && (otherParent.tag == "Left" || otherParent.tag == "HeroLeft"))
                     {
-                        patrol.navMeshAgent.isStopped = true;
-                        patrol.animator.SetBool("running", false);
-                        patrol.animator.SetBool("enemyMeet", true);
-
-                        if (container[0])
+                        container.Add(other.transform.parent.GetComponent<SphereCollider>());
+                        if (!patrol.isDead)
                         {
-                            nPC.Attack(container[0]);
+                            patrol.navMeshAgent.isStopped = true;
+                            patrol.animator.SetBool("running", false);
+                            patrol.animator.SetBool("enemyMeet", true);
 
-                            if (nPC.MaxHp <= 0 || container[0].GetComponent<NPC>().MaxHp <= 0)
+                            if (container[0])
                             {
-                                container.RemoveAt(0);
-                                StartCoroutine(Waiting());
+                                nPC.Attack(container[0]);
+
+                                if (nPC.MaxHp <= 0 || container[0].GetComponent<NPC>().MaxHp <= 0)
+                                {
+                                    container.RemoveAt(0);
+                                    StartCoroutine(Waiting());
+                                }
                             }
-                        }
-                        else
-                        {
-                            nPC.Attack(other);
-
-                            if (nPC.MaxHp <= 0 || other.GetComponent<NPC>().MaxHp <= 0)
+                            else
                             {
-                                StartCoroutine(Waiting());
+                                nPC.Attack(other.transform.parent.GetComponent<SphereCollider>());
+
+                                if (nPC.MaxHp <= 0 || other.transform.parent.GetComponent<NPC>().MaxHp <= 0)
+                                {
+                                    StartCoroutine(Waiting());
+                                }
                             }
                         }
                     }
@@ -122,7 +116,7 @@ public class AttackArea : MonoBehaviour
 
             if (nPC.isTeamright && other.tag == "TowerLeft")
             {
-                container.Add(other);
+                //container.Add(other);
                 if (!patrol.isDead)
                 {
                     if (patrol.remainEnemyHero)
@@ -152,7 +146,7 @@ public class AttackArea : MonoBehaviour
             }
             else if (!nPC.isTeamright && other.tag == "TowerRight")
             {
-                container.Add(other);
+                //container.Add(other);
                 if (!patrol.isDead)
                 {
                     if (patrol.remainEnemyHero)

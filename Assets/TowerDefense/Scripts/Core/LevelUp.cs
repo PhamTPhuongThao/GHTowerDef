@@ -62,9 +62,10 @@ public class LevelUp : MonoBehaviour
         this.gameObject.GetComponent<Patrol>().animator.SetBool("canLevelUp", false);
     }
 
-    public void ResetConfig()
+    public void ResetConfig(int attackType)
     {
         var currChange = this.gameObject.GetComponent<NPC>();
+        var currPatrol = this.gameObject.GetComponent<Patrol>();
         currChange.level++;
         currChange.MaxHp = currChange.MaxHp * 2;
         currChange.MaxAttack = currChange.MaxAttack * 2;
@@ -73,7 +74,8 @@ public class LevelUp : MonoBehaviour
         currChange.CriticalChance = currChange.CriticalChance * 2;
         currChange.CriticalDamage = currChange.CriticalDamage * 2;
         currChange.AttackSpeed = currChange.AttackSpeed * 2;
-        currChange.AttackType = currChange.AttackType * 2;
+        currChange.AttackType = attackType;
+        currPatrol.animator.SetInteger("attackOne", attackType);
         StartCoroutine(Waiting());
 
     }

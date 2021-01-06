@@ -33,6 +33,8 @@ public class BuyingSystem : MonoBehaviour
     public List<GameObject> ourTeamContainer;
     public List<GameObject> enemyTeamContainer;
 
+    public HeroLoader heroLoader;
+
     private void Start()
     {
         patrol = FindObjectOfType<Patrol>();
@@ -41,6 +43,7 @@ public class BuyingSystem : MonoBehaviour
 
         isMickeyRecover = true;
         isRalphRecover = true;
+        //StartCoroutine(Waiting());
         recoverSliderOfMickey.gameObject.SetActive(false);
         recoverSliderOfRalph.gameObject.SetActive(false);
         recoverSliderOfMickey.maxValue = waitingTime;
@@ -76,6 +79,13 @@ public class BuyingSystem : MonoBehaviour
 
     }
 
+    public IEnumerator Waiting()
+    {
+        yield return new WaitForSeconds(3f);
+        isMickeyRecover = false;
+        isRalphRecover = false;
+    }
+
     public void BuyMickey()
     {
         if (isMickeyRecover)
@@ -103,8 +113,8 @@ public class BuyingSystem : MonoBehaviour
             return;
         }
         ChooseTeam(enemyOrOurTeam, hero);
+        SetConfig(hero, start, enemyOrOurTeam, heroClass);
         InstantiateHero(hero, value, start, enemyOrOurTeam);
-        SetConfig(hero, start, heroClass);
         CreateLabel(enemyOrOurTeam, hero);
 
     }
@@ -130,7 +140,7 @@ public class BuyingSystem : MonoBehaviour
                 }
             }
         }
-        else // enemy
+        else
         {
             hero.GetComponent<NPC>().isTeamright = HeroLoader.chooseTeamLeft;
             if (teamRight && teamLeft)
@@ -194,7 +204,7 @@ public class BuyingSystem : MonoBehaviour
         }
     }
 
-    private void SetConfig(GameObject hero, bool start, HeroLoader.Hero heroClass)
+    private void SetConfig(GameObject hero, bool start, bool enemyOrOurTeam, HeroLoader.Hero heroClass)
     {
         var currNPC = hero.GetComponent<NPC>();
         if (hero == Mickey)
@@ -205,12 +215,11 @@ public class BuyingSystem : MonoBehaviour
         {
             currNPC.Name = "Ralph";
         }
-        if (start)
+        if (enemyOrOurTeam) // ourteam
         {
-            if (heroClass != null)
+            if (start)
             {
                 currNPC.MovementSpeed = heroClass.MovementSpeed;
-                currNPC.Name = heroClass.Name;
                 currNPC.MaxHp = heroClass.MaxHp;
                 currNPC.MaxAttack = heroClass.MaxAttack;
                 currNPC.AttackMiss = heroClass.AttackMiss;
@@ -219,12 +228,36 @@ public class BuyingSystem : MonoBehaviour
                 currNPC.CriticalDamage = heroClass.CriticalDamage;
                 currNPC.AttackSpeed = heroClass.AttackSpeed;
                 currNPC.AttackType = heroClass.AttackType;
+                currNPC = null;
+                hero = null;
+            }
+            else
+            {
+                currNPC.MovementSpeed = 5;
+                currNPC.MaxHp = 500;
+                currNPC.MaxAttack = 20;
+                currNPC.AttackMiss = 0;
+                currNPC.PhysicalDefense = 20;
+                currNPC.CriticalChance = 0.1f;
+                currNPC.CriticalDamage = 1.2f;
+                currNPC.AttackSpeed = 0.5f;
+                currNPC.AttackType = 0;
+                currNPC = null;
+                hero = null;
             }
         }
-        else
+        else // enemy
         {
-            // SET DEFAULT OF ITEM 
-
+            currNPC.MovementSpeed = 5;
+            currNPC.MaxHp = 500;
+            currNPC.MaxAttack = 20;
+            currNPC.AttackMiss = 0;
+            currNPC.PhysicalDefense = 20;
+            currNPC.CriticalChance = 0.1f;
+            currNPC.CriticalDamage = 1.2f;
+            currNPC.AttackSpeed = 0.5f;
+            currNPC.AttackType = 0;
+            currNPC = null;
         }
     }
 
