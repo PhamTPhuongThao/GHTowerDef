@@ -11,13 +11,15 @@ public class TeamLeft : MonoBehaviour
     public NPCBloodBar teamLeftHealthBar;
     public NPCBloodBar NPCHealthBar;
     public NPCBloodBar NPCEnemyHealthBar;
+    public GameObject getHitParticle;
+
 
     private void Start()
     {
         heroLoader = FindObjectOfType<HeroLoader>();
         teamRight = FindObjectOfType<TeamRight>();
         value = 200;
-        maxHP = 1500;
+        maxHP = 15000;
         teamLeftHealthBar.bloodBar.maxValue = maxHP;
     }
     private void Update()
@@ -28,6 +30,7 @@ public class TeamLeft : MonoBehaviour
 
     public void GetHurt(int amountBlood)
     {
+        Instantiate(getHitParticle, transform.position + Vector3.up * 3, transform.rotation);
         maxHP -= amountBlood;
         if (maxHP < 0)
         {

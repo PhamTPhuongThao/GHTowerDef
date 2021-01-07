@@ -60,6 +60,8 @@ MonoBehaviour:
   nPC: {fileID: 0}
   container: []
   attackCollider: {fileID: 0}
+  isAttacking: 0
+  currentEnemy: {fileID: 0}
 --- !u!1 &860637539157356066
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,6 +172,63 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bloodslider: {fileID: 0}
   rectTransform: {fileID: 0}
+--- !u!1 &1254404350547941514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6103155662590768512}
+  - component: {fileID: 2773794176686317260}
+  - component: {fileID: 6204868761007590086}
+  m_Layer: 0
+  m_Name: BulletStart
+  m_TagString: BulletStart
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6103155662590768512
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254404350547941514}
+  m_LocalRotation: {x: 0.9204469, y: -0.1826663, z: 0.26611418, w: 0.22043994}
+  m_LocalPosition: {x: 0.059295803, y: -0.20852022, z: -2.1611164}
+  m_LocalScale: {x: 1.5873015, y: 1.5873017, z: 1.5873017}
+  m_Children: []
+  m_Father: {fileID: 1887296107689921584}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &2773794176686317260
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254404350547941514}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.16
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6204868761007590086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254404350547941514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bbb0e1983c2e9c499e2831706360f94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1887296107689693200
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,11 +252,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887296107689693200}
-  m_LocalRotation: {x: 0.03800005, y: -0.19092067, z: -0.11472103, w: 0.9741378}
+  m_LocalRotation: {x: 0.04231191, y: -0.2125844, z: -0.12773842, w: 0.9678329}
   m_LocalPosition: {x: 0.35754317, y: 0.08695279, z: -0.3422265}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 1887296107689921632}
+  - {fileID: 6103155662590768512}
   m_Father: {fileID: 1887296107689921606}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1029,7 +1089,7 @@ MonoBehaviour:
   CriticalDamage: 1.5
   AttackSpeed: 0.76
   AttackType: 1
-  MovementSpeed: 5
+  MovementSpeed: 3
   value: 0
   isTeamright: 1
   patrol: {fileID: 0}
@@ -1037,7 +1097,9 @@ MonoBehaviour:
     type: 3}
   skillEffect: {fileID: 1217479511050380, guid: 7f4b90757abe92040964fd0c4e80701d,
     type: 3}
-  bullet: {fileID: 1686185437788495861, guid: 92f69a809d0f4e047a45d3c769fb0c97, type: 3}
+  getHitParticle: {fileID: 2880299226243595292, guid: a504a91c40ee5e443b1b519e689ee79d,
+    type: 3}
+  bullet: {fileID: 6614779059620552251, guid: 797970927dd69254cb4daa1a7309fff0, type: 3}
   NPCLevelText: {fileID: 0}
   NPCBloodBar: {fileID: 0}
   level: 1
@@ -1047,7 +1109,6 @@ MonoBehaviour:
   waiterForAttack: 0
   countAttack: 0
   originalScale: {x: 0, y: 0, z: 0}
-  bulletSpeed: 3
 --- !u!135 &5314883963631561141
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1059,7 +1120,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 1.5
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &6051685033924886991
 MonoBehaviour:
@@ -1866,3 +1927,5 @@ MonoBehaviour:
   nPC: {fileID: 0}
   container: []
   attackCollider: {fileID: 0}
+  isAttacking: 0
+  currentEnemy: {fileID: 0}

@@ -11,7 +11,19 @@
       "CriticalDamage": 1.5,
       "AttackSpeed": 0.76,
       "AttackType": 1,
-      "MovementSpeed": 5
+      "MovementSpeed": 3
+    },
+    {
+      "Name": "Ralph",
+      "MaxHp": 950,
+      "MaxAttack": 30,
+      "AttackMiss": 0,
+      "PhysicalDefense": 60,
+      "CriticalChance": 0.057,
+      "CriticalDamage": 1.5,
+      "AttackSpeed": 0.76,
+      "AttackType": 0,
+      "MovementSpeed": 3
     }
   ]
 }

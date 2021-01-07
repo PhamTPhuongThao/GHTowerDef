@@ -469,15 +469,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Ralph
-  MaxHp: 500
-  MaxAttack: 20
+  MaxHp: 950
+  MaxAttack: 30
   AttackMiss: 0
-  PhysicalDefense: 20
-  CriticalChance: 0.1
-  CriticalDamage: 1.2
-  AttackSpeed: 0.5
+  PhysicalDefense: 60
+  CriticalChance: 0.057
+  CriticalDamage: 1.5
+  AttackSpeed: 0.76
   AttackType: 0
-  MovementSpeed: 5
+  MovementSpeed: 3
   value: 0
   isTeamright: 1
   patrol: {fileID: 0}
@@ -485,7 +485,9 @@ MonoBehaviour:
     type: 3}
   skillEffect: {fileID: 1995999885220330, guid: 583847f543542d84fa2e1fd012abf2ec,
     type: 3}
-  bullet: {fileID: 1686185437788495861, guid: 92f69a809d0f4e047a45d3c769fb0c97, type: 3}
+  getHitParticle: {fileID: 2880299226243595292, guid: a504a91c40ee5e443b1b519e689ee79d,
+    type: 3}
+  bullet: {fileID: 6614779059620552251, guid: 797970927dd69254cb4daa1a7309fff0, type: 3}
   NPCLevelText: {fileID: 0}
   NPCBloodBar: {fileID: 0}
   level: 1
@@ -495,7 +497,6 @@ MonoBehaviour:
   waiterForAttack: 0
   countAttack: 0
   originalScale: {x: 0, y: 0, z: 0}
-  bulletSpeed: 0
 --- !u!135 &1251035310816127175
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -507,7 +508,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.5
+  m_Radius: 1.1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &7243687351225405205
 MonoBehaviour:
@@ -1765,6 +1766,8 @@ MonoBehaviour:
   nPC: {fileID: 0}
   container: []
   attackCollider: {fileID: 0}
+  isAttacking: 0
+  currentEnemy: {fileID: 0}
 --- !u!1 &8205869727556159435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1812,6 +1815,8 @@ MonoBehaviour:
   nPC: {fileID: 0}
   container: []
   attackCollider: {fileID: 0}
+  isAttacking: 0
+  currentEnemy: {fileID: 0}
 --- !u!135 &7003963959650385501
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1823,7 +1828,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8243921064690409989
 GameObject:

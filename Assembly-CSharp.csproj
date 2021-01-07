@@ -43,6 +43,7 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\NPCBloodBar.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Utils\Physics\MathfExtensions.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\LevelUp.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\LoadNewScene.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\BuyingSystem.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Patrol.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\ApiSingleton.cs" />
@@ -59,11 +60,11 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\HealthSystem.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\AttackArea.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Utils\Singleton\MonoSingleton.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\OurTeamCreation.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\EnemyCreation.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\CountdownStart.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Projectile.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\OurTeamCreation.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\LoadNewScene.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\BulletStart.cs" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_AlphaBlend.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Additive.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Multiply.shader" />

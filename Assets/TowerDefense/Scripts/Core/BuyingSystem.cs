@@ -34,6 +34,8 @@ public class BuyingSystem : MonoBehaviour
     public List<GameObject> enemyTeamContainer;
 
     public HeroLoader heroLoader;
+    private HeroLoader.Hero MickeyConfig;
+    private HeroLoader.Hero RalphConfig;
 
     private void Start()
     {
@@ -210,45 +212,33 @@ public class BuyingSystem : MonoBehaviour
         if (hero == Mickey)
         {
             currNPC.Name = "Mickey";
+            if (heroClass != null)
+            {
+                MickeyConfig = heroClass;
+            }
         }
         else if (hero == Ralph)
         {
             currNPC.Name = "Ralph";
-        }
-        if (enemyOrOurTeam) // ourteam
-        {
-            if (start)
+            if (heroClass != null)
             {
-                currNPC.MovementSpeed = heroClass.MovementSpeed;
-                currNPC.MaxHp = heroClass.MaxHp;
-                currNPC.MaxAttack = heroClass.MaxAttack;
-                currNPC.AttackMiss = heroClass.AttackMiss;
-                currNPC.PhysicalDefense = heroClass.PhysicalDefense;
-                currNPC.CriticalChance = heroClass.CriticalChance;
-                currNPC.CriticalDamage = heroClass.CriticalDamage;
-                currNPC.AttackSpeed = heroClass.AttackSpeed;
-                currNPC.AttackType = heroClass.AttackType;
-                currNPC = null;
-                hero = null;
+                RalphConfig = heroClass;
+            }
+        }
+        if (enemyOrOurTeam)
+        {
+            if (currNPC.Name == "Mickey")
+            {
+                AddConfigSBS(currNPC, MickeyConfig);
             }
             else
             {
-                currNPC.MovementSpeed = 5;
-                currNPC.MaxHp = 500;
-                currNPC.MaxAttack = 20;
-                currNPC.AttackMiss = 0;
-                currNPC.PhysicalDefense = 20;
-                currNPC.CriticalChance = 0.1f;
-                currNPC.CriticalDamage = 1.2f;
-                currNPC.AttackSpeed = 0.5f;
-                currNPC.AttackType = 0;
-                currNPC = null;
-                hero = null;
+                AddConfigSBS(currNPC, RalphConfig);
             }
         }
-        else // enemy
+        else
         {
-            currNPC.MovementSpeed = 5;
+            currNPC.MovementSpeed = 3;
             currNPC.MaxHp = 500;
             currNPC.MaxAttack = 20;
             currNPC.AttackMiss = 0;
@@ -259,6 +249,19 @@ public class BuyingSystem : MonoBehaviour
             currNPC.AttackType = 0;
             currNPC = null;
         }
+    }
+
+    private void AddConfigSBS(NPC currNPC, HeroLoader.Hero heroClass)
+    {
+        currNPC.MovementSpeed = heroClass.MovementSpeed;
+        currNPC.MaxHp = heroClass.MaxHp;
+        currNPC.MaxAttack = heroClass.MaxAttack;
+        currNPC.AttackMiss = heroClass.AttackMiss;
+        currNPC.PhysicalDefense = heroClass.PhysicalDefense;
+        currNPC.CriticalChance = heroClass.CriticalChance;
+        currNPC.CriticalDamage = heroClass.CriticalDamage;
+        currNPC.AttackSpeed = heroClass.AttackSpeed;
+        currNPC.AttackType = heroClass.AttackType;
     }
 
 }

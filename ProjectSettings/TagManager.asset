@@ -12,6 +12,7 @@ TagManager:
   - HeroRight
   - NormalAttack
   - BulletAttack
+  - BulletStart
   layers:
   - Default
   - TransparentFX

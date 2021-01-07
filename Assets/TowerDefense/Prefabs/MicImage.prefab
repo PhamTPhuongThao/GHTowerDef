@@ -935,7 +935,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.3
+  m_Radius: 2
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &-3087430518391024542
 MonoBehaviour:
@@ -950,8 +950,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTeamright: 0
-  ownHero: {fileID: 0}
   canLevelUp: 0
+  ownHero: {fileID: 0}
+  occupied: 0
 --- !u!1 &5409150874960963301
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,6 +60,8 @@ MonoBehaviour:
   nPC: {fileID: 0}
   container: []
   attackCollider: {fileID: 0}
+  isAttacking: 0
+  currentEnemy: {fileID: 0}
 --- !u!1 &860637539157356066
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,7 +1031,7 @@ MonoBehaviour:
   CriticalDamage: 1.2
   AttackSpeed: 0.5
   AttackType: 0
-  MovementSpeed: 5
+  MovementSpeed: 3
   value: 0
   isTeamright: 0
   patrol: {fileID: 0}
@@ -1037,7 +1039,9 @@ MonoBehaviour:
     type: 3}
   skillEffect: {fileID: 1217479511050380, guid: 7f4b90757abe92040964fd0c4e80701d,
     type: 3}
-  bullet: {fileID: 1686185437788495861, guid: 92f69a809d0f4e047a45d3c769fb0c97, type: 3}
+  getHitParticle: {fileID: 2880299226243595292, guid: a504a91c40ee5e443b1b519e689ee79d,
+    type: 3}
+  bullet: {fileID: 6614779059620552251, guid: 797970927dd69254cb4daa1a7309fff0, type: 3}
   NPCLevelText: {fileID: 0}
   NPCBloodBar: {fileID: 0}
   level: 1
@@ -1047,7 +1051,6 @@ MonoBehaviour:
   waiterForAttack: 0
   countAttack: 0
   originalScale: {x: 0, y: 0, z: 0}
-  bulletSpeed: 3
 --- !u!135 &5314883963631561141
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1866,3 +1869,5 @@ MonoBehaviour:
   nPC: {fileID: 0}
   container: []
   attackCollider: {fileID: 0}
+  isAttacking: 0
+  currentEnemy: {fileID: 0}

@@ -22,7 +22,7 @@ public class EnemyCreation : MonoBehaviour
 
     public void StartGame()
     {
-        //StartCoroutine(EnemyBuyHero());
+        StartCoroutine(EnemyBuyHero());
     }
 
     private IEnumerator EnemyBuyHero()

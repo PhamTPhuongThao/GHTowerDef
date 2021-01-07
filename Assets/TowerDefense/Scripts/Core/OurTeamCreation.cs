@@ -24,8 +24,8 @@ public class OurTeamCreation : MonoBehaviour
     }
     public void StartGame()
     {
-        //StartCoroutine(CreateOurTeam());
-        //StartCoroutine(StandStill());
+        StartCoroutine(CreateOurTeam());
+        StartCoroutine(StandStill());
     }
 
     private IEnumerator CreateOurTeam()

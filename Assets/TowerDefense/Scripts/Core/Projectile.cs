@@ -9,7 +9,7 @@ public class Projectile : MonoBehaviour
     public float bulletSpeed;
     void Start()
     {
-        bulletSpeed = 12f;
+        bulletSpeed = 16f;
     }
 
     void Update()

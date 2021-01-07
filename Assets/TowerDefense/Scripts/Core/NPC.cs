@@ -22,6 +22,7 @@ public class NPC : MonoBehaviour
     public Patrol patrol;
     public GameObject heroImage;
     public GameObject skillEffect;
+    public GameObject getHitParticle;
     public GameObject bullet;
 
     public NPCLevelText NPCLevelText;
@@ -33,7 +34,6 @@ public class NPC : MonoBehaviour
     public float waiterForAttack;
     public int countAttack;
     public Vector3 originalScale;
-    public float bulletSpeed;
 
     void Start()
     {
@@ -43,7 +43,6 @@ public class NPC : MonoBehaviour
         heroLoader = FindObjectOfType<HeroLoader>();
         level = 1;
         isLevelingUp = false;
-        bulletSpeed = 1f;
         if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "HeroRight")
         {
             value = 50;
@@ -137,18 +136,30 @@ public class NPC : MonoBehaviour
         }
     }
 
+    public IEnumerator WaitingDoingSkill()
+    {
+        yield return new WaitForSeconds(5f);
+        patrol.animator.SetBool("doingSkill", false);
+    }
+
     public void DoingAttack(Collider enemy, int attackContainer, int classToChoose)
     {
         if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
         {
+
+            if ((heroLoader.chooseTeamLeft && this.tag == "HeroLeft") || (!heroLoader.chooseTeamLeft && this.tag == "HeroRight"))
+            {
+                patrol.animator.SetBool("doingSkill", true);
+            }
             MaxAttack = (int)(MaxAttack * CriticalDamage);
-            Instantiate(skillEffect, this.transform.position, this.transform.rotation);
             countAttack = 0;
-            //this.transform.localScale = originalScale;
         }
         if (classToChoose == 0)
         {
-            enemy.GetComponent<NPC>().GetHurt(MaxAttack);
+            if (enemy)
+            {
+                enemy.GetComponent<NPC>().GetHurt(MaxAttack);
+            }
         }
         if (classToChoose == 1)
         {
@@ -158,39 +169,56 @@ public class NPC : MonoBehaviour
         {
             enemy.GetComponent<TeamRight>().GetHurt(MaxAttack);
         }
-
         canAttack = false;
+        StartCoroutine(WaitingDoingSkill());
         MaxAttack = attackContainer;
         countAttack++;
-        //this.transform.localScale = originalScale + Vector3.one * (countAttack / ((float)2 * (1 / CriticalChance)));
     }
 
     public void DoingFarAttack(Collider enemy, int attackContainer, int classToChoose)
     {
+        if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
+        {
+            if ((heroLoader.chooseTeamLeft && this.tag == "HeroLeft") || (!heroLoader.chooseTeamLeft && this.tag == "HeroRight"))
+            {
+                patrol.animator.SetBool("doingSkill", true);
+            }
+            MaxAttack = (int)(MaxAttack * CriticalDamage);
+            countAttack = 0;
+        }
+        var positionToStart = transform.GetComponentInChildren<BulletStart>().GetComponent<SphereCollider>().transform.position;
+        Debug.Log(transform.GetComponentInChildren<BulletStart>());
         if (classToChoose == 0)
         {
-            var bulletImage = Instantiate(bullet, transform.position, transform.rotation);
-            bulletImage.GetComponent<Projectile>().ownPlayer = this;
-            bulletImage.GetComponent<Projectile>().enemy = enemy;
+            if (enemy)
+            {
+                var bulletImage = Instantiate(bullet, positionToStart, transform.rotation);
+                bulletImage.GetComponent<Projectile>().ownPlayer = this;
+                bulletImage.GetComponent<Projectile>().enemy = enemy;
+            }
         }
         if (classToChoose == 1)
         {
-            var bulletImage = Instantiate(bullet, transform.position, transform.rotation);
+            var bulletImage = Instantiate(bullet, positionToStart, transform.rotation);
             bulletImage.GetComponent<Projectile>().ownPlayer = this;
             bulletImage.GetComponent<Projectile>().enemy = enemy;
         }
         if (classToChoose == -1)
         {
-            var bulletImage = Instantiate(bullet, transform.position, transform.rotation);
+            var bulletImage = Instantiate(bullet, positionToStart, transform.rotation);
             bulletImage.GetComponent<Projectile>().ownPlayer = this;
             bulletImage.GetComponent<Projectile>().enemy = enemy;
         }
         canAttack = false;
+        StartCoroutine(WaitingDoingSkill());
+        MaxAttack = attackContainer;
+        countAttack++;
     }
 
 
     public void GetHurt(int amountBlood)
     {
+        Instantiate(getHitParticle, transform.position + Vector3.up * 2, transform.rotation);
         MaxHp -= amountBlood;
         if (MaxHp < 0)
         {
