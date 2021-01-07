@@ -34,6 +34,7 @@ public class NPC : MonoBehaviour
     public float waiterForAttack;
     public int countAttack;
     public Vector3 originalScale;
+    public bool isDead;
 
     void Start()
     {
@@ -43,6 +44,7 @@ public class NPC : MonoBehaviour
         heroLoader = FindObjectOfType<HeroLoader>();
         level = 1;
         isLevelingUp = false;
+        isDead = false;
         if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "HeroRight")
         {
             value = 50;
@@ -223,16 +225,23 @@ public class NPC : MonoBehaviour
         if (MaxHp < 0)
         {
             MaxHp = 0;
-            patrol.isDead = true;
             KillEnemyCoinGetting();
 
             if (NPCBloodBar)
             {
                 Destroy(NPCBloodBar.gameObject);
             }
-            Destroy(this.gameObject);
-
+            isDead = true;
+            patrol.navMeshAgent.isStopped = true;
+            patrol.animator.SetBool("isDead", true);
+            StartCoroutine(FadeAwayAfterDeath());
         }
+    }
+
+    private IEnumerator FadeAwayAfterDeath()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(this.gameObject);
     }
 
     public void KillEnemyCoinGetting()

@@ -431,7 +431,6 @@ MonoBehaviour:
   nPC: {fileID: 0}
   animator: {fileID: 0}
   navMeshAgent: {fileID: 0}
-  isDead: 0
   remainEnemyHero: {fileID: 0}
   remainEnemy: {fileID: 0}
 --- !u!195 &3290230051800551247
@@ -497,6 +496,7 @@ MonoBehaviour:
   waiterForAttack: 0
   countAttack: 0
   originalScale: {x: 0, y: 0, z: 0}
+  isDead: 0
 --- !u!135 &1251035310816127175
 SphereCollider:
   m_ObjectHideFlags: 0

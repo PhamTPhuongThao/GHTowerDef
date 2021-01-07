@@ -22,7 +22,7 @@ public class Patrol : MonoBehaviour
 
     public NavMeshAgent navMeshAgent;
 
-    public bool isDead;
+    //public bool isDead;
 
     public GameObject remainEnemyHero;
     public GameObject remainEnemy;
@@ -64,7 +64,7 @@ public class Patrol : MonoBehaviour
 
     void Update()
     {
-        if (isDead)
+        if (nPC.isDead)
         {
             return;
         }
@@ -105,7 +105,7 @@ public class Patrol : MonoBehaviour
     {
         animator.SetBool("running", true);
         animator.SetBool("enemyMeet", false);
-        if (setPatrolPoint != null && !isDead)
+        if (setPatrolPoint != null && !nPC.isDead)
         {
             Vector3 targetVector = setPatrolPoint;
             navMeshAgent.SetDestination(targetVector);

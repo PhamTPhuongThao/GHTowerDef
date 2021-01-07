@@ -32,6 +32,10 @@ public class AttackArea : MonoBehaviour
             {
                 if (currentEnemy.transform.parent.GetComponent<SphereCollider>())
                 {
+                    if (currentEnemy.GetComponent<NPC>() && currentEnemy.GetComponent<NPC>().isDead)
+                    {
+                        AfterWar();
+                    }
                     nPC.Attack(currentEnemy.transform.parent.GetComponent<SphereCollider>());
                 }
                 else
@@ -53,12 +57,28 @@ public class AttackArea : MonoBehaviour
         if (patrol.remainEnemyHero)
         {
             patrol.SetDestination(patrol.remainEnemyHero.transform.position);
+            if (patrol.remainEnemy.GetComponent<SphereCollider>())
+            {
+                currentEnemy = patrol.remainEnemy.GetComponent<SphereCollider>();
+            }
+            else
+            {
+                currentEnemy = null;
+            }
         }
         else
         {
             if (patrol.remainEnemy)
             {
                 patrol.SetDestination(patrol.remainEnemy.transform.position);
+                if (patrol.remainEnemy.GetComponent<SphereCollider>())
+                {
+                    currentEnemy = patrol.remainEnemy.GetComponent<SphereCollider>();
+                }
+                else
+                {
+                    currentEnemy = null;
+                }
             }
             else
             {
@@ -69,7 +89,7 @@ public class AttackArea : MonoBehaviour
 
     private void MeetEnemy(Collider other)
     {
-        if (!patrol.isDead)
+        if (!nPC.isDead)
         {
             patrol.navMeshAgent.isStopped = true;
             patrol.animator.SetBool("running", false);
@@ -81,7 +101,7 @@ public class AttackArea : MonoBehaviour
 
     private void MeetTower(Collider other)
     {
-        if (!patrol.isDead)
+        if (!nPC.isDead)
         {
             if (patrol.remainEnemyHero)
             {
@@ -111,7 +131,7 @@ public class AttackArea : MonoBehaviour
             if (other.tag == "NormalAttack")
             {
                 var otherParent = other.transform.parent;
-                if (otherParent.GetComponent<Patrol>() && !otherParent.GetComponent<Patrol>().isDead)
+                if (otherParent.GetComponent<Patrol>() && !otherParent.GetComponent<NPC>().isDead)
                 {
                     if (!nPC.isTeamright && (otherParent.tag == "Right" || otherParent.tag == "HeroRight"))
                     {
