@@ -22,7 +22,8 @@ public class Patrol : MonoBehaviour
 
     public NavMeshAgent navMeshAgent;
 
-    //public bool isDead;
+    private AttackArea attackArea;
+    private BulletAttackArea bulletAttackArea;
 
     public GameObject remainEnemyHero;
     public GameObject remainEnemy;
@@ -35,6 +36,8 @@ public class Patrol : MonoBehaviour
         nPC = GetComponent<NPC>();
         navMeshAgent = this.GetComponent<NavMeshAgent>();
         navMeshAgent.isStopped = false;
+        attackArea = GetComponentInChildren<AttackArea>();
+        bulletAttackArea = GetComponentInChildren<BulletAttackArea>();
 
         if (navMeshAgent == null)
         {
@@ -64,6 +67,7 @@ public class Patrol : MonoBehaviour
 
     void Update()
     {
+
         if (nPC.isDead)
         {
             return;

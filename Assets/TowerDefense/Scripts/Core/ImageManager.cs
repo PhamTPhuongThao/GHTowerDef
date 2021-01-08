@@ -45,14 +45,10 @@ public class ImageManager : MonoBehaviour
         var ownHeroNPC = ownHero.GetComponent<NPC>();
         ownHeroNPC.isLevelingUp = true;
         Destroy(this.gameObject);
-        Destroy(ownHero);
         if (ownHeroNPC.NPCBloodBar)
         {
             Destroy(ownHeroNPC.NPCBloodBar.gameObject);
         }
-        other.GetComponent<NPC>().countAttack = 0;
-        other.transform.localScale = other.GetComponent<NPC>().originalScale;
-        other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
         if (ownHeroNPC.AttackType == 1 || other.GetComponent<NPC>().AttackType == 1)
         {
             other.GetComponent<LevelUp>().ResetConfig(1);
@@ -61,6 +57,13 @@ public class ImageManager : MonoBehaviour
         {
             other.GetComponent<LevelUp>().ResetConfig(0);
         }
+        ownHeroNPC = null;
+        ownHero.GetComponent<Patrol>().enabled = false;
+        Destroy(ownHero);
+
+        other.GetComponent<NPC>().countAttack = 0;
+        other.GetComponent<Patrol>().animator.SetBool("canLevelUp", true);
+
 
     }
 }

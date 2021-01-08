@@ -9,7 +9,7 @@ public class BuyingSystem : MonoBehaviour
     public GameObject Ralph;
 
     public Transform launchPoint;
-    public Patrol patrol;
+    // public Patrol patrol;
     public TeamRight teamRight;
     public TeamLeft teamLeft;
     private Vector3 spawnPos;
@@ -39,7 +39,7 @@ public class BuyingSystem : MonoBehaviour
 
     private void Start()
     {
-        patrol = FindObjectOfType<Patrol>();
+        // patrol = FindObjectOfType<Patrol>();
         teamRight = FindObjectOfType<TeamRight>();
         teamLeft = FindObjectOfType<TeamLeft>();
 
@@ -50,6 +50,21 @@ public class BuyingSystem : MonoBehaviour
         recoverSliderOfRalph.gameObject.SetActive(false);
         recoverSliderOfMickey.maxValue = waitingTime;
         recoverSliderOfRalph.maxValue = waitingTime;
+
+        if (heroLoader.heroesCollectionOfOurTeam.heroes.Length > 0)
+        {
+            for (int i = 0; i < heroLoader.heroesCollectionOfOurTeam.heroes.Length; i++)
+            {
+                if (heroLoader.heroesCollectionOfOurTeam.heroes[i].Name == "Mickey")
+                {
+                    MickeyConfig = heroLoader.heroesCollectionOfOurTeam.heroes[i];
+                }
+                else if (heroLoader.heroesCollectionOfOurTeam.heroes[i].Name == "Ralph")
+                {
+                    RalphConfig = heroLoader.heroesCollectionOfOurTeam.heroes[i];
+                }
+            }
+        }
     }
 
     private void Update()
@@ -81,12 +96,12 @@ public class BuyingSystem : MonoBehaviour
 
     }
 
-    public IEnumerator Waiting()
-    {
-        yield return new WaitForSeconds(3f);
-        isMickeyRecover = false;
-        isRalphRecover = false;
-    }
+    // public IEnumerator Waiting()
+    // {
+    //     yield return new WaitForSeconds(3f);
+    //     isMickeyRecover = false;
+    //     isRalphRecover = false;
+    // }
 
     public void BuyMickey()
     {
@@ -190,6 +205,7 @@ public class BuyingSystem : MonoBehaviour
         if (start)
         {
             var cur = Instantiate(hero, spawnPos, launchPoint.rotation);
+            StartCoroutine(Waiting(cur));
             cur.GetComponent<Patrol>().enabled = false;
             if (enemyOrOurTeam)
             {
@@ -202,7 +218,26 @@ public class BuyingSystem : MonoBehaviour
         }
         else
         {
-            Instantiate(hero, spawnPos, launchPoint.rotation);
+            var cur = Instantiate(hero, spawnPos, launchPoint.rotation);
+            StartCoroutine(Waiting(cur));
+        }
+
+    }
+
+    private IEnumerator Waiting(GameObject cur)
+    {
+        yield return new WaitForSeconds(.4f);
+        cur.GetComponent<Patrol>().navMeshAgent.isStopped = true;
+        cur.GetComponent<Patrol>().animator.SetBool("appear", true);
+        yield return new WaitForSeconds(2f);
+        if (cur != null && cur.GetComponent<Patrol>() != null && cur.GetComponent<Patrol>().animator != null && cur.GetComponent<Patrol>().navMeshAgent != null)
+        {
+            cur.GetComponent<Patrol>().animator.SetBool("appear", false);
+            yield return new WaitForSeconds(.5f);
+            if (cur != null && cur.GetComponent<Patrol>() != null && cur.GetComponent<Patrol>().animator != null && cur.GetComponent<Patrol>().navMeshAgent != null)
+            {
+                cur.GetComponent<Patrol>().navMeshAgent.isStopped = false;
+            }
         }
     }
 

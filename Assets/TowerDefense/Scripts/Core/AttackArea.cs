@@ -10,6 +10,11 @@ public class AttackArea : MonoBehaviour
     public SphereCollider attackCollider;
     public bool isAttacking;
     public Collider currentEnemy;
+    public ParticleSystem RalphskillEffect;
+    public ParticleSystem MickeyskillEffect;
+    public ParticleSystem RalphAttack1;
+    public ParticleSystem RalphAttack2;
+    public ParticleSystem RalphAttack3;
 
     private void Start()
     {
@@ -24,6 +29,8 @@ public class AttackArea : MonoBehaviour
     {
         if (isAttacking)
         {
+            patrol.animator.SetBool("running", false);
+            patrol.animator.SetBool("enemyMeet", true);
             if (currentEnemy == null)
             {
                 AfterWar();
@@ -44,6 +51,32 @@ public class AttackArea : MonoBehaviour
                 }
             }
         }
+        if (nPC.isDoingSkill)
+        {
+            if (nPC.Name == "Mickey" && nPC.AttackType == 0)
+            {
+                Instantiate(MickeyskillEffect, currentEnemy.transform.position, currentEnemy.transform.rotation);
+                nPC.isDoingSkill = false;
+
+            }
+            if (nPC.Name == "Ralph" && nPC.AttackType == 0)
+            {
+                Instantiate(RalphskillEffect, currentEnemy.transform.position, currentEnemy.transform.rotation);
+                nPC.isDoingSkill = false;
+            }
+        }
+
+        // if (nPC.isAttacking && nPC.AttackType == 0 && nPC.Name == "Ralph")
+        // {
+        //     Instantiate(RalphAttack1, currentEnemy.transform.position, currentEnemy.transform.rotation);
+        //     nPC.isAttacking = false;
+        // }
+
+    }
+
+    private IEnumerator WaitingForDoingSkill()
+    {
+        yield return new WaitForSeconds(1f);
     }
 
 
@@ -53,11 +86,12 @@ public class AttackArea : MonoBehaviour
         patrol.navMeshAgent.isStopped = false;
         patrol.animator.SetBool("running", true);
         patrol.animator.SetBool("enemyMeet", false);
+        patrol.SetDestination(patrol.aim);
 
         if (patrol.remainEnemyHero)
         {
             patrol.SetDestination(patrol.remainEnemyHero.transform.position);
-            if (patrol.remainEnemy.GetComponent<SphereCollider>())
+            if (patrol.remainEnemy && patrol.remainEnemy.GetComponent<SphereCollider>())
             {
                 currentEnemy = patrol.remainEnemy.GetComponent<SphereCollider>();
             }
@@ -116,8 +150,8 @@ public class AttackArea : MonoBehaviour
                 else
                 {
                     patrol.navMeshAgent.isStopped = true;
-                    patrol.animator.SetBool("running", false);
                     patrol.animator.SetBool("enemyMeet", true);
+                    patrol.animator.SetBool("running", false);
                     isAttacking = true;
                     currentEnemy = other;
                 }
@@ -161,7 +195,7 @@ public class AttackArea : MonoBehaviour
         {
             patrol.animator.SetBool("running", true);
             patrol.animator.SetBool("enemyMeet", false);
-            isAttacking = false;
+            //isAttacking = false;
         }
     }
 

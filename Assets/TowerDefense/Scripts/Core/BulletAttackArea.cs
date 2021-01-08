@@ -10,6 +10,8 @@ public class BulletAttackArea : MonoBehaviour
     public SphereCollider attackCollider;
     public bool isAttacking;
     public Collider currentEnemy;
+    public ParticleSystem RalphskillEffect;
+    public ParticleSystem MickeyskillEffect;
 
     private void Start()
     {
@@ -25,6 +27,8 @@ public class BulletAttackArea : MonoBehaviour
     {
         if (isAttacking)
         {
+            patrol.animator.SetBool("running", false);
+            patrol.animator.SetBool("enemyMeet", true);
             if (currentEnemy == null)
             {
                 AfterWar();
@@ -45,6 +49,19 @@ public class BulletAttackArea : MonoBehaviour
                 }
             }
         }
+        if (nPC.isDoingSkill)
+        {
+            if (nPC.Name == "Mickey" && (nPC.AttackType == 1))
+            {
+                Instantiate(MickeyskillEffect, currentEnemy.transform.position, currentEnemy.transform.rotation);
+                nPC.isDoingSkill = false;
+            }
+            if (nPC.Name == "Ralph" && (nPC.AttackType == 1))
+            {
+                Instantiate(RalphskillEffect, currentEnemy.transform.position, currentEnemy.transform.rotation);
+                nPC.isDoingSkill = false;
+            }
+        }
     }
 
     private void AfterWar()
@@ -53,11 +70,11 @@ public class BulletAttackArea : MonoBehaviour
         patrol.navMeshAgent.isStopped = false;
         patrol.animator.SetBool("running", true);
         patrol.animator.SetBool("enemyMeet", false);
-
+        patrol.SetDestination(patrol.aim);
         if (patrol.remainEnemyHero)
         {
             patrol.SetDestination(patrol.remainEnemyHero.transform.position);
-            if (patrol.remainEnemy.GetComponent<SphereCollider>())
+            if (patrol.remainEnemy && patrol.remainEnemy.GetComponent<SphereCollider>())
             {
                 currentEnemy = patrol.remainEnemy.GetComponent<SphereCollider>();
             }
@@ -89,6 +106,7 @@ public class BulletAttackArea : MonoBehaviour
 
     private void MeetEnemy(Collider other)
     {
+        patrol.animator.SetBool("appear", false);
         if (!nPC.isDead)
         {
             patrol.navMeshAgent.isStopped = true;
@@ -161,7 +179,7 @@ public class BulletAttackArea : MonoBehaviour
         {
             patrol.animator.SetBool("running", true);
             patrol.animator.SetBool("enemyMeet", false);
-            isAttacking = false;
+            //isAttacking = false;
         }
     }
 

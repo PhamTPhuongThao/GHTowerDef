@@ -957,14 +957,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1887296107689693240}
   serializedVersion: 2
-  m_Mass: 20
-  m_Drag: 20
-  m_AngularDrag: 10
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 32
-  m_CollisionDetection: 1
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!195 &1887296108724380902
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1036,7 +1036,7 @@ MonoBehaviour:
   patrol: {fileID: 0}
   heroImage: {fileID: 5409150874960963299, guid: d7884a6b25ef84e4ca96285ba51b63fc,
     type: 3}
-  skillEffect: {fileID: 1217479511050380, guid: 7f4b90757abe92040964fd0c4e80701d,
+  skillEffect: {fileID: 1416234665501338, guid: 4ae5e8bea6c66f446a0d95b4efadd894,
     type: 3}
   getHitParticle: {fileID: 2880299226243595292, guid: a504a91c40ee5e443b1b519e689ee79d,
     type: 3}
@@ -1051,6 +1051,8 @@ MonoBehaviour:
   countAttack: 0
   originalScale: {x: 0, y: 0, z: 0}
   isDead: 0
+  fadedAfterDeath:
+  - {fileID: 2100000, guid: 09f8144084a84ee4b97cf190c16ddbb0, type: 2}
 --- !u!135 &5314883963631561141
 SphereCollider:
   m_ObjectHideFlags: 0

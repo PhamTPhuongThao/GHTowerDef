@@ -71,9 +71,9 @@ public class LevelUp : MonoBehaviour
         currChange.MaxAttack = currChange.MaxAttack * 2;
         currChange.AttackMiss = currChange.AttackMiss * 2;
         currChange.PhysicalDefense = currChange.PhysicalDefense * 2;
-        currChange.CriticalChance = currChange.CriticalChance * 2;
-        currChange.CriticalDamage = currChange.CriticalDamage * 2;
-        currChange.AttackSpeed = currChange.AttackSpeed * 2;
+        //currChange.CriticalChance = currChange.CriticalChance * 2;
+        //currChange.CriticalDamage = currChange.CriticalDamage * 2;
+        currChange.AttackSpeed = currChange.AttackSpeed / 2;
         currChange.AttackType = attackType;
         currPatrol.animator.SetInteger("attackOne", attackType);
         StartCoroutine(Waiting());

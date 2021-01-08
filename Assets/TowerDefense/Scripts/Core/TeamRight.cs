@@ -5,6 +5,7 @@ public class TeamRight : MonoBehaviour
 {
     public int maxHP;
     private int value;
+    public int HPContainer;
     public HeroLoader heroLoader;
     public GameObject winScreen;
     public GameObject loseScreen;
@@ -13,6 +14,7 @@ public class TeamRight : MonoBehaviour
     public NPCBloodBar NPCHealthBar;
     public NPCBloodBar NPCEnemyHealthBar;
     public GameObject getHitParticle;
+    public ParticleSystem smallFire;
 
     private void Start()
     {
@@ -20,6 +22,7 @@ public class TeamRight : MonoBehaviour
         teamLeft = FindObjectOfType<TeamLeft>();
         value = 200;
         maxHP = 15000;
+        HPContainer = maxHP;
         teamRightHealthBar.bloodBar.maxValue = maxHP;
     }
 
@@ -32,6 +35,10 @@ public class TeamRight : MonoBehaviour
     {
         Instantiate(getHitParticle, transform.position + Vector3.up * 3, transform.rotation);
         maxHP -= amountBlood;
+        if (maxHP < HPContainer * 0.7)
+        {
+            Instantiate(smallFire, transform.position + Vector3.right * 7, transform.rotation);
+        }
         if (maxHP < 0)
         {
             maxHP = 0;

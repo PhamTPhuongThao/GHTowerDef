@@ -22,7 +22,7 @@ public class EnemyCreation : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(EnemyBuyHero());
+        //StartCoroutine(EnemyBuyHero());
     }
 
     private IEnumerator EnemyBuyHero()
@@ -51,7 +51,6 @@ public class EnemyCreation : MonoBehaviour
                         buyingSystem.BuyHero(hero, 0, false, false, null);
                     }
                 }
-
             }
         }
     }

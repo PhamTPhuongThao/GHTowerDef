@@ -23,9 +23,13 @@ public class Projectile : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        if (ownPlayer == null)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         if (ownPlayer && ownPlayer.tag == "HeroLeft" && (other.tag == "HeroRight" || other.tag == "TowerRight" || other.tag == "Right"))
         {

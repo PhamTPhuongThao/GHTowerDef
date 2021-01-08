@@ -54,6 +54,7 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\WaitingToRecover.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\EnemyCoinSystem.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Utils\Physics\PhysicsUtils.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\BulletStart.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\NPC.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\HeroLoader.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\DestroyParticleAfterFinish.cs" />
@@ -64,7 +65,7 @@
      <Compile Include="Assets\TowerDefense\Scripts\Core\EnemyCreation.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\CountdownStart.cs" />
      <Compile Include="Assets\TowerDefense\Scripts\Core\Projectile.cs" />
-     <Compile Include="Assets\TowerDefense\Scripts\Core\BulletStart.cs" />
+     <Compile Include="Assets\TowerDefense\Scripts\Core\RalphBodyChangePosition.cs" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_AlphaBlend.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Additive.shader" />
      <None Include="Assets\TowerDefense\Media\ArtistFolder\LFS\Shaders\PARTICLE_Multiply.shader" />

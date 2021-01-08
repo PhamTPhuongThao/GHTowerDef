@@ -21,8 +21,8 @@ public class NPC : MonoBehaviour
 
     public Patrol patrol;
     public GameObject heroImage;
-    public GameObject skillEffect;
-    public GameObject getHitParticle;
+
+    public ParticleSystem getHitParticle;
     public GameObject bullet;
 
     public NPCLevelText NPCLevelText;
@@ -31,10 +31,12 @@ public class NPC : MonoBehaviour
     public bool isLevelingUp;
     public HeroLoader heroLoader;
     public bool canAttack;
-    public float waiterForAttack;
+    private float waiterForAttack;
     public int countAttack;
-    public Vector3 originalScale;
     public bool isDead;
+    public Material[] fadedAfterDeath;
+    public bool isDoingSkill;
+    public bool isAttacking;
 
     void Start()
     {
@@ -45,6 +47,7 @@ public class NPC : MonoBehaviour
         level = 1;
         isLevelingUp = false;
         isDead = false;
+        isDoingSkill = false;
         if (this.gameObject.tag == "HeroLeft" || this.gameObject.tag == "HeroRight")
         {
             value = 50;
@@ -60,9 +63,7 @@ public class NPC : MonoBehaviour
             NPCBloodBar = null;
             NPCLevelText = null;
             heroImage = null;
-            skillEffect = null;
         }
-        originalScale = this.transform.localScale;
     }
 
     private void Update()
@@ -87,6 +88,7 @@ public class NPC : MonoBehaviour
 
     public void Attack(Collider enemy)
     {
+        StartCoroutine(WaitingForAnimationOfAttackEffect());
         var attackContainer = MaxAttack;
         if (canAttack)
         {
@@ -108,6 +110,7 @@ public class NPC : MonoBehaviour
 
     public void AttackTower(Collider enemy)
     {
+        StartCoroutine(WaitingForAnimationOfAttackEffect());
         var attackContainer = MaxAttack;
 
         if (isTeamright && canAttack)
@@ -138,20 +141,32 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public IEnumerator WaitingDoingSkill()
+
+    private IEnumerator WaitingForAnimation()
+    {
+        yield return new WaitForSeconds(2f);
+        isDoingSkill = true;
+    }
+    private IEnumerator WaitingDoingSkill()
     {
         yield return new WaitForSeconds(5f);
         patrol.animator.SetBool("doingSkill", false);
+    }
+
+    private IEnumerator WaitingForAnimationOfAttackEffect()
+    {
+        yield return new WaitForSeconds(5f);
+        isAttacking = true;
     }
 
     public void DoingAttack(Collider enemy, int attackContainer, int classToChoose)
     {
         if (countAttack == (int)(1 / CriticalChance) && countAttack != 0 && (this.Name == "Mickey" || this.Name == "Ralph"))
         {
-
             if ((heroLoader.chooseTeamLeft && this.tag == "HeroLeft") || (!heroLoader.chooseTeamLeft && this.tag == "HeroRight"))
             {
                 patrol.animator.SetBool("doingSkill", true);
+                StartCoroutine(WaitingForAnimation());
             }
             MaxAttack = (int)(MaxAttack * CriticalDamage);
             countAttack = 0;
@@ -184,12 +199,12 @@ public class NPC : MonoBehaviour
             if ((heroLoader.chooseTeamLeft && this.tag == "HeroLeft") || (!heroLoader.chooseTeamLeft && this.tag == "HeroRight"))
             {
                 patrol.animator.SetBool("doingSkill", true);
+                StartCoroutine(WaitingForAnimation());
             }
             MaxAttack = (int)(MaxAttack * CriticalDamage);
             countAttack = 0;
         }
         var positionToStart = transform.GetComponentInChildren<BulletStart>().GetComponent<SphereCollider>().transform.position;
-        Debug.Log(transform.GetComponentInChildren<BulletStart>());
         if (classToChoose == 0)
         {
             if (enemy)
@@ -240,7 +255,16 @@ public class NPC : MonoBehaviour
 
     private IEnumerator FadeAwayAfterDeath()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
+        if (this.Name == "Mickey")
+        {
+            var skinnedMeshRenderers = this.GetComponentsInChildren<SkinnedMeshRenderer>();
+            foreach (var skinnedMesh in skinnedMeshRenderers)
+            {
+                skinnedMesh.materials = fadedAfterDeath;
+            }
+        }
+        yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }
 

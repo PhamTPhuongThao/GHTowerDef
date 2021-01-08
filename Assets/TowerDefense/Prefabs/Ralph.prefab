@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &881114102272535623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3290230050956653901}
+  m_Layer: 0
+  m_Name: HELPER01_jnt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3290230050956653901
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881114102272535623}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 6.61854e-17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3290230050956653847}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3290230050956355841
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,14 +433,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3290230050956355859}
   serializedVersion: 2
-  m_Mass: 20
-  m_Drag: 20
-  m_AngularDrag: 10
+  m_Mass: 10
+  m_Drag: 0
+  m_AngularDrag: 0
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 32
-  m_CollisionDetection: 1
+  m_Constraints: 0
+  m_CollisionDetection: 3
 --- !u!114 &3290230051800551245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -482,8 +512,6 @@ MonoBehaviour:
   patrol: {fileID: 0}
   heroImage: {fileID: 2401572306313422137, guid: f93ba774c3290264583c5bd3b85a07a3,
     type: 3}
-  skillEffect: {fileID: 1995999885220330, guid: 583847f543542d84fa2e1fd012abf2ec,
-    type: 3}
   getHitParticle: {fileID: 2880299226243595292, guid: a504a91c40ee5e443b1b519e689ee79d,
     type: 3}
   bullet: {fileID: 6614779059620552251, guid: 797970927dd69254cb4daa1a7309fff0, type: 3}
@@ -493,10 +521,11 @@ MonoBehaviour:
   isLevelingUp: 0
   heroLoader: {fileID: 0}
   canAttack: 0
-  waiterForAttack: 0
   countAttack: 0
-  originalScale: {x: 0, y: 0, z: 0}
   isDead: 0
+  fadedAfterDeath: []
+  isDoingSkill: 0
+  isAttacking: 0
 --- !u!135 &1251035310816127175
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -874,6 +903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3290230050956653847}
+  - component: {fileID: 6165296128205194004}
   m_Layer: 0
   m_Name: world_jnt
   m_TagString: Untagged
@@ -897,6 +927,18 @@ Transform:
   m_Father: {fileID: 3290230050956653939}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6165296128205194004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3290230050956355895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffc256ad49ff72b45b877d7d9514f774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3290230050956355897
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,36 +1355,6 @@ Transform:
   - {fileID: 3290230050956653891}
   m_Father: {fileID: 3290230050956653915}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3290230050956355949
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3290230050956653901}
-  m_Layer: 0
-  m_Name: HELPER01_jnt
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3290230050956653901
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3290230050956355949}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 6.61854e-17, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 3290230050956653847}
-  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3290230050956355951
 GameObject:
@@ -1768,6 +1780,16 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   isAttacking: 0
   currentEnemy: {fileID: 0}
+  RalphskillEffect: {fileID: 198946311662897436, guid: 7f4b90757abe92040964fd0c4e80701d,
+    type: 3}
+  MickeyskillEffect: {fileID: 198706997460873524, guid: 4ae5e8bea6c66f446a0d95b4efadd894,
+    type: 3}
+  RalphAttack1: {fileID: 198482341948036864, guid: 967bb6cf97afcf74facd7a0f4d8ec3e4,
+    type: 3}
+  RalphAttack2: {fileID: 198824654235691280, guid: ba5c20f55c309c4438db8caba1ccdcca,
+    type: 3}
+  RalphAttack3: {fileID: 198405017470101540, guid: 583847f543542d84fa2e1fd012abf2ec,
+    type: 3}
 --- !u!1 &8205869727556159435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,6 +1839,10 @@ MonoBehaviour:
   attackCollider: {fileID: 0}
   isAttacking: 0
   currentEnemy: {fileID: 0}
+  RalphskillEffect: {fileID: 198946311662897436, guid: 7f4b90757abe92040964fd0c4e80701d,
+    type: 3}
+  MickeyskillEffect: {fileID: 198706997460873524, guid: 4ae5e8bea6c66f446a0d95b4efadd894,
+    type: 3}
 --- !u!135 &7003963959650385501
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1844,7 +1870,7 @@ GameObject:
   - component: {fileID: 8189660149304043337}
   - component: {fileID: 1431366252966644662}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -3,6 +3,7 @@
 public class TeamLeft : MonoBehaviour
 {
     public int maxHP;
+    public int HPContainer;
     private int value;
     public HeroLoader heroLoader;
     public GameObject winScreen;
@@ -12,6 +13,7 @@ public class TeamLeft : MonoBehaviour
     public NPCBloodBar NPCHealthBar;
     public NPCBloodBar NPCEnemyHealthBar;
     public GameObject getHitParticle;
+    public ParticleSystem smallFire;
 
 
     private void Start()
@@ -20,6 +22,7 @@ public class TeamLeft : MonoBehaviour
         teamRight = FindObjectOfType<TeamRight>();
         value = 200;
         maxHP = 15000;
+        HPContainer = maxHP;
         teamLeftHealthBar.bloodBar.maxValue = maxHP;
     }
     private void Update()
@@ -32,6 +35,13 @@ public class TeamLeft : MonoBehaviour
     {
         Instantiate(getHitParticle, transform.position + Vector3.up * 3, transform.rotation);
         maxHP -= amountBlood;
+        if (maxHP < HPContainer * 0.7)
+        {
+            Instantiate(smallFire, transform.position + Vector3.left * 7, transform.rotation);
+        }
+        // if (maxHP < HPContainer * 0.3){
+        //     Instantiate 
+        // }
         if (maxHP < 0)
         {
             maxHP = 0;
